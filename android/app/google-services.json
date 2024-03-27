@@ -1,0 +1,91 @@
+{
+  "project_info": {
+    "project_number": "616349335993",
+    "firebase_url": "https://starpoints-d9368.firebaseio.com",
+    "project_id": "starpoints-d9368",
+    "storage_bucket": "starpoints-d9368.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:616349335993:android:4da2e324262bc3f364b668",
+        "android_client_info": {
+          "package_name": "br.com.bjbraz.bank_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "616349335993-9k2d7g2rut4fmt4c3t3vhvib3j7i91gv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqwUO06kklHtE7UE_ifC5TmoVeTPawiY4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "616349335993-9k2d7g2rut4fmt4c3t3vhvib3j7i91gv.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "616349335993-8mk3bcnke5od2ohk813ek154o4us0kh7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "br.com.bjbraz.bankApp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:616349335993:android:2876b6a479b0c71464b668",
+        "android_client_info": {
+          "package_name": "br.com.bjbraz.my_rootstock_wallet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "616349335993-lvef3jggp4mrihg5rffvp42l8ha142ja.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.bjbraz.my_rootstock_wallet",
+            "certificate_hash": "1e32e6e769fe54cde3b560d10fc2a81fa196f893"
+          }
+        },
+        {
+          "client_id": "616349335993-9k2d7g2rut4fmt4c3t3vhvib3j7i91gv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqwUO06kklHtE7UE_ifC5TmoVeTPawiY4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "616349335993-9k2d7g2rut4fmt4c3t3vhvib3j7i91gv.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "616349335993-8mk3bcnke5od2ohk813ek154o4us0kh7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "br.com.bjbraz.bankApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

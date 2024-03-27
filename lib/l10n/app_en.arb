@@ -1,0 +1,15 @@
+{
+    "title": "Bank App Login",
+    "@title": {
+      "description": "The conventional newborn programmer greeting"
+    },
+  "emailField": "Type your e-mail",
+  "passwordField": "Type your password",
+  "login": "Login",
+  "createAccount": "Create account",
+  "siginWithGoogle": "Sign in with google",
+  "siginWithFb": "Sign in with facebook",
+  "or": "Or",
+  "premios":"Ganhe prêmios para cada indicação que abrir uma conta"
+
+}
