@@ -1,5 +1,23 @@
 {
     "title": "Bank App Login",
-    "premios":"Ganhe prêmios para cada indicação que abrir uma conta"
-
+    "@title": {
+      "description": "The conventional newborn programmer greeting"
+    },
+  "emailField": "Type your e-mail",
+  "passwordField": "Type your password",
+  "login": "Login",
+  "createAccount": "Create account",
+  "siginWithGoogle": "Sign in with google",
+  "siginWithFb": "Sign in with facebook",
+  "or": "Or",
+  "premios":"Earn rewards for every referral that opens an account",
+  "refer":"Refer friends",
+  "recarga":"Recharge cell",
+  "cobrar":"Cash in",
+  "depositar":"Deposit",
+  "emprestimos":"Lend",
+  "transferir":"Transfer",
+  "limits":"Limits",
+  "pagar":"Pay",
+  "bloquear":"Block"
 }

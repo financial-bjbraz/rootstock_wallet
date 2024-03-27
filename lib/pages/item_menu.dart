@@ -20,7 +20,7 @@ class ItemMenu extends StatelessWidget {
 
     return Container(
       height: 40,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         border: Border(
           bottom: BorderSide(
             width: 0.7,
@@ -47,16 +47,16 @@ class ItemMenu extends StatelessWidget {
             Row(
               children: <Widget>[
                 Icon(icone),
-                SizedBox(
+                const SizedBox(
                   width: 10,
                 ),
                 Text(
                   text,
-                  style: TextStyle(fontSize: 12),
+                  style: const TextStyle(fontSize: 12),
                 ),
               ],
             ),
-            Icon(
+            const Icon(
               Icons.chevron_right,
               size: 16,
             ),

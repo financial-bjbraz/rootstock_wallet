@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:my_rootstock_wallet/pages/transactions.dart';
 import 'package:my_rootstock_wallet/entities/simple_user.dart';
 import 'package:my_rootstock_wallet/pages/home_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:my_rootstock_wallet/services/auth.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -10,7 +13,7 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Scaffold(
-        backgroundColor: const Color.fromRGBO(41, 49, 69, 20),
+        backgroundColor: const Color.fromRGBO(0, 0, 0, 0),
         body: Body(),
       ),
     );
@@ -18,6 +21,7 @@ class LoginPage extends StatelessWidget {
 }
 
 class Body extends StatefulWidget {
+  @override
   _BodyState createState() => _BodyState();
 }
 
@@ -26,17 +30,20 @@ class _BodyState extends State<Body> {
   String MESSAGE_INVALID_PASSWORD =
       "Invalid Password. Password must not be least than 8 chars";
 
-  TextEditingController passwordController = new TextEditingController();
-  TextEditingController mailController = new TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController mailController = TextEditingController();
   late bool _buttonPressed = false;
   late String _email, _password;
 
+  late User user;
+  final auth = FirebaseAuth.instance;
+
   Widget loginButton() {
-    FocusNode textSecondFocusNode = new FocusNode();
+    FocusNode textSecondFocusNode = FocusNode();
 
     final ButtonStyle raisedButtonStyle = ElevatedButton.styleFrom(
-      minimumSize: Size(88, 36),
-      padding: EdgeInsets.symmetric(horizontal: 16),
+      minimumSize: const Size(88, 36),
+      padding: const EdgeInsets.symmetric(horizontal: 16),
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(2)),
       ),
@@ -50,7 +57,7 @@ class _BodyState extends State<Body> {
             flex: 1,
             child: Container(
               padding: const EdgeInsets.all(8.0),
-              child: Text(
+              child: const Text(
                 "", //AppLocalizations.of(context).title,
                 style: TextStyle(
                     color: Colors.white,
@@ -62,23 +69,23 @@ class _BodyState extends State<Body> {
           Expanded(
             flex: 3,
             child: Container(
-              color: Color.fromRGBO(41, 49, 69, 20),
+              color: const Color.fromRGBO(0, 0, 0, 0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   Column(children: [
                     Padding(
-                      padding: EdgeInsets.all(10),
+                      padding: const EdgeInsets.all(10),
                       child: TextField(
                         controller: this.mailController,
                         decoration: InputDecoration(
-                            prefixIcon: Icon(Icons.person),
+                            prefixIcon: const Icon(Icons.person),
                             labelText: "Type Your E-mail:",
-                            border: OutlineInputBorder(
+                            border: const OutlineInputBorder(
                                 borderSide:
                                 BorderSide(width: 5, color: Colors.white)),
                             suffixIcon: IconButton(
-                              icon: Icon(Icons.done),
+                              icon: const Icon(Icons.done),
                               splashColor: Colors.white,
                               tooltip: "Submit",
                               onPressed: () {
@@ -89,20 +96,20 @@ class _BodyState extends State<Body> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.all(10),
+                      padding: const EdgeInsets.all(10),
                       child: TextField(
                         focusNode: textSecondFocusNode,
                         obscureText: true,
-                        controller: this.passwordController,
+                        controller: passwordController,
                         decoration: InputDecoration(
-                            prefixIcon: Icon(Icons.person),
+                            prefixIcon: const Icon(Icons.person),
                             labelText: "Type Your Password:",
-                            border: OutlineInputBorder(
+                            border: const OutlineInputBorder(
                               borderSide:
                               BorderSide(width: 5, color: Colors.white),
                             ),
                             suffixIcon: IconButton(
-                              icon: Icon(Icons.done),
+                              icon: const Icon(Icons.done),
                               splashColor: Colors.white,
                               tooltip: "Submit",
                               onPressed: () {},
@@ -186,7 +193,7 @@ class _BodyState extends State<Body> {
                   ),
                   SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                   OutlinedButton(
-                    onPressed: this.clickLoginGoogle,
+                    onPressed: clickLoginGoogle,
                     style: raisedButtonStyle,
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
@@ -205,7 +212,7 @@ class _BodyState extends State<Body> {
                             child: Text(
                               "Sign in with google",
                               style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 25),
+                                  fontWeight: FontWeight.bold, fontSize: 25, color: Colors.white),
                             ),
                           ),
                         ],
@@ -214,7 +221,7 @@ class _BodyState extends State<Body> {
                   ),
                   SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                   OutlinedButton(
-                    onPressed: this.clickLoginFacebook,
+                    onPressed: clickLoginFacebook,
                     style: raisedButtonStyle,
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
@@ -233,7 +240,7 @@ class _BodyState extends State<Body> {
                             child: Text(
                               "Sign in with facebook",
                               style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 25),
+                                  fontWeight: FontWeight.bold, fontSize: 25, color: Colors.white),
                             ),
                           ),
                         ],
@@ -250,13 +257,17 @@ class _BodyState extends State<Body> {
   }
 
   void clickLoginGoogle() {
-        MaterialPageRoute(
-          builder: (context) => HomePage(
-            user: SimpleUser(
-                name: mailController.text,
-                email: mailController.text),
-          ),
-        );
+    siginInWithGoogle().then((value) => {
+      this.user = value!,
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => HomePage(
+              user: SimpleUser.n(user),
+            ),
+          ))
+    });
+
   }
 
   void clickLoginFacebook() {

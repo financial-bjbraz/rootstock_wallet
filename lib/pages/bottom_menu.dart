@@ -1,6 +1,8 @@
 import 'package:my_rootstock_wallet/pages/item_menu_botton.dart';
 import 'package:my_rootstock_wallet/pages/details/account_statements_detail.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class BottomMenu extends StatefulWidget {
   final bool showMenu;
@@ -55,47 +57,47 @@ class _BottomMenuState extends State<BottomMenu> {
                     children: <Widget>[
                       ItemMenuBottom(
                         icon: Icons.person_add,
-                        text: "indicar amigos",
+                        text: AppLocalizations.of(context)!.refer,
                         widget: AccountStatementsDetail(),
                       ),
                       ItemMenuBottom(
                         icon: Icons.phone_android,
-                        text: "Recarga de celular",
+                        text: AppLocalizations.of(context)!.recarga,
                         widget: AccountStatementsDetail(),
                       ),
                       ItemMenuBottom(
                         icon: Icons.chat,
-                        text: "Cobrar",
+                        text: AppLocalizations.of(context)!.cobrar,
                         widget: AccountStatementsDetail(),
                       ),
                       ItemMenuBottom(
                         icon: Icons.monetization_on,
-                        text: "Empréstimos",
+                        text: AppLocalizations.of(context)!.emprestimos,
                         widget: AccountStatementsDetail(),
                       ),
                       ItemMenuBottom(
                         icon: Icons.move_to_inbox,
-                        text: "Depositar",
+                        text: AppLocalizations.of(context)!.depositar,
                         widget: AccountStatementsDetail(),
                       ),
                       ItemMenuBottom(
                         icon: Icons.mobile_screen_share,
-                        text: "Transferir",
+                        text: AppLocalizations.of(context)!.transferir,
                         widget: AccountStatementsDetail(),
                       ),
                       ItemMenuBottom(
                         icon: Icons.format_align_center,
-                        text: "Ajustar limite",
+                        text: AppLocalizations.of(context)!.limits,
                         widget: AccountStatementsDetail(),
                       ),
                       ItemMenuBottom(
                         icon: Icons.chrome_reader_mode,
-                        text: "Pagar",
+                        text: AppLocalizations.of(context)!.pagar,
                         widget: AccountStatementsDetail(),
                       ),
                       ItemMenuBottom(
                         icon: Icons.lock_open,
-                        text: "Bloquear",
+                        text: AppLocalizations.of(context)!.bloquear,
                         widget: AccountStatementsDetail(),
                       ),
                     ],

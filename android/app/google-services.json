@@ -32,10 +32,10 @@
               "client_type": 3
             },
             {
-              "client_id": "616349335993-8mk3bcnke5od2ohk813ek154o4us0kh7.apps.googleusercontent.com",
+              "client_id": "616349335993-6umoqvthf33b0p0s6gihnb8gfm9d8aco.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "br.com.bjbraz.bankApp"
+                "bundle_id": "br.com.bjbraz.myRootstockWallet.RunnerTests"
               }
             }
           ]
@@ -76,10 +76,10 @@
               "client_type": 3
             },
             {
-              "client_id": "616349335993-8mk3bcnke5od2ohk813ek154o4us0kh7.apps.googleusercontent.com",
+              "client_id": "616349335993-6umoqvthf33b0p0s6gihnb8gfm9d8aco.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "br.com.bjbraz.bankApp"
+                "bundle_id": "br.com.bjbraz.myRootstockWallet.RunnerTests"
               }
             }
           ]

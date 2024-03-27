@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>616349335993-6umoqvthf33b0p0s6gihnb8gfm9d8aco.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.616349335993-6umoqvthf33b0p0s6gihnb8gfm9d8aco</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>616349335993-4t1rm70s7g3pgfpfhrhqfoatks7ahp58.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBx1d5-6MuSzfPQ0aI536worjLZ7AHAgpE</string>
+	<key>GCM_SENDER_ID</key>
+	<string>616349335993</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>br.com.bjbraz.myRootstockWallet.RunnerTests</string>
+	<key>PROJECT_ID</key>
+	<string>starpoints-d9368</string>
+	<key>STORAGE_BUCKET</key>
+	<string>starpoints-d9368.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:616349335993:ios:443ad068d04b3b8964b668</string>
+	<key>DATABASE_URL</key>
+	<string>https://starpoints-d9368.firebaseio.com</string>
+</dict>
+</plist>

@@ -32,7 +32,7 @@ class _SplashPageState extends State<Splash> {
   Widget build(BuildContext context) {
     return Container(
       child: Scaffold(
-          backgroundColor: Color.fromRGBO(41, 49, 69, 20),
+          backgroundColor: const Color.fromRGBO(0, 0, 0, 0),
           body: Center(
             child: Image.asset(
               "assets/images/bjbraz-logo.png",

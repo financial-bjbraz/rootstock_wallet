@@ -22,6 +22,11 @@ class ItemMenuBottom extends StatelessWidget {
             vertical: 12,
           ),
           child: Container(
+            width: MediaQuery.of(context).size.width * 0.22,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5),
+              color: Colors.white,
+            ),
             child: Padding(
               padding: const EdgeInsets.all(7.0),
               child: Column(
@@ -31,17 +36,12 @@ class ItemMenuBottom extends StatelessWidget {
                   Icon(icon),
                   Text(
                     text,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 10,
                     ),
                   ),
                 ],
               ),
-            ),
-            width: MediaQuery.of(context).size.width * 0.22,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(5),
-              color: Colors.white24,
             ),
           ),
         ),
@@ -51,7 +51,7 @@ class ItemMenuBottom extends StatelessWidget {
           pageBuilder: (context, animation, secondaryAnimation) =>
               DetailList(child: this.widget),
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            var begin = Offset(0.0, 1.0);
+            var begin = const Offset(0.0, 1.0);
             var end = Offset.zero;
             var curve = Curves.ease;
 
