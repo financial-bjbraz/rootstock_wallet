@@ -10,8 +10,8 @@ class AccountStatementsDetail extends StatelessWidget {
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          title: Padding(
-            padding: const EdgeInsets.all(20),
+          title: const Padding(
+            padding: EdgeInsets.all(20),
             child: Row(
               children: <Widget>[
                 Icon(Icons.attach_money, color: Colors.grey),
@@ -46,7 +46,7 @@ class AccountStatementsDetail extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Row(
+                            const Row(
                               children: <Widget>[
                                 Icon(Icons.attach_money, color: Colors.grey),
                                 SizedBox(
@@ -82,7 +82,7 @@ class AccountStatementsDetail extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                              Text(
+                              const Text(
                                 "Saldo disponível",
                                 textAlign: TextAlign.start,
                                 style: TextStyle(
@@ -96,7 +96,7 @@ class AccountStatementsDetail extends StatelessWidget {
                                   text: currentBalance,
                                 ),
                                 textAlign: TextAlign.start,
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: Colors.black,
                                   fontSize: 28,
                                 ),
@@ -118,6 +118,7 @@ class AccountStatementsDetail extends StatelessWidget {
               Expanded(
                 flex: 3,
                 child: Container(
+                  color: Colors.grey[200],
                   child: Padding(
                     padding: const EdgeInsets.all(20),
                     child: ListView(
@@ -126,11 +127,11 @@ class AccountStatementsDetail extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            Icon(Icons.credit_card, color: Colors.grey),
-                            SizedBox(
+                            const Icon(Icons.credit_card, color: Colors.grey),
+                            const SizedBox(
                               width: 10,
                             ),
-                            Flexible(
+                            const Flexible(
                               child: Text(
                                 "1 - account_statements_detail.dart de R\$ 150,99",
                                 style: TextStyle(
@@ -146,17 +147,17 @@ class AccountStatementsDetail extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            Icon(Icons.credit_card, color: Colors.grey),
-                            SizedBox(
+                            const Icon(Icons.credit_card, color: Colors.grey),
+                            const SizedBox(
                               width: 10,
                             ),
-                            Flexible(
+                            const Flexible(
                               child: Text(
                                 "2 - Compra mais recente em Super Mercado no valor de R\$ 150,99",
                                 style: TextStyle(
@@ -172,17 +173,17 @@ class AccountStatementsDetail extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
                             Icon(Icons.credit_card, color: Colors.grey),
-                            SizedBox(
+                            const SizedBox(
                               width: 10,
                             ),
-                            Flexible(
+                            const Flexible(
                               child: Text(
                                 "3 - Compra mais recente em Super Mercado no valor de R\$ 150,99",
                                 style: TextStyle(
@@ -198,17 +199,17 @@ class AccountStatementsDetail extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
                             Icon(Icons.credit_card, color: Colors.grey),
-                            SizedBox(
+                            const SizedBox(
                               width: 10,
                             ),
-                            Flexible(
+                            const Flexible(
                               child: Text(
                                 "4 - Compra mais recente em Super Mercado no valor de R\$ 150,99",
                                 style: TextStyle(
@@ -224,17 +225,17 @@ class AccountStatementsDetail extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
                             Icon(Icons.credit_card, color: Colors.grey),
-                            SizedBox(
+                            const SizedBox(
                               width: 10,
                             ),
-                            Flexible(
+                            const Flexible(
                               child: Text(
                                 "5 - Compra mais recente em Super Mercado no valor de R\$ 150,99",
                                 style: TextStyle(
@@ -250,13 +251,12 @@ class AccountStatementsDetail extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                       ],
                     ),
                   ),
-                  color: Colors.grey[200],
                 ),
               ),
             ],

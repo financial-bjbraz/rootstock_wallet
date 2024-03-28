@@ -5,6 +5,14 @@ PODS:
   - AppAuth/Core (1.7.3)
   - AppAuth/ExternalUserAgent (1.7.3):
     - AppAuth/Core
+  - FBAEMKit (16.2.1):
+    - FBSDKCoreKit_Basics (= 16.2.1)
+  - FBSDKCoreKit (16.2.1):
+    - FBAEMKit (= 16.2.1)
+    - FBSDKCoreKit_Basics (= 16.2.1)
+  - FBSDKCoreKit_Basics (16.2.1)
+  - FBSDKLoginKit (16.2.1):
+    - FBSDKCoreKit (= 16.2.1)
   - Firebase/Auth (10.22.0):
     - Firebase/CoreOnly
     - FirebaseAuth (~> 10.22.0)
@@ -13,27 +21,33 @@ PODS:
   - Firebase/Database (10.22.0):
     - Firebase/CoreOnly
     - FirebaseDatabase (~> 10.22.0)
+  - Firebase/InAppMessaging (10.22.0):
+    - Firebase/CoreOnly
+    - FirebaseInAppMessaging (~> 10.22.0-beta)
   - Firebase/Messaging (10.22.0):
     - Firebase/CoreOnly
     - FirebaseMessaging (~> 10.22.0)
   - firebase_auth (4.17.9):
-    - Firebase/Auth (~> 10.22.0)
-    - Firebase/CoreOnly (~> 10.22.0)
+    - Firebase/Auth (= 10.22.0)
     - firebase_core
-    - FlutterMacOS
+    - Flutter
   - firebase_core (2.27.2):
-    - Firebase/CoreOnly (~> 10.22.0)
-    - FlutterMacOS
+    - Firebase/CoreOnly (= 10.22.0)
+    - Flutter
   - firebase_database (10.4.10):
-    - Firebase/CoreOnly (~> 10.22.0)
-    - Firebase/Database (~> 10.22.0)
+    - Firebase/Database (= 10.22.0)
     - firebase_core
-    - FlutterMacOS
+    - Flutter
+  - firebase_in_app_messaging (0.7.4-18):
+    - Firebase/InAppMessaging (= 10.22.0)
+    - firebase_core
+    - Flutter
   - firebase_messaging (14.7.20):
-    - Firebase/CoreOnly (~> 10.22.0)
-    - Firebase/Messaging (~> 10.22.0)
+    - Firebase/Messaging (= 10.22.0)
     - firebase_core
-    - FlutterMacOS
+    - Flutter
+  - FirebaseABTesting (10.23.0):
+    - FirebaseCore (~> 10.0)
   - FirebaseAppCheckInterop (10.23.0)
   - FirebaseAuth (10.22.0):
     - FirebaseAppCheckInterop (~> 10.17)
@@ -53,6 +67,12 @@ PODS:
     - FirebaseCore (~> 10.0)
     - FirebaseSharedSwift (~> 10.0)
     - leveldb-library (~> 1.22)
+  - FirebaseInAppMessaging (10.22.0-beta):
+    - FirebaseABTesting (~> 10.0)
+    - FirebaseCore (~> 10.0)
+    - FirebaseInstallations (~> 10.0)
+    - GoogleUtilities/Environment (~> 7.8)
+    - nanopb (< 2.30911.0, >= 2.30908.0)
   - FirebaseInstallations (10.23.0):
     - FirebaseCore (~> 10.0)
     - GoogleUtilities/Environment (~> 7.8)
@@ -68,7 +88,10 @@ PODS:
     - GoogleUtilities/UserDefaults (~> 7.8)
     - nanopb (< 2.30911.0, >= 2.30908.0)
   - FirebaseSharedSwift (10.23.0)
-  - FlutterMacOS (1.0.0)
+  - Flutter (1.0.0)
+  - flutter_login_facebook (1.9.0):
+    - FBSDKLoginKit (= 16.2.1)
+    - Flutter
   - google_sign_in_ios (0.0.1):
     - Flutter
     - FlutterMacOS
@@ -117,24 +140,33 @@ PODS:
   - nanopb/decode (2.30910.0)
   - nanopb/encode (2.30910.0)
   - PromisesObjC (2.4.0)
+  - RecaptchaInterop (100.0.0)
 
 DEPENDENCIES:
-  - firebase_auth (from `Flutter/ephemeral/.symlinks/plugins/firebase_auth/macos`)
-  - firebase_core (from `Flutter/ephemeral/.symlinks/plugins/firebase_core/macos`)
-  - firebase_database (from `Flutter/ephemeral/.symlinks/plugins/firebase_database/macos`)
-  - firebase_messaging (from `Flutter/ephemeral/.symlinks/plugins/firebase_messaging/macos`)
-  - FlutterMacOS (from `Flutter/ephemeral`)
-  - google_sign_in_ios (from `Flutter/ephemeral/.symlinks/plugins/google_sign_in_ios/darwin`)
+  - firebase_auth (from `.symlinks/plugins/firebase_auth/ios`)
+  - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
+  - firebase_database (from `.symlinks/plugins/firebase_database/ios`)
+  - firebase_in_app_messaging (from `.symlinks/plugins/firebase_in_app_messaging/ios`)
+  - firebase_messaging (from `.symlinks/plugins/firebase_messaging/ios`)
+  - Flutter (from `Flutter`)
+  - flutter_login_facebook (from `.symlinks/plugins/flutter_login_facebook/ios`)
+  - google_sign_in_ios (from `.symlinks/plugins/google_sign_in_ios/darwin`)
 
 SPEC REPOS:
   trunk:
     - AppAuth
+    - FBAEMKit
+    - FBSDKCoreKit
+    - FBSDKCoreKit_Basics
+    - FBSDKLoginKit
     - Firebase
+    - FirebaseABTesting
     - FirebaseAppCheckInterop
     - FirebaseAuth
     - FirebaseCore
     - FirebaseCoreInternal
     - FirebaseDatabase
+    - FirebaseInAppMessaging
     - FirebaseInstallations
     - FirebaseMessaging
     - FirebaseSharedSwift
@@ -146,37 +178,50 @@ SPEC REPOS:
     - leveldb-library
     - nanopb
     - PromisesObjC
+    - RecaptchaInterop
 
 EXTERNAL SOURCES:
   firebase_auth:
-    :path: Flutter/ephemeral/.symlinks/plugins/firebase_auth/macos
+    :path: ".symlinks/plugins/firebase_auth/ios"
   firebase_core:
-    :path: Flutter/ephemeral/.symlinks/plugins/firebase_core/macos
+    :path: ".symlinks/plugins/firebase_core/ios"
   firebase_database:
-    :path: Flutter/ephemeral/.symlinks/plugins/firebase_database/macos
+    :path: ".symlinks/plugins/firebase_database/ios"
+  firebase_in_app_messaging:
+    :path: ".symlinks/plugins/firebase_in_app_messaging/ios"
   firebase_messaging:
-    :path: Flutter/ephemeral/.symlinks/plugins/firebase_messaging/macos
-  FlutterMacOS:
-    :path: Flutter/ephemeral
+    :path: ".symlinks/plugins/firebase_messaging/ios"
+  Flutter:
+    :path: Flutter
+  flutter_login_facebook:
+    :path: ".symlinks/plugins/flutter_login_facebook/ios"
   google_sign_in_ios:
-    :path: Flutter/ephemeral/.symlinks/plugins/google_sign_in_ios/darwin
+    :path: ".symlinks/plugins/google_sign_in_ios/darwin"
 
 SPEC CHECKSUMS:
   AppAuth: a13994980c1ec792f7e2e665acd4d4aa6be43240
+  FBAEMKit: 4763aa27b8f69eb9d2c274189e91388de1dbd88a
+  FBSDKCoreKit: 40ae989ca1da1bbeba56acd4671dde64ad415506
+  FBSDKCoreKit_Basics: 1257d71d2d692661290bf2af4bea5f9a101387af
+  FBSDKLoginKit: bf4f96d0ce475de2da4b1800ce150bd8a6f120f3
   Firebase: 797fd7297b7e1be954432743a0b3f90038e45a71
-  firebase_auth: c3804eee5fa773900d3ea874bc14bbe64594e89a
-  firebase_core: d9e90d63b05ac05d24b80429b64ce156041a31df
-  firebase_database: 0751e2e5442724b004f958d7613764173a977af5
-  firebase_messaging: 1eb7e13c7d7745f764e64ebc7ae059f385e9b28e
+  firebase_auth: 610184b4f624545f81e0416bca60642b6818f27f
+  firebase_core: cc49b6648d6dd7570d9273a616cb1205260db91e
+  firebase_database: a35e59e02a5de034b719c5da7037876c7c46bbdc
+  firebase_in_app_messaging: fc3c0bcbfc195b51cbc550e97953416428fa4f11
+  firebase_messaging: f97062a3a7644703ba4892859183c0a59e08d25f
+  FirebaseABTesting: aec61ed9a34d85a95e2013a3fdf051426a2419df
   FirebaseAppCheckInterop: a1955ce8c30f38f87e7d091630e871e91154d65d
   FirebaseAuth: bbe4c68f958504ba9e54aee181adbdf5b664fbc6
   FirebaseCore: 0326ec9b05fbed8f8716cddbf0e36894a13837f7
   FirebaseCoreInternal: 6a292e6f0bece1243a737e81556e56e5e19282e3
   FirebaseDatabase: fee604b3bee8800a1bdc834757d13813cfde1c90
+  FirebaseInAppMessaging: bff8ac490bba54c298b48847e14bd56313d2da1b
   FirebaseInstallations: 42d6ead4605d6eafb3b6683674e80e18eb6f2c35
   FirebaseMessaging: 9f71037fd9db3376a4caa54e5a3949d1027b4b6e
   FirebaseSharedSwift: c92645b392db3c41a83a0aa967de16f8bad25568
-  FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24
+  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+  flutter_login_facebook: 1e096602eae99ee2be7ab4b3ea4cfcf667eab2f0
   google_sign_in_ios: 989eea5abe94af62050782714daf920be883d4a2
   GoogleDataTransport: 6c09b596d841063d76d4288cc2d2f42cc36e1e2a
   GoogleSignIn: d4281ab6cf21542b1cfaff85c191f230b399d2db
@@ -186,7 +231,8 @@ SPEC CHECKSUMS:
   leveldb-library: 06a69cc7582d64b29424a63e085e683cc188230a
   nanopb: 438bc412db1928dac798aa6fd75726007be04262
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
+  RecaptchaInterop: 7d1a4a01a6b2cb1610a47ef3f85f0c411434cb21
 
-PODFILE CHECKSUM: 73d0feaa9ca8c9b13bc5b5e21fbe09c71472f86f
+PODFILE CHECKSUM: 819463e6a0290f5a72f145ba7cde16e8b6ef0796
 
 COCOAPODS: 1.15.2
