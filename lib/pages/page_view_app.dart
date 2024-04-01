@@ -2,6 +2,7 @@ import 'package:my_rootstock_wallet/entities/simple_user.dart';
 import 'package:my_rootstock_wallet/cards/account_info.dart';
 import 'package:my_rootstock_wallet/cards/credit_card.dart';
 import 'package:my_rootstock_wallet/cards/rewards.dart';
+import 'package:my_rootstock_wallet/entities/wallet.dart';
 import 'package:my_rootstock_wallet/pages/details/account_statements_detail.dart';
 import 'package:my_rootstock_wallet/pages/details/card_statements_detail.dart';
 import 'package:flutter/material.dart';
@@ -39,11 +40,11 @@ class _PageViewAppState extends State<PageViewApp> {
     super.initState();
     _tween = Tween<double>(begin: 150.0, end: 0.0);
 
-    ///delayAnimation();
+    //delayAnimation();
   }
 
   Future<void> delayAnimation() async {
-    Future.delayed(Duration(milliseconds: 0), () {
+    Future.delayed(const Duration(milliseconds: 0), () {
       setState(() {
         _tween = Tween<double>(begin: 150.0, end: 0.0);
       });
@@ -54,11 +55,11 @@ class _PageViewAppState extends State<PageViewApp> {
   Widget build(BuildContext context) {
     return TweenAnimationBuilder<double>(
         tween: _tween,
-        duration: Duration(milliseconds: 300),
+        duration: const Duration(milliseconds: 300),
         curve: Curves.easeOutExpo,
         builder: (context, value, child) {
           return AnimatedPositioned(
-            duration: Duration(microseconds: 250),
+            duration: const Duration(microseconds: 250),
             curve: Curves.easeOut,
             left: value,
             right: value * -1,
@@ -70,18 +71,18 @@ class _PageViewAppState extends State<PageViewApp> {
               child: PageView(
                 onPageChanged: widget.onChanged,
                 physics: widget.showMenu
-                    ? NeverScrollableScrollPhysics()
-                    : BouncingScrollPhysics(),
+                    ? const NeverScrollableScrollPhysics()
+                    : const BouncingScrollPhysics(),
                 children: <Widget>[
                   CardApp(
-                    child: CreditCard(),
                     detailChild: CardStatementsDetail(),
+                    child: CreditCard(wallet: Wallet.n()),
                   ),
                   CardApp(
-                    child: AccountInfo(),
                     detailChild: AccountStatementsDetail(),
+                    child: const AccountInfo(),
                   ),
-                  CardApp(
+                  const CardApp(
                     detailChild: AccountInfo(),
                     child: Rewards(),
                   ),

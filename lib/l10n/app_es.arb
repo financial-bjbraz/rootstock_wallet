@@ -1,5 +1,5 @@
 {
-    "title": "Bank App Login",
+    "title": "Cassava Wallet",
     "@title": {
       "description": "The conventional newborn programmer greeting"
     },
@@ -19,5 +19,13 @@
   "transferir":"Transfer",
   "limits":"Limits",
   "pagar":"Pay",
-  "bloquear":"Block"
+  "bloquear":"Block",
+  "glogin":"Login with Google",
+  "alogin":"Anonimous Login",
+  "anonimus":"Anonimous",
+  "wallet": "Wallet #",
+  "saldo": "BALANCE",
+  "saldoUltimoMes": "Last Month Balance",
+  "ultimaTransacao": "Click here to see last transactions details",
+  "coin": "Last Transaction"
 }

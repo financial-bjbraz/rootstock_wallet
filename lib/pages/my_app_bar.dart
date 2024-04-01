@@ -22,7 +22,7 @@ class MyAppBar extends StatelessWidget {
         GestureDetector(
           onTap: onTap,
           child: Container(
-            color: Color(0x293145),
+            color: Colors.black,
             height: MediaQuery.of(context).size.height * .20,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -32,14 +32,15 @@ class MyAppBar extends StatelessWidget {
                   children: <Widget>[
                     Image.asset('assets/images/bjbraz-logo.png',
                         height: 30, color: Colors.white),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     Text(
-                      this.userName,
-                      style: TextStyle(
+                      userName,
+                      style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
+                        color: Colors.white,
                       ),
                     ),
                   ],

@@ -3,7 +3,7 @@ import 'package:my_rootstock_wallet/pages/transactions.dart';
 import 'package:my_rootstock_wallet/entities/simple_user.dart';
 import 'package:my_rootstock_wallet/pages/home_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:my_rootstock_wallet/services/auth.dart';
 
 class LoginPage extends StatelessWidget {
@@ -26,6 +26,7 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
+
   String MESSAGE_INVALID_EMAIL = "Invalid email";
   String MESSAGE_INVALID_PASSWORD =
       "Invalid Password. Password must not be least than 8 chars";
@@ -39,6 +40,12 @@ class _BodyState extends State<Body> {
   final auth = FirebaseAuth.instance;
 
   Widget loginButton() {
+    final String loginGoogleText = AppLocalizations.of(context)!.glogin;
+    final String loginAnonimousText = AppLocalizations.of(context)!.alogin;
+    final String login = AppLocalizations.of(context)!.login;
+    final String createAccount = AppLocalizations.of(context)!.createAccount;
+    final String title = AppLocalizations.of(context)!.title;
+
     FocusNode textSecondFocusNode = FocusNode();
 
     final ButtonStyle raisedButtonStyle = ElevatedButton.styleFrom(
@@ -56,10 +63,10 @@ class _BodyState extends State<Body> {
           Expanded(
             flex: 1,
             child: Container(
-              padding: const EdgeInsets.all(8.0),
-              child: const Text(
-                "", //AppLocalizations.of(context).title,
-                style: TextStyle(
+              padding: const EdgeInsets.all(33.0),
+              child: Text(
+                title,
+                style: const TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
                     fontSize: 18),
@@ -80,7 +87,7 @@ class _BodyState extends State<Body> {
                         controller: this.mailController,
                         decoration: InputDecoration(
                             prefixIcon: const Icon(Icons.person),
-                            labelText: "Type Your E-mail:",
+                            labelText: AppLocalizations.of(context)!.emailField,
                             border: const OutlineInputBorder(
                                 borderSide:
                                 BorderSide(width: 5, color: Colors.white)),
@@ -103,7 +110,7 @@ class _BodyState extends State<Body> {
                         controller: passwordController,
                         decoration: InputDecoration(
                             prefixIcon: const Icon(Icons.person),
-                            labelText: "Type Your Password:",
+                            labelText: AppLocalizations.of(context)!.passwordField,
                             border: const OutlineInputBorder(
                               borderSide:
                               BorderSide(width: 5, color: Colors.white),
@@ -132,21 +139,21 @@ class _BodyState extends State<Body> {
                             }
                           },
                           style: raisedButtonStyle,
-                          child: const Row(
+                          child: Row(
                             children: <Widget>[
                               Row(
                                 children: <Widget>[
-                                  Icon(Icons.create),
-                                  SizedBox(
+                                  const Icon(Icons.create),
+                                  const SizedBox(
                                     width: 10,
                                   ),
                                   Text(
-                                    "Login",
-                                    style: TextStyle(fontSize: 20),
+                                    login,
+                                    style: const TextStyle(fontSize: 20),
                                   ),
                                 ],
                               ),
-                              Icon(
+                              const Icon(
                                 Icons.chevron_right,
                                 size: 20,
                               ),
@@ -160,21 +167,21 @@ class _BodyState extends State<Body> {
                             }
                           },
                           style: raisedButtonStyle,
-                          child: const Row(
+                          child: Row(
                             children: <Widget>[
                               Row(
                                 children: <Widget>[
-                                  Icon(Icons.login_rounded),
-                                  SizedBox(
+                                  const Icon(Icons.login_rounded),
+                                  const SizedBox(
                                     width: 10,
                                   ),
                                   Text(
-                                    "Create account",
-                                    style: TextStyle(fontSize: 20),
+                                    createAccount,
+                                    style: const TextStyle(fontSize: 20),
                                   ),
                                 ],
                               ),
-                              Icon(
+                              const Icon(
                                 Icons.chevron_right,
                                 size: 20,
                               ),
@@ -188,6 +195,7 @@ class _BodyState extends State<Body> {
                   const Text.rich(
                     TextSpan(
                       text: "Or ",
+                      style: TextStyle(color: Colors.white),
                     ),
                     style: TextStyle(fontSize: 12),
                   ),
@@ -207,12 +215,13 @@ class _BodyState extends State<Body> {
                             height: 30,
                             width: 90,
                           ),
-                          const Padding(
-                            padding: EdgeInsets.only(left: 10),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 10),
                             child: Text(
-                              "Sign in with google",
-                              style: TextStyle(
+                              loginGoogleText,
+                              style: const TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 25, color: Colors.white),
+
                             ),
                           ),
                         ],
@@ -221,7 +230,7 @@ class _BodyState extends State<Body> {
                   ),
                   SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                   OutlinedButton(
-                    onPressed: clickLoginFacebook,
+                    onPressed: clickLoginAnonimous,
                     style: raisedButtonStyle,
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
@@ -230,16 +239,16 @@ class _BodyState extends State<Body> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Image.asset(
-                            "assets/images/fb_logo5.png",
+                            "assets/images/anonimous.png",
                             color: Colors.white,
                             height: 30,
                             width: 70,
                           ),
-                          const Padding(
-                            padding: EdgeInsets.only(left: 10),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 10),
                             child: Text(
-                              "Sign in with facebook",
-                              style: TextStyle(
+                              loginAnonimousText,
+                              style: const TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 25, color: Colors.white),
                             ),
                           ),
@@ -270,14 +279,14 @@ class _BodyState extends State<Body> {
 
   }
 
-  void clickLoginFacebook() {
+  void clickLoginAnonimous() {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
           builder: (context) => HomePage(
             user: SimpleUser(
-                name: mailController.text,
-                email: mailController.text),
+                name: AppLocalizations.of(context)!.anonimus,
+                email: "${AppLocalizations.of(context)!.passwordField}@${AppLocalizations.of(context)!.passwordField}.com"),
           ),
         ),
       );
@@ -327,4 +336,5 @@ class _BodyState extends State<Body> {
 
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
+
 }
