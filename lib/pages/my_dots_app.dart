@@ -21,12 +21,12 @@ class MyDotsApp extends StatelessWidget {
     return Positioned(
       top: top,
       child: AnimatedOpacity(
-        duration: Duration(milliseconds: 200),
+        duration: const Duration(milliseconds: 200),
         opacity: showMenu ? 0 : 1,
         child: Row(
           children: <Widget>[
             AnimatedContainer(
-              duration: Duration(milliseconds: 300),
+              duration: const Duration(milliseconds: 300),
               height: 7,
               width: 7,
               decoration: BoxDecoration(
@@ -34,11 +34,11 @@ class MyDotsApp extends StatelessWidget {
                 shape: BoxShape.circle,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               width: 8,
             ),
             AnimatedContainer(
-              duration: Duration(milliseconds: 300),
+              duration: const Duration(milliseconds: 300),
               height: 7,
               width: 7,
               decoration: BoxDecoration(
@@ -46,15 +46,27 @@ class MyDotsApp extends StatelessWidget {
                 shape: BoxShape.circle,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               width: 8,
             ),
             AnimatedContainer(
-              duration: Duration(milliseconds: 300),
+              duration: const Duration(milliseconds: 300),
               height: 7,
               width: 7,
               decoration: BoxDecoration(
                 color: getColor(2),
+                shape: BoxShape.circle,
+              ),
+            ),
+            const SizedBox(
+              width: 8,
+            ),
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 300),
+              height: 7,
+              width: 7,
+              decoration: BoxDecoration(
+                color: getColor(3),
                 shape: BoxShape.circle,
               ),
             ),

@@ -56,6 +56,33 @@ class _BodyState extends State<Body> {
       ),
     );
 
+    final ButtonStyle orangeButton = ElevatedButton.styleFrom(
+      minimumSize: const Size(88, 36),
+      backgroundColor: Color.fromRGBO(255, 145, 0, 1),
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(2)),
+      ),
+    );
+
+    final ButtonStyle greenButtonStyle = ElevatedButton.styleFrom(
+      minimumSize: const Size(88, 36),
+      backgroundColor: Color.fromRGBO(121, 198, 0, 1),
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(2)),
+      ),
+    );
+
+    final ButtonStyle pingButton = ElevatedButton.styleFrom(
+      minimumSize: const Size(88, 36),
+      backgroundColor: Color.fromRGBO(121, 198, 0, 1),
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(2)),
+      ),
+    );
+
     return ClipRRect(
       borderRadius: BorderRadius.circular(5),
       child: Column(
@@ -202,7 +229,7 @@ class _BodyState extends State<Body> {
                   SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                   OutlinedButton(
                     onPressed: clickLoginGoogle,
-                    style: raisedButtonStyle,
+                    style: orangeButton,
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
                       child: Row(
@@ -231,7 +258,7 @@ class _BodyState extends State<Body> {
                   SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                   OutlinedButton(
                     onPressed: clickLoginAnonimous,
-                    style: raisedButtonStyle,
+                    style: greenButtonStyle,
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
                       child: Row(
@@ -305,20 +332,20 @@ class _BodyState extends State<Body> {
     var password = passwordController.text;
     var message = "";
 
-    if (email.isEmpty) {
-      showMessage(MESSAGE_INVALID_EMAIL);
-      return false;
-    }
-
-    if (password.isEmpty) {
-      showMessage(MESSAGE_INVALID_PASSWORD);
-      return false;
-    }
-
-    if (password.length < 8) {
-      showMessage(MESSAGE_INVALID_PASSWORD);
-      return false;
-    }
+    // if (email.isEmpty) {
+    //   showMessage(MESSAGE_INVALID_EMAIL);
+    //   return false;
+    // }
+    //
+    // if (password.isEmpty) {
+    //   showMessage(MESSAGE_INVALID_PASSWORD);
+    //   return false;
+    // }
+    //
+    // if (password.length < 8) {
+    //   showMessage(MESSAGE_INVALID_PASSWORD);
+    //   return false;
+    // }
 
     return true;
   }

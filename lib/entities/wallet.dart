@@ -17,6 +17,13 @@ class Wallet {
     retrieveFromDisk();
   }
 
+  String getAddress() {
+    var address = "0x02E221a95224F090E492066bc1B7A35B5fd94542";
+    address = "${address.substring(0, 8)}...${address.substring(
+        address.length - 8, address.length)}";
+    return address;
+  }
+
   Future<void> saveOnDisk() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(pKEY, privateKey!);

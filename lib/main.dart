@@ -1,9 +1,12 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:my_rootstock_wallet/pages/splash.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:my_rootstock_wallet/services/wallet_service.dart';
+import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 
 void main() {
@@ -16,7 +19,12 @@ void main() {
 
     ),
   );
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider<WalletServiceImpl> (
+      create: (context) => WalletServiceImpl(),
+      child: const MyApp()
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -34,9 +42,12 @@ class MyApp extends StatelessWidget {
 
       await FirebaseMessaging.instance.setAutoInitEnabled(true);
       final fcmToken = await FirebaseMessaging.instance.getToken();
-      print("=================================");
-      print(fcmToken);
-      print("=================================");
+      if (kDebugMode) {
+        print("=================================");
+        print(fcmToken);
+        print("=================================");
+      }
+
       return true;
     }
 
@@ -44,7 +55,7 @@ class MyApp extends StatelessWidget {
       if (snapshot.connectionState == ConnectionState.done) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          title: 'Rootstock Wallet',
+          title: 'Maniva Wallet',
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
           // theme: ThemeData(

@@ -1,32 +1,43 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
+import 'package:my_rootstock_wallet/entities/wallet.dart';
+import 'package:my_rootstock_wallet/services/wallet_service.dart';
+import 'package:provider/provider.dart';
 
-class CreateImportWallets extends StatelessWidget {
+class CreateWallet extends StatelessWidget {
+  const CreateWallet({super.key, required this.wallet});
 
-  const CreateImportWallets({super.key});
+  final Wallet wallet;
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
+
+    final walletService = Provider.of<WalletServiceImpl>(context);
+
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(5),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+            children:  [
+      Expanded(
+      child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(20),
+          const Padding(
+            padding: EdgeInsets.all(20),
             child: Row(
-              children: <Widget>[
-                Image.asset(
-                  "assets/images/sad_image.png",
-                  height: 30,
-                  width: 90,
+              children: [
+                Icon(
+                  Icons.add_circle,
+                  color: Color.fromRGBO(158, 118, 255, 1),
+                  size: 48,
                 ),
                 Text(
-                  "Nenhuma wallet criada ainda",
+                  "Criar uma \n nova wallet ",
                   textAlign: TextAlign.start,
-                  style: const TextStyle(
+                  style: TextStyle(
                       color: Colors.black,
-                      fontSize: 15,
+                      backgroundColor: Color.fromRGBO(158, 118, 255, 1),
+                      fontSize: 28,
                       fontWeight: FontWeight.bold),
                 ),
               ],
@@ -52,32 +63,7 @@ class CreateImportWallets extends StatelessWidget {
                         ),
                         Text.rich(
                           const TextSpan(
-                              text: "Criar nova wallet",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                              )),
-                          textAlign: TextAlign.start,
-                          style: TextStyle(
-                            color: Colors.grey[400],
-                            fontSize: 28,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        left: 20, top: 20, bottom: 20),
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.add_circle,
-                          color: Colors.grey[400],
-                          size: 48,
-                        ),
-                        Text.rich(
-                          const TextSpan(
-                              text: "Importar wallet",
+                              text: "Criar uma nova wallet",
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                               )),
@@ -98,9 +84,9 @@ class CreateImportWallets extends StatelessWidget {
               height: MediaQuery.of(context).size.height * 0.05),
         ],
       ),
+    ),
+            ],
+          ),
     );
   }
-
-
-
 }

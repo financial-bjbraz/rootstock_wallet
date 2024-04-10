@@ -17,7 +17,7 @@ class CardApp extends StatelessWidget {
         child: Container(
           child: child,
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(5), color: Colors.white),
+              borderRadius: BorderRadius.circular(20), color: Colors.black, border: Border.all(color: Colors.white)),
         ),
         onTap: () {
           if (detailChild != null) {

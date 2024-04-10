@@ -22,7 +22,7 @@ class MyAppBar extends StatelessWidget {
         GestureDetector(
           onTap: onTap,
           child: Container(
-            color: Colors.black,
+            color: const Color.fromRGBO(255, 145, 0, 1),
             height: MediaQuery.of(context).size.height * .20,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,

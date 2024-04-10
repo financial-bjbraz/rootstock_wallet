@@ -1,13 +1,16 @@
 import 'package:my_rootstock_wallet/entities/simple_user.dart';
 import 'package:my_rootstock_wallet/cards/account_info.dart';
-import 'package:my_rootstock_wallet/cards/credit_card.dart';
 import 'package:my_rootstock_wallet/cards/rewards.dart';
 import 'package:my_rootstock_wallet/entities/wallet.dart';
 import 'package:my_rootstock_wallet/pages/details/account_statements_detail.dart';
-import 'package:my_rootstock_wallet/pages/details/card_statements_detail.dart';
 import 'package:flutter/material.dart';
-
+import 'package:my_rootstock_wallet/wallets/create_import/import_wallet_detail.dart';
+import 'package:my_rootstock_wallet/wallets/create_import/import_wallet.dart';
 import '../cards/card_app.dart';
+import '../wallets/create_import/create_wallet.dart';
+import '../wallets/info/view_wallet.dart';
+import '../wallets/create_import/create_wallet_detail.dart';
+import '../wallets/info/view_wallet_detail.dart';
 
 class PageViewApp extends StatefulWidget {
   final double top;
@@ -32,6 +35,7 @@ class PageViewApp extends StatefulWidget {
 class _PageViewAppState extends State<PageViewApp> {
   late Tween<double> _tween;
   final SimpleUser user;
+  final Wallet wallet = Wallet.n();
 
   _PageViewAppState(this.user);
 
@@ -75,8 +79,16 @@ class _PageViewAppState extends State<PageViewApp> {
                     : const BouncingScrollPhysics(),
                 children: <Widget>[
                   CardApp(
-                    detailChild: CardStatementsDetail(),
-                    child: CreditCard(wallet: Wallet.n()),
+                    detailChild: ViewWalletDetail(),
+                    child: ViewWallet(wallet: wallet),
+                  ),
+                  CardApp(
+                    detailChild:CreateNewWalletDetail(),
+                    child:CreateWallet(wallet: wallet) ,
+                  ),
+                  CardApp(
+                    detailChild:ImportNewWalletDetail(),
+                    child:ImportWallet(wallet: wallet) ,
                   ),
                   CardApp(
                     detailChild: AccountStatementsDetail(),

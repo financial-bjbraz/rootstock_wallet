@@ -1,11 +1,32 @@
 import 'package:my_rootstock_wallet/pages/item_menu.dart';
 import 'package:flutter/material.dart';
+import 'package:my_rootstock_wallet/pages/login.dart';
 
 class MenuApp extends StatelessWidget {
-  const MenuApp({Key? key, required this.top, required this.showMenu})
+  MenuApp({Key? key, required this.top, required this.showMenu})
       : super(key: key);
   final double top;
-  final bool showMenu;
+  bool showMenu;
+
+  Route _createRoute() {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => const LoginPage(),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        const begin = Offset(0.0, 1.8);
+        const end = Offset.zero;
+        const curve = Curves.ease;
+        
+        var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+        return SlideTransition(
+          position: animation.drive(tween),
+          child: child,
+        );
+      },
+    );
+  }
+  
+  
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +43,7 @@ class MenuApp extends StatelessWidget {
       left: 0,
       right: 0,
       child: AnimatedOpacity(
-        duration: Duration(milliseconds: 100),
+        duration: Duration(milliseconds: 800),
         opacity: showMenu ? 1 : 0,
         child: Container(
             //color: Colors.red,
@@ -125,11 +146,17 @@ class MenuApp extends StatelessWidget {
                             },
                             // focusElevation: 0,
                             // splashColor: Colors.purple[900],
-                            child: const Text(
+                            child: GestureDetector(
+                              onTap: () {
+
+                                Navigator.of(context).push(_createRoute());
+                              },
+                              child: const Text(
                               "SAIR DO APP",
                               style: TextStyle(
                                   fontSize: 12, fontWeight: FontWeight.bold),
                             ),
+                            )
                           ),
                         ),
                       ],
