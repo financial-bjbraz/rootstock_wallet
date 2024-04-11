@@ -121,7 +121,7 @@ class _CreateNewWalletDetail extends State<CreateNewWalletDetail> {
               ],
             ),
           ),
-          backgroundColor: const Color.fromRGBO(255, 112, 224, 1),
+          backgroundColor: const Color.fromRGBO(158, 118, 255, 1),
         ),
         body: ClipRRect(
           borderRadius: BorderRadius.circular(5),

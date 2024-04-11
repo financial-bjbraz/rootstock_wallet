@@ -28,5 +28,5 @@
   "saldoUltimoMes": "Last Month Balance",
   "ultimaTransacao": "Click here to see last transactions details",
   "coin": "Last Transaction",
-  "copiar": "Copy"
+  "copiar": "Copy to clipboard"
 }

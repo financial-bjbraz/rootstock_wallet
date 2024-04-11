@@ -26,7 +26,8 @@ class ViewWallet extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     const Padding(
-                      padding: EdgeInsets.all(20),
+                      padding: EdgeInsets.only(
+                          left: 10, top: 10, bottom: 10, right: 10),
                       child: Row(
                         children: <Widget>[
                           // Image.asset(
@@ -54,6 +55,7 @@ class ViewWallet extends StatelessWidget {
                         width: double.infinity,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             Padding(
                               padding: const EdgeInsets.only(
@@ -71,7 +73,7 @@ class ViewWallet extends StatelessWidget {
                                     style: const TextStyle(
                                       color: Colors.white,
                                       backgroundColor: Color.fromRGBO(7, 255, 208, 1),
-                                      fontSize: 28,
+                                      fontSize: 20,
                                     ),
                                   ),
                                 ],
@@ -103,8 +105,8 @@ class ViewWallet extends StatelessWidget {
                                 ],
                               ),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.only(
+                            const Padding(
+                              padding: EdgeInsets.only(
                                   left: 10, top: 10, bottom: 10, right: 10),
                               child: Row(
                                 children: [
@@ -113,7 +115,7 @@ class ViewWallet extends StatelessWidget {
                                     color: Color.fromRGBO(121, 198, 0, 1),
                                     size: 48,
                                   ),
-                                  const Text.rich(
+                                  Text.rich(
                                     TextSpan(
                                         text: " USD 125.43",
                                         style: TextStyle(
@@ -133,8 +135,8 @@ class ViewWallet extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.05),
+                    const SizedBox(
+                        height: 10),
                   ],
                 ),
               ),

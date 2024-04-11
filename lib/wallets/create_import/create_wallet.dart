@@ -16,11 +16,11 @@ class CreateWallet extends StatelessWidget {
         children: [
           Expanded(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                const Padding(
-                  padding: EdgeInsets.all(20),
+                Padding(
+                  padding: EdgeInsets.only(left: 20, bottom: 20),
                   child: Row(
                     children: [
                       Icon(
@@ -40,43 +40,6 @@ class CreateWallet extends StatelessWidget {
                     ],
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 20, top: 20, bottom: 20),
-                  child: SizedBox(
-                    width: double.infinity,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              left: 20, top: 20, bottom: 20),
-                          child: Row(
-                            children: [
-                              // Icon(
-                              //   Icons.add_circle,
-                              //   color: Colors.grey[400],
-                              //   size: 48,
-                              // ),
-                              // Text.rich(
-                              //   const TextSpan(
-                              //       text: "Criar uma nova wallet",
-                              //       style: TextStyle(
-                              //         fontWeight: FontWeight.bold,
-                              //       )),
-                              //   textAlign: TextAlign.start,
-                              //   style: TextStyle(
-                              //     color: Colors.grey[400],
-                              //     fontSize: 28,
-                              //   ),
-                              // ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(height: MediaQuery.of(context).size.height * 0.05),
               ],
             ),
           ),

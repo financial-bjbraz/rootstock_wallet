@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ImportNewWalletDetail extends StatelessWidget {
+  const ImportNewWalletDetail({super.key});
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
@@ -23,7 +24,7 @@ class ImportNewWalletDetail extends StatelessWidget {
               ],
             ),
           ),
-          backgroundColor: const Color.fromRGBO(255, 112, 224, 1),
+          backgroundColor: const Color.fromRGBO(7, 255, 208, 1),
         ),
         body: ClipRRect(
           borderRadius: BorderRadius.circular(5),

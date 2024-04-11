@@ -13,7 +13,7 @@ class CreateWalletApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    Future<void> _dialogBuilder(BuildContext context) {
+    Future<void> dialogBuilder(BuildContext context) {
       return showDialog<void>(
         context: context,
         builder: (BuildContext context) {
@@ -76,7 +76,7 @@ class CreateWalletApp extends StatelessWidget {
           child: child,
         ),
         onTap: () {
-          _dialogBuilder(context);
+          dialogBuilder(context);
         //if
         },
       ),

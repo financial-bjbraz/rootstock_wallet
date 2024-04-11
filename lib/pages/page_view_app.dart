@@ -5,12 +5,9 @@ import 'package:my_rootstock_wallet/cards/rewards.dart';
 import 'package:my_rootstock_wallet/entities/wallet.dart';
 import 'package:my_rootstock_wallet/pages/details/account_statements_detail.dart';
 import 'package:flutter/material.dart';
-import 'package:my_rootstock_wallet/wallets/create_import/import_wallet_detail.dart';
-import 'package:my_rootstock_wallet/wallets/create_import/import_wallet.dart';
 import '../cards/card_app.dart';
-import '../wallets/create_import/create_wallet.dart';
+import '../cards/import_seed_pk_app.dart';
 import '../wallets/info/view_wallet.dart';
-import '../wallets/create_import/create_wallet_detail.dart';
 import '../wallets/info/view_wallet_detail.dart';
 
 class PageViewApp extends StatefulWidget {
@@ -83,11 +80,8 @@ class _PageViewAppState extends State<PageViewApp> {
                     detailChild: ViewWalletDetail(),
                     child: ViewWallet(wallet: wallet),
                   ),
-                  const CreateWalletApp( ),
-                  CardApp(
-                    detailChild:ImportNewWalletDetail(),
-                    child:ImportWallet(wallet: wallet) ,
-                  ),
+                  const CreateWalletApp(),
+                  const ImportSeedPkApp(),
                   CardApp(
                     detailChild: AccountStatementsDetail(),
                     child: const AccountInfo(),
