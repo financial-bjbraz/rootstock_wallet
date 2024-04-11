@@ -1,8 +1,8 @@
 {
-    "title": "Maniva Wallet",
-    "@title": {
-      "description": "The conventional newborn programmer greeting"
-    },
+  "title": "Maniva Wallet",
+  "@title": {
+    "description": "The conventional newborn programmer greeting"
+  },
   "emailField": "Digite seu e-mail",
   "passwordField": "Digite sua senha",
   "login": "Login",
@@ -10,21 +10,22 @@
   "siginWithGoogle": "Login com google",
   "siginWithFb": "Login com facebook",
   "or": "Ou",
-  "premios":"Ganhe prêmios para cada indicação que abrir uma conta",
-  "refer":"indicar amigos",
-    "recarga":"Recarga celular",
-    "cobrar":"Cobrar",
-    "depositar":"Depositar",
-    "emprestimos":"Emprestimo",
-    "transferir":"Transferencias",
-    "limits":"Limites",
-    "pagar":"Pagar",
-    "bloquear":"Bloquear",
-    "glogin":"Logar com Google",
-    "alogin":"logar Anonimo",
-    "anonimus":"Anonimus",
-    "wallet": "Wallet #",
-    "saldo": "SALDO",
-    "saldoUltimoMes": "Saldo Ultimo Mes",
-    "ultimaTransacao": "Clique aqui para ver os detalhes das ultimas transacoes"
+  "premios": "Ganhe prêmios para cada indicação que abrir uma conta",
+  "refer": "indicar amigos",
+  "recarga": "Recarga celular",
+  "cobrar": "Cobrar",
+  "depositar": "Depositar",
+  "emprestimos": "Emprestimo",
+  "transferir": "Transferencias",
+  "limits": "Limites",
+  "pagar": "Pagar",
+  "bloquear": "Bloquear",
+  "glogin": "Logar com Google",
+  "alogin": "logar Anonimo",
+  "anonimus": "Anonimus",
+  "wallet": "Wallet #",
+  "saldo": "SALDO",
+  "saldoUltimoMes": "Saldo Ultimo Mes",
+  "ultimaTransacao": "Clique aqui para ver os detalhes das ultimas transacoes",
+  "copiar": "Copiar"
 }

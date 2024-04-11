@@ -1,3 +1,4 @@
+import 'package:my_rootstock_wallet/cards/create_wallet_app.dart';
 import 'package:my_rootstock_wallet/entities/simple_user.dart';
 import 'package:my_rootstock_wallet/cards/account_info.dart';
 import 'package:my_rootstock_wallet/cards/rewards.dart';
@@ -82,10 +83,7 @@ class _PageViewAppState extends State<PageViewApp> {
                     detailChild: ViewWalletDetail(),
                     child: ViewWallet(wallet: wallet),
                   ),
-                  CardApp(
-                    detailChild:CreateNewWalletDetail(),
-                    child:CreateWallet(wallet: wallet) ,
-                  ),
+                  const CreateWalletApp( ),
                   CardApp(
                     detailChild:ImportNewWalletDetail(),
                     child:ImportWallet(wallet: wallet) ,
