@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:my_rootstock_wallet/wallets/create_import/import_wallet_seed_detail.dart';
 import 'package:provider/provider.dart';
 import 'package:web3dart/src/credentials/address.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../../pages/details/detail_list.dart';
 import '../../services/wallet_service.dart';
 import 'package:flutter/services.dart';
+
+import '../../util/util.dart';
 
 class CreateNewWalletDetail extends StatefulWidget {
   const CreateNewWalletDetail({Key? key}) : super(key: key);
@@ -14,6 +18,7 @@ class CreateNewWalletDetail extends StatefulWidget {
 
 class _CreateNewWalletDetail extends State<CreateNewWalletDetail> {
   late bool _showSeed;
+  bool processing = false;
   bool _created = false;
   late WalletServiceImpl walletService;
   List<String> splittedMnemonic = List<String>.filled(1, "");
@@ -26,7 +31,7 @@ class _CreateNewWalletDetail extends State<CreateNewWalletDetail> {
   }
 
   void createNewAccount() async {
-    if(!_created) {
+    if (!_created) {
       walletService = Provider.of<WalletServiceImpl>(context);
       //showMessage("Gerando uma nova conta");
       final mnemonic = walletService.generateMnemonic();
@@ -61,9 +66,7 @@ class _CreateNewWalletDetail extends State<CreateNewWalletDetail> {
       return Expanded(
         child: TextFormField(
           enabled: false,
-          style: const TextStyle(
-              fontSize: 6
-          ),
+          style: const TextStyle(fontSize: 6),
           decoration: InputDecoration(
             contentPadding: const EdgeInsets.fromLTRB(2, 2, 2, 1),
             labelText: "$contador. $word",
@@ -80,18 +83,6 @@ class _CreateNewWalletDetail extends State<CreateNewWalletDetail> {
       return const EdgeInsets.only(left: 2, top: 45, bottom: 5, right: 2);
     }
 
-    void showMessage(String message) {
-      final snackBar = SnackBar(
-        content: Text(message),
-        action: SnackBarAction(
-          label: 'Ok',
-          onPressed: () {},
-        ),
-      );
-
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
-    }
-
     final ButtonStyle raisedButtonStyle = ElevatedButton.styleFrom(
       minimumSize: const Size(88, 36),
       padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -99,6 +90,26 @@ class _CreateNewWalletDetail extends State<CreateNewWalletDetail> {
         borderRadius: BorderRadius.all(Radius.circular(2)),
       ),
     );
+
+    sentToDetail() {
+      processing = false;
+      Navigator.of(context).push(PageRouteBuilder(
+        pageBuilder: (context, animation, secondaryAnimation) =>
+            const DetailList(child: ImportNewWalletBySeedDetail()),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          var begin = Offset(0.0, 1.0);
+          var end = Offset.zero;
+          var curve = Curves.ease;
+          var tween =
+              Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+          return SlideTransition(
+            position: animation.drive(tween),
+            child: child,
+          );
+        },
+      ));
+    }
 
     return Scaffold(
         backgroundColor: Colors.white,
@@ -149,11 +160,14 @@ class _CreateNewWalletDetail extends State<CreateNewWalletDetail> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      createTextFieldWithSeed(splittedMnemonic.elementAt(contador)),
+                                      createTextFieldWithSeed(
+                                          splittedMnemonic.length > contador ? splittedMnemonic.elementAt(contador) : ""),
                                       const SizedBox(width: 5),
-                                      createTextFieldWithSeed(splittedMnemonic.elementAt(contador)),
+                                      createTextFieldWithSeed(
+                                          splittedMnemonic.length > contador ? splittedMnemonic.elementAt(contador) : ""),
                                       const SizedBox(width: 5),
-                                      createTextFieldWithSeed(splittedMnemonic.elementAt(contador)),
+                                      createTextFieldWithSeed(
+                                          splittedMnemonic.length > contador ? splittedMnemonic.elementAt(contador) : ""),
                                     ],
                                   ),
                                 ),
@@ -164,11 +178,14 @@ class _CreateNewWalletDetail extends State<CreateNewWalletDetail> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      createTextFieldWithSeed(splittedMnemonic.elementAt(contador)),
+                                      createTextFieldWithSeed(
+                                          splittedMnemonic.length > contador ? splittedMnemonic.elementAt(contador) : ""),
                                       const SizedBox(width: 5),
-                                      createTextFieldWithSeed(splittedMnemonic.elementAt(contador)),
+                                      createTextFieldWithSeed(
+                                          splittedMnemonic.length > contador ? splittedMnemonic.elementAt(contador) : ""),
                                       const SizedBox(width: 5),
-                                      createTextFieldWithSeed(splittedMnemonic.elementAt(contador)),
+                                      createTextFieldWithSeed(
+                                          splittedMnemonic.length > contador ? splittedMnemonic.elementAt(contador) : ""),
                                     ],
                                   ),
                                 ),
@@ -179,11 +196,14 @@ class _CreateNewWalletDetail extends State<CreateNewWalletDetail> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      createTextFieldWithSeed(splittedMnemonic.elementAt(contador)),
+                                      createTextFieldWithSeed(
+                                          splittedMnemonic.length > contador ? splittedMnemonic.elementAt(contador) : ""),
                                       const SizedBox(width: 5),
-                                      createTextFieldWithSeed(splittedMnemonic.elementAt(contador)),
+                                      createTextFieldWithSeed(
+                                          splittedMnemonic.length > contador ? splittedMnemonic.elementAt(contador) : ""),
                                       const SizedBox(width: 5),
-                                      createTextFieldWithSeed(splittedMnemonic.elementAt(contador)),
+                                      createTextFieldWithSeed(
+                                          splittedMnemonic.length > contador ? splittedMnemonic.elementAt(contador) : ""),
                                     ],
                                   ),
                                 ),
@@ -194,40 +214,70 @@ class _CreateNewWalletDetail extends State<CreateNewWalletDetail> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      createTextFieldWithSeed(splittedMnemonic.elementAt(contador)),
+                                      createTextFieldWithSeed(
+                                          splittedMnemonic.length > contador ? splittedMnemonic.elementAt(contador) : ""),
                                       const SizedBox(width: 5),
-                                      createTextFieldWithSeed(splittedMnemonic.elementAt(contador)),
+                                      createTextFieldWithSeed(
+                                          splittedMnemonic.length > contador ? splittedMnemonic.elementAt(contador) : ""),
                                       const SizedBox(width: 5),
-                                      createTextFieldWithSeed(splittedMnemonic.elementAt(contador)),
+                                      createTextFieldWithSeed(
+                                          splittedMnemonic.length > contador ? splittedMnemonic.elementAt(contador) : ""),
                                     ],
                                   ),
                                 ),
                                 Padding(
                                   padding: createPaddingBetweenDifferentRows(),
-                                  child: ElevatedButton(
-                                    onPressed: () async {
-                                      await Clipboard.setData(ClipboardData(text: splittedMnemonic.toString().replaceAll("[", "").replaceAll("]", "")));
-                                      showMessage("Copied to the clipboard");
-                                    },
-                                    style: raisedButtonStyle,
-                                    child: Row(
-                                      children: <Widget>[
-                                        Row(
-                                          children: <Widget>[
-                                            const Icon(Icons.copy),
-                                            const SizedBox(
-                                              width: 10,
-                                            ),
-                                            Text(
-                                              copy,
-                                              style:
-                                                  const TextStyle(fontSize: 20),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ),
+                                  child: !processing
+                                      ? ElevatedButton(
+                                          onPressed: () async {
+                                            await Clipboard.setData(
+                                                ClipboardData(
+                                                    text: splittedMnemonic
+                                                        .toString()
+                                                        .replaceAll("[", "")
+                                                        .replaceAll("]", "")));
+                                            showMessage(
+                                                "Copied to the clipboard",
+                                                context);
+
+                                            setState(() {
+                                              processing = true;
+                                              print("Processing === true");
+                                              delay(context, 5)
+                                                  .whenComplete(() {
+                                                    processing = false;
+                                                    sentToDetail();
+                                                  });
+
+                                            });
+                                          },
+                                          style: raisedButtonStyle,
+                                          child: Row(
+                                            children: <Widget>[
+                                              Row(
+                                                children: <Widget>[
+                                                  const Icon(Icons.copy),
+                                                  const SizedBox(
+                                                    width: 10,
+                                                  ),
+                                                  Text(
+                                                    copy,
+                                                    style: const TextStyle(
+                                                        fontSize: 20),
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        )
+                                      : const Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                              CircularProgressIndicator()
+                                            ]),
                                 ),
                               ],
                             ),

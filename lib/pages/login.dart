@@ -6,6 +6,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:my_rootstock_wallet/services/auth.dart';
 
+import '../util/util.dart';
+
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
 
@@ -26,7 +28,6 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-
   String MESSAGE_INVALID_EMAIL = "Invalid email";
   String MESSAGE_INVALID_PASSWORD =
       "Invalid Password. Password must not be least than 8 chars";
@@ -47,41 +48,6 @@ class _BodyState extends State<Body> {
     final String title = AppLocalizations.of(context)!.title;
 
     FocusNode textSecondFocusNode = FocusNode();
-
-    final ButtonStyle raisedButtonStyle = ElevatedButton.styleFrom(
-      minimumSize: const Size(88, 36),
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(2)),
-      ),
-    );
-
-    final ButtonStyle orangeButton = ElevatedButton.styleFrom(
-      minimumSize: const Size(88, 36),
-      backgroundColor: Color.fromRGBO(255, 145, 0, 1),
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(2)),
-      ),
-    );
-
-    final ButtonStyle greenButtonStyle = ElevatedButton.styleFrom(
-      minimumSize: const Size(88, 36),
-      backgroundColor: Color.fromRGBO(121, 198, 0, 1),
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(2)),
-      ),
-    );
-
-    final ButtonStyle pingButton = ElevatedButton.styleFrom(
-      minimumSize: const Size(88, 36),
-      backgroundColor: Color.fromRGBO(121, 198, 0, 1),
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(2)),
-      ),
-    );
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(5),
@@ -117,7 +83,7 @@ class _BodyState extends State<Body> {
                             labelText: AppLocalizations.of(context)!.emailField,
                             border: const OutlineInputBorder(
                                 borderSide:
-                                BorderSide(width: 5, color: Colors.white)),
+                                    BorderSide(width: 5, color: Colors.white)),
                             suffixIcon: IconButton(
                               icon: const Icon(Icons.done),
                               splashColor: Colors.white,
@@ -137,10 +103,11 @@ class _BodyState extends State<Body> {
                         controller: passwordController,
                         decoration: InputDecoration(
                             prefixIcon: const Icon(Icons.person),
-                            labelText: AppLocalizations.of(context)!.passwordField,
+                            labelText:
+                                AppLocalizations.of(context)!.passwordField,
                             border: const OutlineInputBorder(
                               borderSide:
-                              BorderSide(width: 5, color: Colors.white),
+                                  BorderSide(width: 5, color: Colors.white),
                             ),
                             suffixIcon: IconButton(
                               icon: const Icon(Icons.done),
@@ -158,14 +125,14 @@ class _BodyState extends State<Body> {
                             if (validate()) {
                               Navigator.of(context)
                                   .pushReplacement(MaterialPageRoute(
-                                  builder: (context) => TransactionsPage(
-                                    user: SimpleUser(
-                                        name: mailController.text,
-                                        email: mailController.text),
-                                  )));
+                                      builder: (context) => TransactionsPage(
+                                            user: SimpleUser(
+                                                name: mailController.text,
+                                                email: mailController.text),
+                                          )));
                             }
                           },
-                          style: raisedButtonStyle,
+                          style: greenButtonStyle,
                           child: Row(
                             children: <Widget>[
                               Row(
@@ -189,11 +156,9 @@ class _BodyState extends State<Body> {
                         ),
                         ElevatedButton(
                           onPressed: () {
-                            if (validate()) {
-
-                            }
+                            if (validate()) {}
                           },
-                          style: raisedButtonStyle,
+                          style: orangeButton,
                           child: Row(
                             children: <Widget>[
                               Row(
@@ -227,34 +192,6 @@ class _BodyState extends State<Body> {
                     style: TextStyle(fontSize: 12),
                   ),
                   SizedBox(height: MediaQuery.of(context).size.height * 0.02),
-                  OutlinedButton(
-                    onPressed: clickLoginGoogle,
-                    style: orangeButton,
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Image.asset(
-                            "assets/images/google_logo.png",
-                            color: Colors.white,
-                            height: 30,
-                            width: 90,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 10),
-                            child: Text(
-                              loginGoogleText,
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 25, color: Colors.white),
-
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
                   SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                   OutlinedButton(
                     onPressed: clickLoginAnonimous,
@@ -262,25 +199,26 @@ class _BodyState extends State<Body> {
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
                       child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Image.asset(
-                            "assets/images/anonimous.png",
-                            color: Colors.white,
-                            height: 30,
-                            width: 70,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 10),
-                            child: Text(
-                              loginAnonimousText,
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 25, color: Colors.white),
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              "assets/images/anonimous.png",
+                              color: Colors.white,
+                              height: 30,
+                              width: 70,
                             ),
-                          ),
-                        ],
-                      ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 10),
+                              child: Text(
+                                loginAnonimousText,
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 25,
+                                    color: Colors.white),
+                              ),
+                            ),
+                          ]),
                     ),
                   ),
                 ],
@@ -292,31 +230,18 @@ class _BodyState extends State<Body> {
     );
   }
 
-  void clickLoginGoogle() {
-    siginInWithGoogle().then((value) => {
-      this.user = value!,
-      Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => HomePage(
-              user: SimpleUser.n(user),
-            ),
-          ))
-    });
-
-  }
-
   void clickLoginAnonimous() {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => HomePage(
-            user: SimpleUser(
-                name: AppLocalizations.of(context)!.anonimus,
-                email: "${AppLocalizations.of(context)!.passwordField}@${AppLocalizations.of(context)!.passwordField}.com"),
-          ),
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => HomePage(
+          user: SimpleUser(
+              name: AppLocalizations.of(context)!.anonimus,
+              email:
+                  "${AppLocalizations.of(context)!.passwordField}@${AppLocalizations.of(context)!.passwordField}.com"),
         ),
-      );
+      ),
+    );
   }
 
   @override
@@ -363,5 +288,4 @@ class _BodyState extends State<Body> {
 
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
-
 }

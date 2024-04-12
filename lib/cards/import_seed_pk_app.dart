@@ -1,9 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../wallets/create_import/import_wallet_detail.dart';
+import '../pages/details/detail_list.dart';
+import '../wallets/create_import/import_wallet_pk_detail.dart';
+import '../wallets/create_import/import_wallet_seed_detail.dart';
 
 class ImportSeedPkApp extends StatelessWidget {
-  final ImportNewWalletDetail detailChild = const ImportNewWalletDetail();
+  final ImportNewWalletByPrivateKeyDetail importWalletByPrivateKey = const ImportNewWalletByPrivateKeyDetail();
+  final ImportNewWalletBySeedDetail importWalletBySeed = const ImportNewWalletBySeedDetail();
 
   const ImportSeedPkApp({super.key});
 
@@ -49,16 +52,21 @@ class ImportSeedPkApp extends StatelessWidget {
                             ],
                           ),
                           onTap: () {
+                            Navigator.of(context).push(PageRouteBuilder(
+                              pageBuilder: (context, animation, secondaryAnimation) => DetailList(child: importWalletBySeed),
+                              transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                                var begin = const Offset(0.0, 1.0);
+                                var end = Offset.zero;
+                                var curve = Curves.ease;
+                                var tween = Tween(begin: begin, end: end)
+                                    .chain(CurveTween(curve: curve));
 
-                            final snackBar = SnackBar(
-                              content: Text("Importar Seed"),
-                              action: SnackBarAction(
-                                label: 'Ok',
-                                onPressed: () {},
-                              ),
-                            );
-
-                            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                return SlideTransition(
+                                  position: animation.drive(tween),
+                                  child: child,
+                                );
+                              },
+                            ));
 
                           }),
                     ),
@@ -95,6 +103,22 @@ class ImportSeedPkApp extends StatelessWidget {
                             );
 
                             ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+                            Navigator.of(context).push(PageRouteBuilder(
+                              pageBuilder: (context, animation, secondaryAnimation) => DetailList(child: importWalletByPrivateKey),
+                              transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                                var begin = Offset(0.0, 1.0);
+                                var end = Offset.zero;
+                                var curve = Curves.ease;
+                                var tween = Tween(begin: begin, end: end)
+                                    .chain(CurveTween(curve: curve));
+
+                                return SlideTransition(
+                                  position: animation.drive(tween),
+                                  child: child,
+                                );
+                              },
+                            ));
 
                           }),
                     ),

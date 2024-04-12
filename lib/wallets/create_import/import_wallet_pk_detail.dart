@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class ImportNewWalletDetail extends StatelessWidget {
-  const ImportNewWalletDetail({super.key});
+class ImportNewWalletByPrivateKeyDetail extends StatelessWidget {
+  const ImportNewWalletByPrivateKeyDetail({super.key});
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,

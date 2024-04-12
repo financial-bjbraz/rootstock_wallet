@@ -17,5 +17,5 @@ samples, guidance on mobile development, and a full API reference.
 
 
 ```
-flutter clean && flutter pub get && cd ios/ && pod install 
+flutter clean && flutter pub get && cd ios/ && pod install && cd ../
 ```

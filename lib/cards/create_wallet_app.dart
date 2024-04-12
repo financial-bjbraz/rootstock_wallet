@@ -66,7 +66,6 @@ class CreateWalletApp extends StatelessWidget {
         },
       );
     }
-
     return Padding(
       padding: const EdgeInsets.all(20),
       child: GestureDetector(
