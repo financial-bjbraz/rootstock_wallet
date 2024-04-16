@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:my_rootstock_wallet/entities/wallet.dart';
 
+import '../../entities/wallet_entity.dart';
+import '../../util/util.dart';
+
 class ViewWallet extends StatelessWidget {
   const ViewWallet({super.key, required this.wallet});
 
-  final Wallet wallet;
+  final WalletEntity wallet;
 
   TextSpan addressText() {
     return TextSpan(
-        text: wallet.getAddress(),
+        text: getAddress(wallet),
         style: const TextStyle(
           fontWeight: FontWeight.bold,
         ));
@@ -37,7 +40,7 @@ class ViewWallet extends StatelessWidget {
                           //   color: Color.fromRGBO(222, 255, 27, 1),
                           // ),
                           Text(
-                            "Wallet #1",
+                            "Wallet #",
                             textAlign: TextAlign.start,
                             style: TextStyle(
                                 color: Colors.white,

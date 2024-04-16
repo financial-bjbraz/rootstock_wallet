@@ -5,8 +5,11 @@ import 'package:my_rootstock_wallet/cards/rewards.dart';
 import 'package:my_rootstock_wallet/entities/wallet.dart';
 import 'package:my_rootstock_wallet/pages/details/account_statements_detail.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../cards/card_app.dart';
 import '../cards/import_seed_pk_app.dart';
+import '../entities/wallet_entity.dart';
+import '../services/wallet_service.dart';
 import '../wallets/info/view_wallet.dart';
 import '../wallets/info/view_wallet_detail.dart';
 
@@ -31,9 +34,13 @@ class PageViewApp extends StatefulWidget {
 }
 
 class _PageViewAppState extends State<PageViewApp> {
+  late WalletServiceImpl walletService =
+      Provider.of<WalletServiceImpl>(context);
+
   late Tween<double> _tween;
   final SimpleUser user;
-  final Wallet wallet = Wallet.n();
+
+  var widgets = <Widget>{};
 
   _PageViewAppState(this.user);
 
@@ -41,8 +48,28 @@ class _PageViewAppState extends State<PageViewApp> {
   void initState() {
     super.initState();
     _tween = Tween<double>(begin: 150.0, end: 0.0);
-
     //delayAnimation();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    loadWallets();
+  }
+
+  loadWallets() async {
+    var wallets = <WalletEntity>{};
+    walletService.getWallets().then((walletsLoaded) => {
+      print("Wallets Loaded"),
+      print(walletsLoaded),
+      for (final item in walletsLoaded) {
+        print("getting a wallet"),
+        widgets.add(CardApp(
+          detailChild: ViewWalletDetail(),
+          child: ViewWallet(wallet: item),
+        )),
+      }
+    });
   }
 
   Future<void> delayAnimation() async {
@@ -55,6 +82,7 @@ class _PageViewAppState extends State<PageViewApp> {
 
   @override
   Widget build(BuildContext context) {
+
     return TweenAnimationBuilder<double>(
         tween: _tween,
         duration: const Duration(milliseconds: 300),
@@ -67,7 +95,6 @@ class _PageViewAppState extends State<PageViewApp> {
             right: value * -1,
             top: widget.top,
             height: MediaQuery.of(context).size.height * .45,
-            //width: MediaQuery.of(context).size.width,
             child: GestureDetector(
               onPanUpdate: widget.onPanUpdated,
               child: PageView(
@@ -76,10 +103,7 @@ class _PageViewAppState extends State<PageViewApp> {
                     ? const NeverScrollableScrollPhysics()
                     : const BouncingScrollPhysics(),
                 children: <Widget>[
-                  CardApp(
-                    detailChild: ViewWalletDetail(),
-                    child: ViewWallet(wallet: wallet),
-                  ),
+                  ...widgets,
                   const CreateWalletApp(),
                   const ImportSeedPkApp(),
                   CardApp(

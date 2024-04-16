@@ -5,6 +5,10 @@ import 'package:my_rootstock_wallet/pages/my_app_bar.dart';
 import 'package:my_rootstock_wallet/pages/my_dots_app.dart';
 import 'package:my_rootstock_wallet/pages/page_view_app.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../entities/wallet_entity.dart';
+import '../services/wallet_service.dart';
 
 class HomePage extends StatefulWidget {
   final SimpleUser user;
@@ -20,6 +24,8 @@ class _HomePageState extends State<HomePage> {
   late int _currentIndex;
   late double _yPosition = 0;
   late SimpleUser _user;
+  late int _walletQuantity;
+  late WalletServiceImpl walletService = Provider.of<WalletServiceImpl>(context);
 
   _HomePageState(this._user);
 
@@ -28,10 +34,22 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     _showMenu = false;
     _currentIndex = 0;
+    _walletQuantity = 0;
+  }
+
+  loadWallets() async {
+    walletService.getWallets().then((walletsLoaded) => {
+      print("Wallets Loaded"),
+      print(walletsLoaded),
+      setState(() {
+         _walletQuantity = walletsLoaded.length;
+      }),
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    loadWallets();
     double _heightScreen = MediaQuery.of(context).size.height;
 
     if (_yPosition == 0) {
@@ -64,6 +82,7 @@ class _HomePageState extends State<HomePage> {
             showMenu: _showMenu,
             top: _heightScreen * .70,
             currentIndex: _currentIndex,
+            walletQuantity: _walletQuantity,
           ),
           PageViewApp(
             user: _user,

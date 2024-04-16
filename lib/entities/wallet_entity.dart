@@ -1,8 +1,24 @@
+class WalletEntity{
 
-import 'package:flutter/cupertino.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+  final String privateKey;
+  final String walletName;
+  final String walletId;
+  final String publicKey;
 
-class WalletEntity {
-  late String name;
-  late bool isImported;
+  WalletEntity({required this.privateKey, required this.walletName, required this.walletId, required this.publicKey});
+
+  Map<String, Object?> toMap() {
+    return {
+      'privateKey': privateKey,
+      'walletName': walletName,
+      'walletId': walletId,
+      'publicKey': publicKey,
+    };
+  }
+
+  @override
+  String toString() {
+    return 'WalletEntity{privateKey: $privateKey, walletName: $walletName, walletId: $walletId, publicKey: $publicKey}';
+  }
+
 }

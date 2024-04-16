@@ -17,6 +17,7 @@ class TransactionsPage extends StatefulWidget {
 class _TransactionsPageState extends State<TransactionsPage> {
   late bool _showMenu;
   late int _currentIndex;
+  late int _walletQuantity = 0;
   late double _yPosition = 0;
   late final SimpleUser _user;
 
@@ -62,7 +63,9 @@ class _TransactionsPageState extends State<TransactionsPage> {
           MyDotsApp(
               showMenu: _showMenu,
               top: _heightScreen * .70,
-              currentIndex: _currentIndex),
+              currentIndex: _currentIndex,
+              walletQuantity: _walletQuantity,
+          ),
         ],
       ),
     );

@@ -13,6 +13,7 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    verifyAndCreateDataBase();
     return Container(
       child: Scaffold(
         backgroundColor: const Color.fromRGBO(0, 0, 0, 0),
@@ -41,7 +42,6 @@ class _BodyState extends State<Body> {
   final auth = FirebaseAuth.instance;
 
   Widget loginButton() {
-    final String loginGoogleText = AppLocalizations.of(context)!.glogin;
     final String loginAnonimousText = AppLocalizations.of(context)!.alogin;
     final String login = AppLocalizations.of(context)!.login;
     final String createAccount = AppLocalizations.of(context)!.createAccount;
@@ -143,7 +143,10 @@ class _BodyState extends State<Body> {
                                   ),
                                   Text(
                                     login,
-                                    style: const TextStyle(fontSize: 20),
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20,
+                                        color: Colors.white),
                                   ),
                                 ],
                               ),
@@ -169,7 +172,10 @@ class _BodyState extends State<Body> {
                                   ),
                                   Text(
                                     createAccount,
-                                    style: const TextStyle(fontSize: 20),
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20,
+                                        color: Colors.white),
                                   ),
                                 ],
                               ),
@@ -191,7 +197,6 @@ class _BodyState extends State<Body> {
                     ),
                     style: TextStyle(fontSize: 12),
                   ),
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                   SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                   OutlinedButton(
                     onPressed: clickLoginAnonimous,

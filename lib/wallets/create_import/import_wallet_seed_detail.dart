@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../entities/simple_user.dart';
+import '../../entities/wallet_entity.dart';
 import '../../pages/home_page.dart';
+import '../../services/wallet_service.dart';
 import '../../util/util.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ImportNewWalletBySeedDetail extends StatefulWidget {
   const ImportNewWalletBySeedDetail({Key? key}) : super(key: key);
@@ -11,6 +15,7 @@ class ImportNewWalletBySeedDetail extends StatefulWidget {
 }
 
 class _ImportNewWalletBySeedDetail extends State<ImportNewWalletBySeedDetail> {
+  late WalletServiceImpl walletService = Provider.of<WalletServiceImpl>(context, listen: false);
   bool inputSeedEnabled = true;
 
   Widget build(BuildContext context) {
@@ -109,13 +114,19 @@ class _ImportNewWalletBySeedDetail extends State<ImportNewWalletBySeedDetail> {
                                         if(seed.isEmpty) {
                                           showMessage("Invalid Seed", context);
                                         } else {
+                                          var privateKey = await walletService.getPrivateKey(seed);
+                                          var publicKey = await walletService.getPublicKeyString(privateKey);
+                                          WalletEntity wallet = WalletEntity(privateKey: privateKey, publicKey: publicKey, walletId: "", walletName: "");
+
+                                          walletService.persistNewWallet(wallet);
                                           showMessage("Account #2 Created", context);
                                           Navigator.of(context)
                                               .pushReplacement(MaterialPageRoute(
                                               builder: (context) => HomePage(
                                                 user: SimpleUser(
-                                                    name: mailController.text,
-                                                    email: mailController.text),
+                                                    name: AppLocalizations.of(context)!.anonimus,
+                                                    email:
+                                                    "${AppLocalizations.of(context)!.passwordField}@${AppLocalizations.of(context)!.passwordField}.com"),
                                               )));
 
                                         }
