@@ -60,10 +60,7 @@ class _PageViewAppState extends State<PageViewApp> {
   loadWallets() async {
     var wallets = <WalletEntity>{};
     walletService.getWallets().then((walletsLoaded) => {
-      print("Wallets Loaded"),
-      print(walletsLoaded),
       for (final item in walletsLoaded) {
-        print("getting a wallet"),
         widgets.add(CardApp(
           detailChild: ViewWalletDetail(),
           child: ViewWallet(wallet: item),

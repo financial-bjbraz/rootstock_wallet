@@ -39,8 +39,6 @@ class _HomePageState extends State<HomePage> {
 
   loadWallets() async {
     walletService.getWallets().then((walletsLoaded) => {
-      print("Wallets Loaded"),
-      print(walletsLoaded),
       setState(() {
          _walletQuantity = walletsLoaded.length;
       }),

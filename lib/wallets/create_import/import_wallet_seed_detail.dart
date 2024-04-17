@@ -116,7 +116,8 @@ class _ImportNewWalletBySeedDetail extends State<ImportNewWalletBySeedDetail> {
                                         } else {
                                           var privateKey = await walletService.getPrivateKey(seed);
                                           var publicKey = await walletService.getPublicKeyString(privateKey);
-                                          WalletEntity wallet = WalletEntity(privateKey: privateKey, publicKey: publicKey, walletId: "", walletName: "");
+                                          var walletId = await getIndex();
+                                          WalletEntity wallet = WalletEntity(privateKey: privateKey, publicKey: publicKey, walletId: walletId, walletName: "Wallet #");
 
                                           walletService.persistNewWallet(wallet);
                                           showMessage("Account #2 Created", context);

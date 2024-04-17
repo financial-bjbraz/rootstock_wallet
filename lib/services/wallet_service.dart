@@ -77,6 +77,8 @@ class WalletServiceImpl extends ChangeNotifier implements WalletAddressService {
   }
 
   void persistNewWallet(WalletEntity wallet) async {
+    print("Persisting");
+    print(wallet);
     final db = await openDataBase();
 
     await db.insert(
@@ -84,6 +86,13 @@ class WalletServiceImpl extends ChangeNotifier implements WalletAddressService {
       wallet.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
+  }
+
+  void delete(WalletEntity wallet) async {
+    print("Deleting");
+    print(wallet);
+    final db = await openDataBase();
+    await db.delete("wallets", where: 'privateKey = ?', whereArgs: [wallet.privateKey]);
   }
 
 }

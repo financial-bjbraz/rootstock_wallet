@@ -21,12 +21,6 @@ class MyDotsApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var widgets = <Widget>{};
-    print("The current index is ");
-    print(currentIndex);
-    print("The showMenu is ");
-    print(showMenu);
-    print("The walletQuantity is ");
-    print(walletQuantity);
 
     if(walletQuantity > 0) {
       for (int i = 0; i < walletQuantity; i++) {

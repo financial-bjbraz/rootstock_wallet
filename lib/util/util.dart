@@ -74,8 +74,24 @@ verifyAndCreateDataBase() async {
 Future<bool> isTableCreated() async {
   final prefs = await SharedPreferences.getInstance();
   var created = await prefs.getString("dataBaseCreated");
-  print("The table is created ? ${created}" );
   return created != null;
+}
+
+Future<String> getIndex() async {
+  var index = 0;
+  final prefs = await SharedPreferences.getInstance();
+  var indexStorage = await prefs.getString("index");
+
+  if(indexStorage != null) {
+    index = int.parse(indexStorage);
+    indexStorage = (index + 1).toString();
+  } else {
+    indexStorage = "0";
+  }
+
+  await prefs.setString("index", indexStorage);
+
+  return index.toString();
 }
 
 setDataBaseCreated() async {
@@ -134,7 +150,6 @@ createTable() async {
   // path to perform database upgrades and downgrades.
   version: 1,
   );
-  print("=========table wallets created======");
 }
 
 Future<dynamic> closeBoxes() async {

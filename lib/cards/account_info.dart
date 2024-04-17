@@ -9,8 +9,7 @@ class AccountInfo extends StatefulWidget {
   _AccountInfoState createState() => _AccountInfoState();
 }
 
-class _AccountInfoState extends State<AccountInfo>
-    with AutomaticKeepAliveClientMixin {
+class _AccountInfoState extends State<AccountInfo> with AutomaticKeepAliveClientMixin {
   bool _showSaldo = false;
 
   @override
@@ -28,86 +27,84 @@ class _AccountInfoState extends State<AccountInfo>
         children: <Widget>[
           Expanded(
             flex: 3,
-            child: Container(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Row(
-                          children: <Widget>[
-                            Icon(Icons.attach_money, color: Colors.grey),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            Text(
-                              "Conta",
-                              style: TextStyle(
-                                color: Colors.grey,
-                                fontSize: 13,
-                              ),
-                            ),
-                          ],
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              _showSaldo = !_showSaldo;
-                            });
-                          },
-                          child: SvgPicture.asset(
-                            _showSaldo
-                                ? "assets/icons/eye-outline.svg"
-                                : "assets/icons/eye-off-outline.svg",
-                            color: Colors.grey,
-                            semanticsLabel: "visualizar",
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding:
-                        const EdgeInsets.only(left: 20, top: 20, bottom: 20),
-                    child: SizedBox(
-                      width: double.infinity,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Row(
                         children: <Widget>[
-                          const Text(
-                            "Saldo disponível",
-                            textAlign: TextAlign.start,
+                          Icon(Icons.attach_money, color: Colors.grey),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Text(
+                            "Conta",
                             style: TextStyle(
                               color: Colors.grey,
                               fontSize: 13,
                             ),
                           ),
-                          _showSaldo
-                              ? Text.rich(
-                                  TextSpan(
-                                    text: currentBalance,
-                                  ),
-                                  textAlign: TextAlign.start,
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 28,
-                                  ),
-                                )
-                              : Container(
-                                  height: 32,
-                                  width: 140,
-                                  color: Colors.grey[200]),
                         ],
                       ),
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            _showSaldo = !_showSaldo;
+                          });
+                        },
+                        child: SvgPicture.asset(
+                          _showSaldo
+                              ? "assets/icons/eye-outline.svg"
+                              : "assets/icons/eye-off-outline.svg",
+                          color: Colors.grey,
+                          semanticsLabel: "visualizar",
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsets.only(left: 20, top: 20, bottom: 20),
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        const Text(
+                          "Saldo disponível",
+                          textAlign: TextAlign.start,
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 13,
+                          ),
+                        ),
+                        _showSaldo
+                            ? Text.rich(
+                                TextSpan(
+                                  text: currentBalance,
+                                ),
+                                textAlign: TextAlign.start,
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 28,
+                                ),
+                              )
+                            : Container(
+                                height: 32,
+                                width: 140,
+                                color: Colors.grey[200]),
+                      ],
                     ),
                   ),
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.05),
-                ],
-              ),
+                ),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+              ],
             ),
           ),
           Expanded(
