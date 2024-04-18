@@ -6,11 +6,10 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../pages/details/detail_list.dart';
 import '../../services/wallet_service.dart';
 import 'package:flutter/services.dart';
-
 import '../../util/util.dart';
 
 class CreateNewWalletDetail extends StatefulWidget {
-  const CreateNewWalletDetail({Key? key}) : super(key: key);
+  const CreateNewWalletDetail({super.key});
 
   @override
   _CreateNewWalletDetail createState() => _CreateNewWalletDetail();
@@ -38,24 +37,16 @@ class _CreateNewWalletDetail extends State<CreateNewWalletDetail> {
       final privateKey = await walletService.getPrivateKey(mnemonic);
       address = await walletService.getPublicKey(privateKey);
       splittedMnemonic = mnemonic.split(' ');
-      print(splittedMnemonic);
-      print(splittedMnemonic.length);
-      print(splittedMnemonic.elementAt(1));
-      print(mnemonic);
-      print(privateKey);
-      print(address);
       //showMessage("Nova conta gerada com sucesso!");
       setState(() {
         splittedMnemonic = mnemonic.split(' ');
-        print(splittedMnemonic);
-        print(splittedMnemonic.length);
-        print(splittedMnemonic.elementAt(2));
         _showSeed = true;
       });
       _created = !_created;
     }
   }
 
+  @override
   Widget build(BuildContext context) {
     int contador = 0;
     createNewAccount();

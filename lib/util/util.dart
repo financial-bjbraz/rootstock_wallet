@@ -99,6 +99,17 @@ setDataBaseCreated() async {
    await prefs.setString("dataBaseCreated", "true");
 }
 
+setLastUsdPrice(int price) async {
+  final prefs = await SharedPreferences.getInstance();
+  await prefs.setString("lastBtcPrice", price.toString());
+}
+
+Future<int> getLastUsdPrice() async {
+  final prefs = await SharedPreferences.getInstance();
+  final String? valor = await prefs.getString("lastBtcPrice");
+  return int.parse(valor ?? "0");
+}
+
 Future<Database> openDataBase() async {
   if (kDebugMode) {
     print("====================================================================");

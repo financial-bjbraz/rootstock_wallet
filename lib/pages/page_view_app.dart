@@ -2,16 +2,14 @@ import 'package:my_rootstock_wallet/cards/create_wallet_app.dart';
 import 'package:my_rootstock_wallet/entities/simple_user.dart';
 import 'package:my_rootstock_wallet/cards/account_info.dart';
 import 'package:my_rootstock_wallet/cards/rewards.dart';
-import 'package:my_rootstock_wallet/entities/wallet.dart';
 import 'package:my_rootstock_wallet/pages/details/account_statements_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../cards/card_app.dart';
 import '../cards/import_seed_pk_app.dart';
+import '../cards/view_wallet_app.dart';
 import '../entities/wallet_entity.dart';
 import '../services/wallet_service.dart';
-import '../wallets/info/view_wallet.dart';
-import '../wallets/info/view_wallet_detail.dart';
 
 class PageViewApp extends StatefulWidget {
   final double top;
@@ -61,10 +59,7 @@ class _PageViewAppState extends State<PageViewApp> {
     var wallets = <WalletEntity>{};
     walletService.getWallets().then((walletsLoaded) => {
       for (final item in walletsLoaded) {
-        widgets.add(CardApp(
-          detailChild: ViewWalletDetail(),
-          child: ViewWallet(wallet: item),
-        )),
+        widgets.add(ViewWalletApp(wallet: item)),
       }
     });
   }

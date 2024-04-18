@@ -1,6 +1,11 @@
+import 'dart:convert';
+
 import 'package:hex/hex.dart';
 import 'package:bip39/bip39.dart' as bip39;
 import 'package:flutter/cupertino.dart';
+import 'package:intl/intl.dart';
+import 'package:my_rootstock_wallet/util/CoinGeckoResponse.dart';
+import 'package:my_rootstock_wallet/util/wei.dart';
 import 'package:path/path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ed25519_hd_key/ed25519_hd_key.dart';
@@ -8,6 +13,8 @@ import 'package:sqflite/sqflite.dart';
 import 'package:web3dart/credentials.dart';
 import '../entities/wallet_entity.dart';
 import '../util/util.dart';
+import 'package:http/http.dart' as http;
+import 'package:web3dart/web3dart.dart';
 
 abstract class WalletAddressService {
   String generateMnemonic();
@@ -93,6 +100,41 @@ class WalletServiceImpl extends ChangeNotifier implements WalletAddressService {
     print(wallet);
     final db = await openDataBase();
     await db.delete("wallets", where: 'privateKey = ?', whereArgs: [wallet.privateKey]);
+  }
+
+  Future<String> getBalance(WalletEntity wallet) async {
+    const returnValue = "0.00";
+    try {
+      final client = Web3Client("http://192.168.15.6:4444", http.Client());
+      final credentials = EthPrivateKey.fromHex(wallet.privateKey);
+      final address = credentials.address;
+      final balance = await client.getBalance(address);
+      final wei = Wei(src: balance.getInWei, currency: "wei");
+      return (wei.toRBTCTrimmedString());
+    }catch(e){
+      return returnValue;
+    }
+  }
+
+  Future<int> getPrice() async {
+    final response = await http.get(Uri.parse('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin&order=market_cap_desc&per_page=100&page=1&sparkline=false'));
+
+    if (response.statusCode == 200) {
+      List<dynamic> body = jsonDecode(response.body);
+
+      List<CoinGeckoResponse> prices = body
+          .map(
+            (dynamic item) => CoinGeckoResponse.fromJson2(item),
+      ).toList();
+      var price = (prices.elementAt(0).current_price);
+
+      setLastUsdPrice(price);
+
+      return price;
+
+    } else {
+      return getLastUsdPrice();
+    }
   }
 
 }
