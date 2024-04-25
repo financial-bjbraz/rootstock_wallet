@@ -53,17 +53,15 @@ class _BodyState extends State<Body> {
       borderRadius: BorderRadius.circular(5),
       child: Column(
         children: [
+          SizedBox(
+            height: MediaQuery.of(context).padding.top,
+          ),
           Expanded(
             flex: 1,
             child: Container(
               padding: const EdgeInsets.all(33.0),
-              child: Text(
-                title,
-                style: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18),
-              ),
+              child: Image.asset('assets/images/maniva.png',
+                  height: 30),
             ),
           ),
           Expanded(
@@ -79,13 +77,13 @@ class _BodyState extends State<Body> {
                       child: TextField(
                         controller: this.mailController,
                         decoration: InputDecoration(
-                            prefixIcon: const Icon(Icons.person),
+                            prefixIcon: const Icon(Icons.person, color: Colors.white,),
                             labelText: AppLocalizations.of(context)!.emailField,
                             border: const OutlineInputBorder(
                                 borderSide:
                                     BorderSide(width: 5, color: Colors.white)),
                             suffixIcon: IconButton(
-                              icon: const Icon(Icons.done),
+                              icon: const Icon(Icons.done, color: Colors.white,),
                               splashColor: Colors.white,
                               tooltip: "Submit",
                               onPressed: () {
@@ -102,7 +100,7 @@ class _BodyState extends State<Body> {
                         obscureText: true,
                         controller: passwordController,
                         decoration: InputDecoration(
-                            prefixIcon: const Icon(Icons.person),
+                            prefixIcon: const Icon(Icons.person, color: Colors.white,),
                             labelText:
                                 AppLocalizations.of(context)!.passwordField,
                             border: const OutlineInputBorder(
@@ -113,6 +111,7 @@ class _BodyState extends State<Body> {
                               icon: const Icon(Icons.done),
                               splashColor: Colors.white,
                               tooltip: "Submit",
+                              color: Colors.white,
                               onPressed: () {},
                             )),
                       ),
@@ -137,7 +136,7 @@ class _BodyState extends State<Body> {
                             children: <Widget>[
                               Row(
                                 children: <Widget>[
-                                  const Icon(Icons.create),
+                                  const Icon(Icons.create, color: Colors.white,),
                                   const SizedBox(
                                     width: 10,
                                   ),
@@ -153,6 +152,7 @@ class _BodyState extends State<Body> {
                               const Icon(
                                 Icons.chevron_right,
                                 size: 20,
+                                color: Colors.white,
                               ),
                             ],
                           ),
@@ -166,7 +166,7 @@ class _BodyState extends State<Body> {
                             children: <Widget>[
                               Row(
                                 children: <Widget>[
-                                  const Icon(Icons.login_rounded),
+                                  const Icon(Icons.login_rounded, color: Colors.white,),
                                   const SizedBox(
                                     width: 10,
                                   ),
@@ -182,6 +182,7 @@ class _BodyState extends State<Body> {
                               const Icon(
                                 Icons.chevron_right,
                                 size: 20,
+                                color: Colors.white,
                               ),
                             ],
                           ),
@@ -200,7 +201,7 @@ class _BodyState extends State<Body> {
                   SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                   OutlinedButton(
                     onPressed: clickLoginAnonimous,
-                    style: greenButtonStyle,
+                    style: pinkButtonStyle,
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
                       child: Row(

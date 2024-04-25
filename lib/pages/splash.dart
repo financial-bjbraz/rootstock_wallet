@@ -35,9 +35,8 @@ class _SplashPageState extends State<Splash> {
           backgroundColor: const Color.fromRGBO(0, 0, 0, 0),
           body: Center(
             child: Image.asset(
-              "assets/images/bjbraz-logo.png",
-              color: Colors.white,
-              height: 50,
+              "assets/images/maniva.png",
+              height: 180,
             ),
           )),
     );

@@ -10,6 +10,13 @@ import 'package:sqflite/sqflite.dart';
 
 const DATABASE_NAME = "my_rootstock_wallet.db";
 
+orange() => const Color.fromRGBO(255, 145, 0, 1);
+pink() => const Color.fromRGBO(255, 112, 224, 1);
+green() => const Color.fromRGBO(121, 198, 0, 1);
+lightBlue() => const Color.fromRGBO(8, 255, 208, 1);
+purple() => const Color.fromRGBO(158, 118, 255, 1);
+yellow() => const Color.fromRGBO(222, 255, 26, 1);
+
 void showMessage(String message, BuildContext context) {
   final snackBar = SnackBar(
     content: Text(message),
@@ -39,6 +46,24 @@ final ButtonStyle orangeButton = ElevatedButton.styleFrom(
   ),
 );
 
+final ButtonStyle yellowButton = ElevatedButton.styleFrom(
+  minimumSize: const Size(88, 36),
+  backgroundColor: yellow(),
+  padding: const EdgeInsets.symmetric(horizontal: 16),
+  shape: const RoundedRectangleBorder(
+    borderRadius: BorderRadius.all(Radius.circular(2)),
+  ),
+);
+
+final ButtonStyle lightBlueButton = ElevatedButton.styleFrom(
+  minimumSize: const Size(88, 36),
+  backgroundColor: lightBlue(),
+  padding: const EdgeInsets.symmetric(horizontal: 16),
+  shape: const RoundedRectangleBorder(
+    borderRadius: BorderRadius.all(Radius.circular(2)),
+  ),
+);
+
 final ButtonStyle greenButtonStyle = ElevatedButton.styleFrom(
   minimumSize: const Size(88, 36),
   backgroundColor: const Color.fromRGBO(121, 198, 0, 1),
@@ -48,9 +73,9 @@ final ButtonStyle greenButtonStyle = ElevatedButton.styleFrom(
   ),
 );
 
-final ButtonStyle pingButton = ElevatedButton.styleFrom(
+final ButtonStyle pinkButtonStyle = ElevatedButton.styleFrom(
   minimumSize: const Size(88, 36),
-  backgroundColor: const Color.fromRGBO(121, 198, 0, 1),
+  backgroundColor: pink(),
   padding: const EdgeInsets.symmetric(horizontal: 16),
   shape: const RoundedRectangleBorder(
     borderRadius: BorderRadius.all(Radius.circular(2)),
@@ -167,11 +192,4 @@ Future<dynamic> closeBoxes() async {
   print("====================================================================");
 
   print("====================================================================");
-}
-
-String getAddress(WalletEntity wallet) {
-  var address = wallet.publicKey;
-  address = "${address.substring(0, 8)}...${address.substring(
-      address.length - 8, address.length)}";
-  return address;
 }

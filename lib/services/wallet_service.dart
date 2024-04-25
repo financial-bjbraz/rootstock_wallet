@@ -4,6 +4,7 @@ import 'package:hex/hex.dart';
 import 'package:bip39/bip39.dart' as bip39;
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
+import 'package:my_rootstock_wallet/entities/wallet_dto.dart';
 import 'package:my_rootstock_wallet/util/CoinGeckoResponse.dart';
 import 'package:my_rootstock_wallet/util/wei.dart';
 import 'package:path/path.dart';
@@ -105,15 +106,31 @@ class WalletServiceImpl extends ChangeNotifier implements WalletAddressService {
   Future<String> getBalance(WalletEntity wallet) async {
     const returnValue = "0.00";
     try {
-      final client = Web3Client("http://192.168.15.6:4444", http.Client());
-      final credentials = EthPrivateKey.fromHex(wallet.privateKey);
-      final address = credentials.address;
-      final balance = await client.getBalance(address);
-      final wei = Wei(src: balance.getInWei, currency: "wei");
+      final wei = await getBalanceInWei(wallet);
       return (wei.toRBTCTrimmedString());
     }catch(e){
       return returnValue;
     }
+  }
+
+  Future<Wei> getBalanceInWei(WalletEntity wallet) async {
+    final client = Web3Client("http://192.168.15.6:4444", http.Client());
+    final credentials = EthPrivateKey.fromHex(wallet.privateKey);
+    final address = credentials.address;
+    final balance = await client.getBalance(address);
+    return Wei(src: balance.getInWei, currency: "wei");
+  }
+
+  Future<WalletDTO> createWalletToDisplay(WalletEntity wallet) async {
+    var walletDto = WalletDTO(wallet: wallet);
+    final wei = await getBalanceInWei(wallet);
+    final usdPrice = await getPrice();
+    final value =  wei.getWei() * usdPrice;
+    walletDto.amountInWeis = wei.getWei();
+    walletDto.amountInUsd = value;
+    walletDto.valueInWeiFormatted = (wei.toRBTCTrimmedString());
+    walletDto.valueInUsdFormatted = (value.toStringAsFixed(2));
+    return walletDto;
   }
 
   Future<int> getPrice() async {

@@ -1,19 +1,16 @@
 import 'package:flutter/services.dart';
+import 'package:my_rootstock_wallet/entities/wallet_dto.dart';
 import 'package:my_rootstock_wallet/pages/details/detail_list.dart';
-import 'package:my_rootstock_wallet/pages/details/account_statements_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:my_rootstock_wallet/wallets/info/view_wallet_detail.dart';
-
 import '../entities/wallet_entity.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../entities/simple_user.dart';
-import '../../entities/wallet_entity.dart';
-import 'package:flutter/material.dart';
 import '../../pages/home_page.dart';
 import '../../services/wallet_service.dart';
-import '../../util/util.dart';
+import '../util/util.dart';
 
 class ViewWalletApp extends StatefulWidget {
   const ViewWalletApp({super.key, required this.wallet});
@@ -28,11 +25,14 @@ class _ViewWalletApp extends State<ViewWalletApp>
     with AutomaticKeepAliveClientMixin {
   final ViewWalletDetail detailChild = ViewWalletDetail();
   final WalletEntity wallet;
+  late WalletDTO walletDto;
   late WalletServiceImpl walletService =
       Provider.of<WalletServiceImpl>(context, listen: false);
   bool _showSaldo = false;
   late String balance = "0";
+  late String balanceInUsd = "0";
   late String title = "";
+  late String address = "";
 
   _ViewWalletApp(this.wallet);
 
@@ -41,7 +41,7 @@ class _ViewWalletApp extends State<ViewWalletApp>
 
   TextSpan addressText() {
     return TextSpan(
-        text: getAddress(wallet),
+        text: address,
         style: const TextStyle(
           fontWeight: FontWeight.bold,
         ));
@@ -54,20 +54,73 @@ class _ViewWalletApp extends State<ViewWalletApp>
   }
 
   loadWalletData() async {
-    walletService.getPrice();
-    walletService.getBalance(wallet).then((value) => {
-          setState(() {
-            balance = value;
-            var id = wallet.walletId;
-            title = "Wallet #$id";
-          })
-        });
+    print("Calling getBalance");
+    return await Future.delayed(const Duration(seconds: 5), () {
+      walletService.createWalletToDisplay(wallet).then((dto) => {
+        setState(() {
+          walletDto = dto;
+          title = walletDto.getName();
+          balance = walletDto.valueInWeiFormatted;
+          balanceInUsd = walletDto.valueInUsdFormatted;
+          address = walletDto.getAddress();
+        })
+      });
+    });
+  }
+
+  Future<void> dialogBuilder(BuildContext context) {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Delete $title'),
+          content: const Text(
+              'Do you really want to delete this wallet?\n'
+              'If you have not backed up the seed, \n'
+              'this wallet can no longer be recovered. \n'
+              'We are not responsible for possible losses of funds.',
+          ),
+          actions: <Widget>[
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: const Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: const Text('Delete'),
+              onPressed: () {
+                walletService.delete(wallet);
+                showMessage("Wallet deleted", context);
+
+                Navigator.of(context)
+                    .pushReplacement(MaterialPageRoute(
+                    builder: (context) => HomePage(
+                      user: SimpleUser(
+                          name: AppLocalizations.of(
+                              context)!
+                              .anonimus,
+                          email:
+                          "${AppLocalizations.of(context)!.passwordField}@${AppLocalizations.of(context)!.passwordField}.com"),
+                    )));
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     super.build(context);
-
+    loadWalletData();
     return Padding(
       padding: const EdgeInsets.all(20),
       child: Container(
@@ -127,19 +180,8 @@ class _ViewWalletApp extends State<ViewWalletApp>
                             onTap: () {
                               setState(() {
                                 _showSaldo = !_showSaldo;
-                                walletService.delete(wallet);
-                                showMessage("Wallet deleted", context);
+                                dialogBuilder(context);
 
-                                Navigator.of(context)
-                                    .pushReplacement(MaterialPageRoute(
-                                        builder: (context) => HomePage(
-                                              user: SimpleUser(
-                                                  name: AppLocalizations.of(
-                                                          context)!
-                                                      .anonimus,
-                                                  email:
-                                                      "${AppLocalizations.of(context)!.passwordField}@${AppLocalizations.of(context)!.passwordField}.com"),
-                                            )));
                               });
                             },
                             child: SvgPicture.asset(
@@ -260,10 +302,10 @@ class _ViewWalletApp extends State<ViewWalletApp>
                                             size: 48,
                                           ),
                                           _showSaldo
-                                              ? const Text.rich(
+                                              ? Text.rich(
                                                   TextSpan(
-                                                      text: " USD 125.43",
-                                                      style: TextStyle(
+                                                      text: balanceInUsd,
+                                                      style: const TextStyle(
                                                           fontWeight:
                                                               FontWeight.bold,
                                                           backgroundColor:
@@ -273,7 +315,7 @@ class _ViewWalletApp extends State<ViewWalletApp>
                                                                   0,
                                                                   1))),
                                                   textAlign: TextAlign.start,
-                                                  style: TextStyle(
+                                                  style: const TextStyle(
                                                     color: Colors.white,
                                                     fontSize: 28,
                                                   ),

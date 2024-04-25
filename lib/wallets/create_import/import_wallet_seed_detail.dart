@@ -8,7 +8,7 @@ import '../../util/util.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ImportNewWalletBySeedDetail extends StatefulWidget {
-  const ImportNewWalletBySeedDetail({Key? key}) : super(key: key);
+  const ImportNewWalletBySeedDetail({super.key});
 
   @override
   _ImportNewWalletBySeedDetail createState() => _ImportNewWalletBySeedDetail();
@@ -18,16 +18,9 @@ class _ImportNewWalletBySeedDetail extends State<ImportNewWalletBySeedDetail> {
   late WalletServiceImpl walletService = Provider.of<WalletServiceImpl>(context, listen: false);
   bool inputSeedEnabled = true;
 
+  @override
   Widget build(BuildContext context) {
     final TextEditingController mailController = TextEditingController();
-
-    final ButtonStyle raisedButtonStyle = ElevatedButton.styleFrom(
-      minimumSize: const Size(88, 36),
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(2)),
-      ),
-    );
 
     return Scaffold(
         backgroundColor: Colors.white,
@@ -50,7 +43,7 @@ class _ImportNewWalletBySeedDetail extends State<ImportNewWalletBySeedDetail> {
               ],
             ),
           ),
-          backgroundColor: const Color.fromRGBO(7, 255, 208, 1),
+          backgroundColor: green(),
         ),
         body: ClipRRect(
           borderRadius: BorderRadius.circular(5),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_rootstock_wallet/entities/wallet.dart';
+import 'package:my_rootstock_wallet/entities/wallet_dto.dart';
 import 'package:my_rootstock_wallet/services/wallet_service.dart';
 import 'package:provider/provider.dart';
 
@@ -12,7 +12,7 @@ class CreateWallet extends StatelessWidget {
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(5),
-      child: Column(
+      child: const Column(
         children: [
           Expanded(
             child: Column(

@@ -16,4 +16,9 @@ class Wei {
     var valueMul = src / conversor;
     return valueMul.toStringAsFixed(2);
   }
+
+  double getWei() {
+    return src / conversor;
+  }
+
 }

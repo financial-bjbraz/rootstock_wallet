@@ -94,20 +94,10 @@ class ImportSeedPkApp extends StatelessWidget {
                           ),
                           onTap: () {
 
-                            final snackBar = SnackBar(
-                              content: Text("Importar Private Key"),
-                              action: SnackBarAction(
-                                label: 'Ok',
-                                onPressed: () {},
-                              ),
-                            );
-
-                            ScaffoldMessenger.of(context).showSnackBar(snackBar);
-
                             Navigator.of(context).push(PageRouteBuilder(
                               pageBuilder: (context, animation, secondaryAnimation) => DetailList(child: importWalletByPrivateKey),
                               transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                                var begin = Offset(0.0, 1.0);
+                                var begin = const Offset(0.0, 1.0);
                                 var end = Offset.zero;
                                 var curve = Curves.ease;
                                 var tween = Tween(begin: begin, end: end)

@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 
 import '../entities/wallet_entity.dart';
 import '../services/wallet_service.dart';
+import '../util/util.dart';
 
 class HomePage extends StatefulWidget {
   final SimpleUser user;
@@ -54,7 +55,7 @@ class _HomePageState extends State<HomePage> {
       _yPosition = _heightScreen * .24;
     }
     return Scaffold(
-      backgroundColor: Color(0x293145),
+      backgroundColor: Colors.black,
       body: Stack(
         alignment: Alignment.topCenter,
         children: <Widget>[

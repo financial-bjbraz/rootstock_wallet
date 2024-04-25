@@ -1,13 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../entities/simple_user.dart';
+import '../../entities/wallet_entity.dart';
+import '../../pages/home_page.dart';
+import '../../util/util.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../../services/wallet_service.dart';
 
-class ImportNewWalletByPrivateKeyDetail extends StatelessWidget {
+class ImportNewWalletByPrivateKeyDetail extends StatefulWidget {
   const ImportNewWalletByPrivateKeyDetail({super.key});
+
+  @override
+  _ImportNewWalletByPKDetail createState() => _ImportNewWalletByPKDetail();
+}
+
+class _ImportNewWalletByPKDetail
+    extends State<ImportNewWalletByPrivateKeyDetail> {
+  late WalletServiceImpl walletService =
+      Provider.of<WalletServiceImpl>(context, listen: false);
+  bool inputSeedEnabled = true;
+
+  @override
   Widget build(BuildContext context) {
+    final TextEditingController mailController = TextEditingController();
+
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          title: Padding(
-            padding: const EdgeInsets.all(20),
+          title: const Padding(
+            padding: EdgeInsets.all(20),
             child: Row(
               children: <Widget>[
                 Icon(Icons.add_circle, color: Colors.white),
@@ -24,7 +45,7 @@ class ImportNewWalletByPrivateKeyDetail extends StatelessWidget {
               ],
             ),
           ),
-          backgroundColor: const Color.fromRGBO(7, 255, 208, 1),
+          backgroundColor: purple(),
         ),
         body: ClipRRect(
           borderRadius: BorderRadius.circular(5),
@@ -48,42 +69,100 @@ class ImportNewWalletByPrivateKeyDetail extends StatelessWidget {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
-                                    Text.rich(
+                                    const Text.rich(
                                       TextSpan(
-                                            text: "Insert your private key",
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                            )),
+                                          text: "Insert your private key",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                          )),
                                       textAlign: TextAlign.start,
                                       style: TextStyle(
                                         color: Colors.teal,
                                         fontSize: 28,
                                       ),
                                     ),
-                                    Text.rich(
-                                      TextSpan(
-                                          text: "Limite disponível ",
-                                          children: [
-                                            TextSpan(
-                                                text: " R\$ 2.200.95",
-                                                style: TextStyle(
-                                                  color: Colors.green,
-                                                  fontWeight: FontWeight.bold,
-                                                )),
-                                          ]),
-                                      textAlign: TextAlign.start,
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 12,
+                                    const SizedBox(
+                                      height: 20,
+                                    ),
+                                    TextField(
+                                      controller: mailController,
+                                      enabled: inputSeedEnabled,
+                                      decoration: InputDecoration(
+                                          labelText:
+                                              "Type or Paste your PrivateKey",
+                                          border: const OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                  width: 5,
+                                                  color: Colors.white)),
+                                          suffixIcon: IconButton(
+                                            icon: const Icon(Icons.done),
+                                            splashColor: Colors.white,
+                                            onPressed: () {
+                                              FocusScope.of(context)
+                                                  .requestFocus(FocusNode());
+                                            },
+                                          )),
+                                    ),
+                                    const SizedBox(
+                                      height: 20,
+                                    ),
+                                    ElevatedButton(
+                                      onPressed: () async {
+                                        var privateKey = mailController.text;
+
+                                        if (privateKey.isEmpty) {
+                                          showMessage(
+                                              "Invalid privateKey", context);
+                                        } else {
+                                          var publicKey = await walletService
+                                              .getPublicKeyString(privateKey);
+                                          var walletId = await getIndex();
+                                          WalletEntity wallet = WalletEntity(
+                                              privateKey: privateKey,
+                                              publicKey: publicKey,
+                                              walletId: walletId,
+                                              walletName: "Wallet #");
+
+                                          walletService
+                                              .persistNewWallet(wallet);
+                                          showMessage(
+                                              "Account ${wallet.walletName} Created",
+                                              context);
+                                          Navigator.of(context).pushReplacement(
+                                              MaterialPageRoute(
+                                                  builder:
+                                                      (context) => HomePage(
+                                                            user: SimpleUser(
+                                                                name: AppLocalizations.of(
+                                                                        context)!
+                                                                    .anonimus,
+                                                                email:
+                                                                    "${AppLocalizations.of(context)!.passwordField}@${AppLocalizations.of(context)!.passwordField}.com"),
+                                                          )));
+                                        }
+                                      },
+                                      style: raisedButtonStyle,
+                                      child: const Row(
+                                        children: <Widget>[
+                                          Row(
+                                            children: <Widget>[
+                                              Icon(Icons.key),
+                                              SizedBox(
+                                                width: 10,
+                                              ),
+                                              Text(
+                                                "Validate and Import",
+                                                style: TextStyle(fontSize: 20),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
                                       ),
                                     ),
                                   ],
                                 ),
                               ),
                             ),
-                            SizedBox(
-                                height:
-                                MediaQuery.of(context).size.height * 0.05),
                           ],
                         ),
                       ),
@@ -97,6 +176,9 @@ class ImportNewWalletByPrivateKeyDetail extends StatelessWidget {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(5),
                           child: Container(
+                            width: 7,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5)),
                             child: Column(
                               children: <Widget>[
                                 Expanded(
@@ -110,9 +192,6 @@ class ImportNewWalletByPrivateKeyDetail extends StatelessWidget {
                                     child: Container(color: Colors.green)),
                               ],
                             ),
-                            width: 7,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5)),
                           ),
                         ),
                       ),
@@ -120,33 +199,6 @@ class ImportNewWalletByPrivateKeyDetail extends StatelessWidget {
                   ),
                 ),
               ),
-              Expanded(
-                flex: 2,
-                child: Container(
-                  child: Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: ListView(
-                      scrollDirection: Axis.vertical,
-                      children: [
-
-                        SizedBox(
-                          height: 10,
-                        ),
-
-                      ],
-                    ),
-                  ),
-                  color: Colors.grey[200],
-                ),
-              ),
-              // Center(
-              //   child: ElevatedButton(
-              //     onPressed: () {
-              //       Navigator.pop(context);
-              //     },
-              //     child: Text("Go Back"),
-              //   ),
-              // ),
             ],
           ),
         ));

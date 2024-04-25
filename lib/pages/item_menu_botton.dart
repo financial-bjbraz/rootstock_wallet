@@ -16,6 +16,7 @@ class ItemMenuBottom extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       child: Container(
+        height: MediaQuery.of(context).size.height * .15,
         child: Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: 10,
@@ -24,7 +25,7 @@ class ItemMenuBottom extends StatelessWidget {
           child: Container(
             width: MediaQuery.of(context).size.width * 0.22,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(5),
+              borderRadius: BorderRadius.circular(20),
               color: Colors.white,
             ),
             child: Padding(

@@ -2,6 +2,7 @@ import 'package:my_rootstock_wallet/pages/item_menu_botton.dart';
 import 'package:my_rootstock_wallet/pages/details/account_statements_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:my_rootstock_wallet/util/util.dart';
 
 
 class BottomMenu extends StatefulWidget {
@@ -50,7 +51,7 @@ class _BottomMenuState extends State<BottomMenu> {
                 duration: Duration(milliseconds: 200),
                 opacity: !widget.showMenu ? 1 : 0,
                 child: Container(
-                  color: Color(0x293145),
+                  color: Colors.black,
                   child: ListView(
                     physics: BouncingScrollPhysics(),
                     scrollDirection: Axis.horizontal,

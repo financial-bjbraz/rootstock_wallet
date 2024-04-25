@@ -98,14 +98,14 @@ class _PageViewAppState extends State<PageViewApp> {
                   ...widgets,
                   const CreateWalletApp(),
                   const ImportSeedPkApp(),
-                  CardApp(
-                    detailChild: AccountStatementsDetail(),
-                    child: const AccountInfo(),
-                  ),
-                  const CardApp(
-                    detailChild: AccountInfo(),
-                    child: Rewards(),
-                  ),
+                  // CardApp(
+                  //   detailChild: AccountStatementsDetail(),
+                  //   child: const AccountInfo(),
+                  // ),
+                  // const CardApp(
+                  //   detailChild: AccountInfo(),
+                  //   child: Rewards(),
+                  // ),
                 ],
               ),
             ),

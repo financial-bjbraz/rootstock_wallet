@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../util/util.dart';
+
 class MyAppBar extends StatelessWidget {
   final bool showMenu;
   final VoidCallback onTap;
@@ -22,30 +24,37 @@ class MyAppBar extends StatelessWidget {
         GestureDetector(
           onTap: onTap,
           child: Container(
-            color: const Color.fromRGBO(255, 145, 0, 1),
-            height: MediaQuery.of(context).size.height * .20,
+            decoration: BoxDecoration(
+                border: Border.all(
+                  color: Colors.black,
+                ),
+                borderRadius: const BorderRadius.all(Radius.circular(20)),
+                color: orange(),
+            ),
+            //color: orange(),
+            height: MediaQuery.of(context).size.height * .15,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Image.asset('assets/images/bjbraz-logo.png',
-                        height: 30, color: Colors.white),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Text(
-                      userName,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                        color: Colors.white,
-                      ),
-                    ),
+                    Image.asset('assets/images/maniva_logo_white.png',
+                        height: 70),
+                    // const SizedBox(
+                    //   width: 10,
+                    // ),
+                    // Text(
+                    //   userName,
+                    //   style: const TextStyle(
+                    //     fontWeight: FontWeight.bold,
+                    //     fontSize: 18,
+                    //     color: Colors.white,
+                    //   ),
+                    // ),
                   ],
                 ),
-                Icon(showMenu ? Icons.expand_less : Icons.expand_more),
+                Icon(showMenu ? Icons.expand_less : Icons.expand_more, color: Colors.white,),
               ],
             ),
           ),
