@@ -114,10 +114,15 @@ class WalletServiceImpl extends ChangeNotifier implements WalletAddressService {
   }
 
   Future<Wei> getBalanceInWei(WalletEntity wallet) async {
-    final client = Web3Client("http://192.168.15.6:4444", http.Client());
-    final credentials = EthPrivateKey.fromHex(wallet.privateKey);
-    final address = credentials.address;
-    final balance = await client.getBalance(address);
+    var balance = EtherAmount.zero();
+    try {
+      final client = Web3Client("http://192.168.15.6:4444", http.Client());
+      final credentials = EthPrivateKey.fromHex(wallet.privateKey);
+      final address = credentials.address;
+      balance = await client.getBalance(address);
+    } catch(error) {
+      print(error);
+    }
     return Wei(src: balance.getInWei, currency: "wei");
   }
 

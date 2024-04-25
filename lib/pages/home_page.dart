@@ -1,3 +1,4 @@
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:my_rootstock_wallet/entities/simple_user.dart';
 import 'package:my_rootstock_wallet/pages/bottom_menu.dart';
 import 'package:my_rootstock_wallet/pages/menu_app.dart';
@@ -10,6 +11,7 @@ import 'package:provider/provider.dart';
 import '../entities/wallet_entity.dart';
 import '../services/wallet_service.dart';
 import '../util/util.dart';
+import 'Bottom_menu_new.dart';
 
 class HomePage extends StatefulWidget {
   final SimpleUser user;
@@ -56,6 +58,13 @@ class _HomePageState extends State<HomePage> {
     }
     return Scaffold(
       backgroundColor: Colors.black,
+      bottomNavigationBar: CurvedNavigationBar(
+          backgroundColor: Colors.black,
+          items: const [
+            Icon(Icons.home),
+            Icon(Icons.favorite),
+            Icon(Icons.settings)
+          ]),
       body: Stack(
         alignment: Alignment.topCenter,
         children: <Widget>[
@@ -74,9 +83,9 @@ class _HomePageState extends State<HomePage> {
             top: _heightScreen * .205,
             showMenu: _showMenu,
           ),
-          BottomMenu(
-            showMenu: _showMenu,
-          ),
+          // BottomMenu(
+          //   showMenu: _showMenu,
+          // ),
           MyDotsApp(
             showMenu: _showMenu,
             top: _heightScreen * .70,
