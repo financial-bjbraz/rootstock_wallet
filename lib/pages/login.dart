@@ -5,20 +5,20 @@ import 'package:my_rootstock_wallet/pages/home_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:my_rootstock_wallet/services/auth.dart';
+import 'package:provider/provider.dart';
 
+import '../services/create_user_service.dart';
 import '../util/util.dart';
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  const LoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     verifyAndCreateDataBase();
-    return Container(
-      child: Scaffold(
-        backgroundColor: const Color.fromRGBO(0, 0, 0, 0),
-        body: Body(),
-      ),
+    return Scaffold(
+      backgroundColor: const Color.fromRGBO(0, 0, 0, 0),
+      body: Body(),
     );
   }
 }
@@ -29,14 +29,22 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  String MESSAGE_INVALID_EMAIL = "Invalid email";
-  String MESSAGE_INVALID_PASSWORD =
-      "Invalid Password. Password must not be least than 8 chars";
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   TextEditingController passwordController = TextEditingController();
   TextEditingController mailController = TextEditingController();
   late bool _buttonPressed = false;
   late String _email, _password;
+  late String mensagem_invalid_email = AppLocalizations.of(context)!.mensagem_invalid_email;
+  late String mensagem_invalid_password = AppLocalizations.of(context)!.mensagem_invalid_password;
+  late String mensagem_user_exists = AppLocalizations.of(context)!.mensagem_user_exists;
+  late String mensagem_user_not_found = AppLocalizations.of(context)!.mensagem_user_not_found;
+  late String user_created_successfully = AppLocalizations.of(context)!.user_created_successfully;
+  late CreateUserServiceImpl createUserServiceImpl = Provider.of<CreateUserServiceImpl>(context, listen: false);
 
   late User user;
   final auth = FirebaseAuth.instance;
@@ -46,7 +54,6 @@ class _BodyState extends State<Body> {
     final String login = AppLocalizations.of(context)!.login;
     final String createAccount = AppLocalizations.of(context)!.createAccount;
     final String title = AppLocalizations.of(context)!.title;
-
     FocusNode textSecondFocusNode = FocusNode();
 
     return ClipRRect(
@@ -67,7 +74,7 @@ class _BodyState extends State<Body> {
           Expanded(
             flex: 3,
             child: Container(
-              color: const Color.fromRGBO(0, 0, 0, 0),
+              color: Colors.black,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
@@ -75,59 +82,37 @@ class _BodyState extends State<Body> {
                     Padding(
                       padding: const EdgeInsets.all(10),
                       child: TextField(
-                        controller: this.mailController,
-                        decoration: InputDecoration(
-                            prefixIcon: const Icon(Icons.person, color: Colors.white,),
-                            labelText: AppLocalizations.of(context)!.emailField,
-                            border: const OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(width: 5, color: Colors.white)),
-                            suffixIcon: IconButton(
-                              icon: const Icon(Icons.done, color: Colors.white,),
-                              splashColor: Colors.white,
-                              tooltip: "Submit",
-                              onPressed: () {
-                                FocusScope.of(context)
-                                    .requestFocus(textSecondFocusNode);
-                              },
-                            )),
+                        style: const TextStyle(color: Colors.white),
+                        cursorColor: Colors.white,
+                        controller: mailController,
+                        decoration: simmpleDecoration(AppLocalizations.of(context)!.emailField,  const Icon(Icons.person, color: Colors.white,)),
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(10),
                       child: TextField(
                         focusNode: textSecondFocusNode,
+                        style: const TextStyle(color: Colors.white),
+                        cursorColor: Colors.white,
                         obscureText: true,
                         controller: passwordController,
-                        decoration: InputDecoration(
-                            prefixIcon: const Icon(Icons.person, color: Colors.white,),
-                            labelText:
-                                AppLocalizations.of(context)!.passwordField,
-                            border: const OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(width: 5, color: Colors.white),
-                            ),
-                            suffixIcon: IconButton(
-                              icon: const Icon(Icons.done),
-                              splashColor: Colors.white,
-                              tooltip: "Submit",
-                              color: Colors.white,
-                              onPressed: () {},
-                            )),
+                        decoration: simmpleDecoration(AppLocalizations.of(context)!.passwordField,  const Icon(Icons.password, color: Colors.white,)),
                       ),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         ElevatedButton(
-                          onPressed: () {
-                            if (validate()) {
+                          onPressed: () async {
+                            var user = SimpleUser(
+                              name: mailController.text,
+                              email: mailController.text,
+                              password: passwordController.text);
+                            if (await validate(user)) {
                               Navigator.of(context)
                                   .pushReplacement(MaterialPageRoute(
                                       builder: (context) => TransactionsPage(
-                                            user: SimpleUser(
-                                                name: mailController.text,
-                                                email: mailController.text),
+                                            user: user,
                                           )));
                             }
                           },
@@ -158,8 +143,19 @@ class _BodyState extends State<Body> {
                           ),
                         ),
                         ElevatedButton(
-                          onPressed: () {
-                            if (validate()) {}
+                          onPressed: () async {
+                            var user = SimpleUser(
+                                name: mailController.text,
+                                email: mailController.text,
+                                password: passwordController.text);
+
+                            if (await validateCreateAccount(user)) {
+                              Navigator.of(context)
+                                  .pushReplacement(MaterialPageRoute(
+                                  builder: (context) => TransactionsPage(
+                                    user: user ,
+                                  )));
+                            }
                           },
                           style: orangeButton,
                           child: Row(
@@ -244,7 +240,8 @@ class _BodyState extends State<Body> {
           user: SimpleUser(
               name: AppLocalizations.of(context)!.anonimus,
               email:
-                  "${AppLocalizations.of(context)!.passwordField}@${AppLocalizations.of(context)!.passwordField}.com"),
+                  "${AppLocalizations.of(context)!.passwordField}@${AppLocalizations.of(context)!.passwordField}.com",
+              password: "",),
         ),
       ),
     );
@@ -258,26 +255,50 @@ class _BodyState extends State<Body> {
     );
   }
 
-  bool validate() {
+  Future<bool> validate(SimpleUser user) async {
+    var email = user.email;
+    var password = user.password;
+
+    if (email.isEmpty) {
+      showMessage(mensagem_invalid_email);
+      return false;
+    }
+
+    if (password.isEmpty ||  password.length < 8) {
+      showMessage(mensagem_invalid_password);
+      return false;
+    }
+
+    var userExists = await createUserServiceImpl.getUser(user);
+    if (userExists == null) {
+      showMessage(mensagem_user_exists);
+    }
+
+    return true;
+  }
+
+  Future<bool> validateCreateAccount(SimpleUser user) async {
     var email = mailController.text;
     var password = passwordController.text;
-    var message = "";
 
-    // if (email.isEmpty) {
-    //   showMessage(MESSAGE_INVALID_EMAIL);
-    //   return false;
-    // }
-    //
-    // if (password.isEmpty) {
-    //   showMessage(MESSAGE_INVALID_PASSWORD);
-    //   return false;
-    // }
-    //
-    // if (password.length < 8) {
-    //   showMessage(MESSAGE_INVALID_PASSWORD);
-    //   return false;
-    // }
+    if (email.isEmpty) {
+      showMessage(mensagem_invalid_email);
+      return false;
+    }
 
+    if (password.isEmpty ||  password.length < 8) {
+      showMessage(mensagem_invalid_password);
+      return false;
+    }
+    print("getting user in database");
+    var userExists = await createUserServiceImpl.getUser(user);
+    print("user retrieved $userExists");
+    if (userExists != null) {
+      showMessage(mensagem_user_exists);
+    } else {
+      createUserServiceImpl.createUser(user);
+      showMessage(user_created_successfully);
+    }
     return true;
   }
 
@@ -294,4 +315,5 @@ class _BodyState extends State<Body> {
 
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
+
 }

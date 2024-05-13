@@ -120,7 +120,8 @@ class _ImportNewWalletBySeedDetail extends State<ImportNewWalletBySeedDetail> {
                                                 user: SimpleUser(
                                                     name: AppLocalizations.of(context)!.anonimus,
                                                     email:
-                                                    "${AppLocalizations.of(context)!.passwordField}@${AppLocalizations.of(context)!.passwordField}.com"),
+                                                    "${AppLocalizations.of(context)!.passwordField}@${AppLocalizations.of(context)!.passwordField}.com",
+                                                    password: ""),
                                               )));
 
                                         }

@@ -9,19 +9,20 @@ class Splash extends StatefulWidget {
 }
 
 class _SplashPageState extends State<Splash> {
+  @override
   void initState() {
     super.initState();
     delay();
   }
 
   Future<void> delay() async {
-    return await Future.delayed(Duration(seconds: 5), () {
+    return await Future.delayed(const Duration(seconds: 5), () {
       Navigator.pushReplacement(
         context,
         PageRouteBuilder(
           pageBuilder: (BuildContext context, Animation animation,
               Animation secondaryAnimation) {
-            return LoginPage();
+            return const LoginPage();
           },
         ),
       );
@@ -30,15 +31,13 @@ class _SplashPageState extends State<Splash> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Scaffold(
-          backgroundColor: const Color.fromRGBO(0, 0, 0, 0),
-          body: Center(
-            child: Image.asset(
-              "assets/images/maniva.png",
-              height: 180,
-            ),
-          )),
-    );
+    return Scaffold(
+        backgroundColor: Colors.black,
+        body: Center(
+          child: Image.asset(
+            "assets/images/maniva.png",
+            height: 180,
+          ),
+        ));
   }
 }

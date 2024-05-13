@@ -107,7 +107,8 @@ class _ViewWalletApp extends State<ViewWalletApp>
                               context)!
                               .anonimus,
                           email:
-                          "${AppLocalizations.of(context)!.passwordField}@${AppLocalizations.of(context)!.passwordField}.com"),
+                          "${AppLocalizations.of(context)!.passwordField}@${AppLocalizations.of(context)!.passwordField}.com",
+                      password: ""),
                     )));
               },
             ),

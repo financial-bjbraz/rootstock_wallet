@@ -1,17 +1,17 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:my_rootstock_wallet/entities/simple_user.dart';
-import 'package:my_rootstock_wallet/pages/bottom_menu.dart';
+import 'package:my_rootstock_wallet/entities/wallet_dto.dart';
+import 'package:my_rootstock_wallet/entities/wallet_entity.dart';
 import 'package:my_rootstock_wallet/pages/menu_app.dart';
 import 'package:my_rootstock_wallet/pages/my_app_bar.dart';
 import 'package:my_rootstock_wallet/pages/my_dots_app.dart';
 import 'package:my_rootstock_wallet/pages/page_view_app.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../entities/wallet_entity.dart';
 import '../services/wallet_service.dart';
-import '../util/util.dart';
-import 'Bottom_menu_new.dart';
+import 'details/account_statements_detail.dart';
+import 'details/create_send_transaction.dart';
+import 'details/detail_list.dart';
 
 class HomePage extends StatefulWidget {
   final SimpleUser user;
@@ -28,7 +28,8 @@ class _HomePageState extends State<HomePage> {
   late double _yPosition = 0;
   late SimpleUser _user;
   late int _walletQuantity;
-  late WalletServiceImpl walletService = Provider.of<WalletServiceImpl>(context);
+  late WalletServiceImpl walletService =
+      Provider.of<WalletServiceImpl>(context);
 
   _HomePageState(this._user);
 
@@ -42,10 +43,10 @@ class _HomePageState extends State<HomePage> {
 
   loadWallets() async {
     walletService.getWallets().then((walletsLoaded) => {
-      setState(() {
-         _walletQuantity = walletsLoaded.length;
-      }),
-    });
+          setState(() {
+            _walletQuantity = walletsLoaded.length;
+          }),
+        });
   }
 
   @override
@@ -58,13 +59,35 @@ class _HomePageState extends State<HomePage> {
     }
     return Scaffold(
       backgroundColor: Colors.black,
-      bottomNavigationBar: CurvedNavigationBar(
-          backgroundColor: Colors.black,
-          items: const [
-            Icon(Icons.home),
-            Icon(Icons.favorite),
-            Icon(Icons.settings)
-          ]),
+      bottomNavigationBar:
+          CurvedNavigationBar(backgroundColor: Colors.black, items: [
+            const Icon(Icons.home),
+        GestureDetector(
+          child: const Icon(Icons.call_made),
+          onTap: () => {
+            Navigator.of(context).push(PageRouteBuilder(
+              pageBuilder: (context, animation, secondaryAnimation) =>
+                  DetailList(child: CreateSendTransaction(wallet: WalletDTO(wallet: WalletEntity(privateKey: "privateKey", walletName: "walletName", walletId: "walletId", publicKey: "publicKey")),)),
+              transitionsBuilder:
+                  (context, animation, secondaryAnimation, child) {
+                var begin = const Offset(0.0, 1.0);
+                var end = Offset.zero;
+                var curve = Curves.ease;
+
+                var tween = Tween(begin: begin, end: end)
+                    .chain(CurveTween(curve: curve));
+
+                return SlideTransition(
+                  position: animation.drive(tween),
+                  child: child,
+                );
+              },
+            ))
+          },
+        ),
+
+        Icon(Icons.call_received)
+      ]),
       body: Stack(
         alignment: Alignment.topCenter,
         children: <Widget>[

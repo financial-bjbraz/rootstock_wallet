@@ -140,27 +140,21 @@ Future<Database> openDataBase() async {
     print("====================================================================");
     print("==================== Opening database ==================");
   }
-// Avoid errors caused by flutter upgrade.
-// Importing 'package:flutter/widgets.dart' is required.
-//  WidgetsFlutterBinding.ensureInitialized();
-// Open the database and store the reference.
-//
-final database = openDatabase(
-    // Set the path to the database. Note: Using the `join` function from the
-    // `path` package is best practice to ensure the path is correctly
-    // constructed for each platform.
-    join(await getDatabasesPath(), DATABASE_NAME),
-    // When the database is first created, create a table to store dogs.
-    onCreate: (db, version) {
-      // Run the CREATE TABLE statement on the database.
-      return db.execute(
-        'CREATE TABLE wallets(privateKey TEXT PRIMARY KEY, walletName TEXT, walletId TEXT,publicKey TEXT)',
+  // Avoid errors caused by flutter upgrade.
+  // Importing 'package:flutter/widgets.dart' is required.
+  //  WidgetsFlutterBinding.ensureInitialized();
+  // Open the database and store the reference.
+  //
+  Database database = await openDatabase(DATABASE_NAME, version: 1,
+      onCreate: (Database db, int version) async {
+      await db.execute(
+        'CREATE TABLE wallets(privateKey TEXT PRIMARY KEY, walletName TEXT, walletId TEXT,publicKey TEXT)'
       );
-    },
-    // Set the version. This executes the onCreate function and provides a
-    // path to perform database upgrades and downgrades.
-    version: 1,
-  );
+      await db.execute(
+        'CREATE TABLE users(name TEXT PRIMARY KEY, email TEXT, userId TEXT, password TEXT)'
+      );
+    });
+
   if (kDebugMode) {
     print("====================================================================");
     print("==========Creating database =============");
@@ -170,26 +164,38 @@ final database = openDatabase(
 }
 
 createTable() async {
-  final database = openDatabase(
-    // Set the path to the database. Note: Using the `join` function from the
-    // `path` package is best practice to ensure the path is correctly
-    // constructed for each platform.
-      join(await getDatabasesPath(), DATABASE_NAME),
-  // When the database is first created, create a table to store dogs.
-      onCreate: (db, version) {
-  // Run the CREATE TABLE statement on the database.
-  return db.execute(
-  'CREATE TABLE wallets(privateKey TEXT PRIMARY KEY, walletName TEXT, walletId TEXT,publicKey TEXT)',
-  );
-  },
-  // Set the version. This executes the onCreate function and provides a
-  // path to perform database upgrades and downgrades.
-  version: 1,
-  );
+  openDataBase();
 }
 
-Future<dynamic> closeBoxes() async {
-  print("====================================================================");
+InputDecoration simmpleDecoration(final String labelText, final Icon icon) {
+  FocusNode textSecondFocusNode = FocusNode();
+  return InputDecoration(
+      focusColor: Colors.white,
+      enabled: true,
 
-  print("====================================================================");
+      fillColor: Colors.white,
+      prefixIcon: icon,
+      labelText: labelText,
+      labelStyle: const TextStyle( color: Colors.white ),
+      enabledBorder: const OutlineInputBorder(
+        borderSide:
+        BorderSide(color: Colors.white),
+      ),
+      focusedBorder: const OutlineInputBorder(
+        borderSide:
+        BorderSide(width: 2, color: Colors.white),
+      ),
+      border: const OutlineInputBorder(
+        borderSide:
+        BorderSide(width: 1, color: Colors.white),
+      ),
+      suffixIcon: IconButton(
+        icon: const Icon(Icons.done, color: Colors.white,),
+        splashColor: Colors.green,
+        tooltip: "Submit",
+        onPressed: () {
+
+        },
+      ));
 }
+

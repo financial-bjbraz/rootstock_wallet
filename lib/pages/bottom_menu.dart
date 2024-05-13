@@ -24,7 +24,7 @@ class _BottomMenuState extends State<BottomMenu> {
 
   Future<void> delayAnimation() async {
     Future.delayed(Duration(milliseconds: 0), () {
-      setState(() {
+      (() {
         _tween = Tween<double>(begin: 150.0, end: 0.0);
       });
     });
