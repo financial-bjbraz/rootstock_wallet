@@ -54,7 +54,7 @@ class _ViewWalletApp extends State<ViewWalletApp>
   }
 
   loadWalletData() async {
-    print("Calling getBalance");
+    print("Calling getBalance for account ${wallet.publicKey}");
     return await Future.delayed(const Duration(seconds: 5), () {
       walletService.createWalletToDisplay(wallet).then((dto) => {
         setState(() {

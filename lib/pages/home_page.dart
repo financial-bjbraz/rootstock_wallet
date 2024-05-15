@@ -7,6 +7,7 @@ import 'package:my_rootstock_wallet/pages/my_app_bar.dart';
 import 'package:my_rootstock_wallet/pages/my_dots_app.dart';
 import 'package:my_rootstock_wallet/pages/page_view_app.dart';
 import 'package:flutter/material.dart';
+import 'package:my_rootstock_wallet/util/util.dart';
 import 'package:provider/provider.dart';
 import '../services/wallet_service.dart';
 import 'details/account_statements_detail.dart';
@@ -42,11 +43,16 @@ class _HomePageState extends State<HomePage> {
   }
 
   loadWallets() async {
-    walletService.getWallets().then((walletsLoaded) => {
-          setState(() {
-            _walletQuantity = walletsLoaded.length;
-          }),
-        });
+    try {
+      walletService.getWallets(_user.email).then((walletsLoaded) =>
+      {
+        setState(() {
+          _walletQuantity = walletsLoaded.length;
+        }),
+      });
+    }catch(e) {
+      print('error occurred $e');
+    }
   }
 
   @override
@@ -60,14 +66,14 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: Colors.black,
       bottomNavigationBar:
-          CurvedNavigationBar(backgroundColor: Colors.black, items: [
-            const Icon(Icons.home),
-        GestureDetector(
-          child: const Icon(Icons.call_made),
+          CurvedNavigationBar(color: orange(), backgroundColor: Colors.black, buttonBackgroundColor: orange(), items: [
+            const Icon(Icons.home, color: Colors.white),
+            _walletQuantity > 1 ? GestureDetector(
+          child: const Icon(Icons.call_made, color: Colors.white),
           onTap: () => {
             Navigator.of(context).push(PageRouteBuilder(
               pageBuilder: (context, animation, secondaryAnimation) =>
-                  DetailList(child: CreateSendTransaction(wallet: WalletDTO(wallet: WalletEntity(privateKey: "privateKey", walletName: "walletName", walletId: "walletId", publicKey: "publicKey")),)),
+                  DetailList(child: CreateSendTransaction(user: _user,)),
               transitionsBuilder:
                   (context, animation, secondaryAnimation, child) {
                 var begin = const Offset(0.0, 1.0);
@@ -84,9 +90,9 @@ class _HomePageState extends State<HomePage> {
               },
             ))
           },
-        ),
+        ) : const SizedBox(),
 
-        Icon(Icons.call_received)
+            _walletQuantity > 1 ? const Icon(Icons.call_received, color: Colors.white) : const SizedBox(),
       ]),
       body: Stack(
         alignment: Alignment.topCenter,

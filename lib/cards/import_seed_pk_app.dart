@@ -1,14 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../entities/simple_user.dart';
 import '../pages/details/detail_list.dart';
 import '../wallets/create_import/import_wallet_pk_detail.dart';
 import '../wallets/create_import/import_wallet_seed_detail.dart';
 
 class ImportSeedPkApp extends StatelessWidget {
-  final ImportNewWalletByPrivateKeyDetail importWalletByPrivateKey = const ImportNewWalletByPrivateKeyDetail();
-  final ImportNewWalletBySeedDetail importWalletBySeed = const ImportNewWalletBySeedDetail();
+  late ImportNewWalletByPrivateKeyDetail importWalletByPrivateKey ;
+  late ImportNewWalletBySeedDetail importWalletBySeed;
+  final SimpleUser user;
 
-  const ImportSeedPkApp({super.key});
+  ImportSeedPkApp({super.key, required this.user}){
+    importWalletByPrivateKey = ImportNewWalletByPrivateKeyDetail(user: user,);
+    importWalletBySeed = ImportNewWalletBySeedDetail(user: user,);
+  }
 
   @override
   Widget build(BuildContext context) {

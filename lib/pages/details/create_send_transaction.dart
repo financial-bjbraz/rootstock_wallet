@@ -1,29 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:my_rootstock_wallet/entities/simple_user.dart';
 import 'package:my_rootstock_wallet/entities/wallet_dto.dart';
 import 'package:my_rootstock_wallet/util/util.dart';
+import 'package:provider/provider.dart';
+
+import '../../entities/wallet_entity.dart';
+import '../../services/wallet_service.dart';
 
 
 class CreateSendTransaction extends StatefulWidget {
-  const CreateSendTransaction({super.key, required this.wallet});
+  const CreateSendTransaction({super.key, required this.user});
 
-  final WalletDTO wallet;
+  final SimpleUser user;
 
   @override
-  _CreateSendTransaction createState() => _CreateSendTransaction(walletDTO: wallet);
+  _CreateSendTransaction createState() => _CreateSendTransaction(user: user);
 }
 
 class _CreateSendTransaction extends State<CreateSendTransaction> with AutomaticKeepAliveClientMixin {
-  WalletDTO walletDTO;
+  SimpleUser user;
   bool _showSaldo = false;
   String currentBalance = " 0,00";
   final TextEditingController _controller = TextEditingController();
+  late WalletServiceImpl walletService = Provider.of<WalletServiceImpl>(context);
+  late List<WalletEntity> wallets;
 
-  _CreateSendTransaction({required this.walletDTO});
+  _CreateSendTransaction({required this.user}){
+       walletService.getWallets(user.email).then((value) => wallets = value);
+  }
 
   @override
   Widget build(BuildContext context) {
+    currentBalance = "walletDTO.valueInUsdFormatted;";
     super.build(context);
 
     return Scaffold(

@@ -8,7 +8,6 @@ class CreateWallet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final walletService = Provider.of<WalletServiceImpl>(context);
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(5),

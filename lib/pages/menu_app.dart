@@ -109,18 +109,6 @@ class MenuApp extends StatelessWidget {
                           icone: Icons.settings,
                           text: "Configurar conta",
                         ),
-                        const ItemMenu(
-                          icone: Icons.credit_card,
-                          text: "Configurar cartão",
-                        ),
-                        const ItemMenu(
-                          icone: Icons.store_mall_directory,
-                          text: "Pedir conta PJ",
-                        ),
-                        const ItemMenu(
-                          icone: Icons.phone_android,
-                          text: "Configurações do app",
-                        ),
                         const SizedBox(
                           height: 22.6,
                         ),

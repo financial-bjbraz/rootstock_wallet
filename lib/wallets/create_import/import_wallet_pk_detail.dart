@@ -8,10 +8,12 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../services/wallet_service.dart';
 
 class ImportNewWalletByPrivateKeyDetail extends StatefulWidget {
-  const ImportNewWalletByPrivateKeyDetail({super.key});
+  final SimpleUser user;
+
+  const ImportNewWalletByPrivateKeyDetail({super.key, required this.user});
 
   @override
-  _ImportNewWalletByPKDetail createState() => _ImportNewWalletByPKDetail();
+  _ImportNewWalletByPKDetail createState() => _ImportNewWalletByPKDetail(user);
 }
 
 class _ImportNewWalletByPKDetail
@@ -19,6 +21,9 @@ class _ImportNewWalletByPKDetail
   late WalletServiceImpl walletService =
       Provider.of<WalletServiceImpl>(context, listen: false);
   bool inputSeedEnabled = true;
+  late SimpleUser _user;
+
+  _ImportNewWalletByPKDetail(this._user);
 
   @override
   Widget build(BuildContext context) {
@@ -121,7 +126,8 @@ class _ImportNewWalletByPKDetail
                                               privateKey: privateKey,
                                               publicKey: publicKey,
                                               walletId: walletId,
-                                              walletName: "Wallet #");
+                                              walletName: "Wallet #",
+                                              ownerEmail: _user.email);
 
                                           walletService
                                               .persistNewWallet(wallet);

@@ -4,11 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:my_rootstock_wallet/wallets/create_import/create_wallet.dart';
 import 'package:my_rootstock_wallet/wallets/create_import/create_wallet_detail.dart';
 
-class CreateWalletApp extends StatelessWidget {
-  final CreateWallet child = const CreateWallet();
-  final CreateNewWalletDetail detailChild = const CreateNewWalletDetail();
+import '../entities/simple_user.dart';
 
-  const CreateWalletApp({super.key});
+class CreateWalletApp extends StatelessWidget {
+  final SimpleUser user;
+  final CreateWallet child = const CreateWallet();
+  late CreateNewWalletDetail detailChild;
+
+  CreateWalletApp({super.key, required this.user}){
+    detailChild = CreateNewWalletDetail(user: user,);
+  }
 
   @override
   Widget build(BuildContext context) {

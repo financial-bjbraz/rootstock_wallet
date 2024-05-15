@@ -56,11 +56,11 @@ class _PageViewAppState extends State<PageViewApp> {
   }
 
   loadWallets() async {
-    var wallets = <WalletEntity>{};
-    walletService.getWallets().then((walletsLoaded) => {
+    walletService.getWallets(user.email).then((walletsLoaded) => {
       for (final item in walletsLoaded) {
         widgets.add(ViewWalletApp(wallet: item)),
-      }
+      },
+      print("Wallets loaded ${user.email}")
     });
   }
 
@@ -96,8 +96,8 @@ class _PageViewAppState extends State<PageViewApp> {
                     : const BouncingScrollPhysics(),
                 children: <Widget>[
                   ...widgets,
-                  const CreateWalletApp(),
-                  const ImportSeedPkApp(),
+                  CreateWalletApp(user: user,),
+                  ImportSeedPkApp(user: user,),
                   // CardApp(
                   //   detailChild: AccountStatementsDetail(),
                   //   child: const AccountInfo(),

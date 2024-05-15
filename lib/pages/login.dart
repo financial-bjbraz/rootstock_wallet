@@ -44,7 +44,6 @@ class _BodyState extends State<Body> {
   late String mensagem_user_exists = AppLocalizations.of(context)!.mensagem_user_exists;
   late String mensagem_user_not_found = AppLocalizations.of(context)!.mensagem_user_not_found;
   late String user_created_successfully = AppLocalizations.of(context)!.user_created_successfully;
-  late CreateUserServiceImpl createUserServiceImpl = Provider.of<CreateUserServiceImpl>(context, listen: false);
 
   late User user;
   final auth = FirebaseAuth.instance;
@@ -108,12 +107,17 @@ class _BodyState extends State<Body> {
                               name: mailController.text,
                               email: mailController.text,
                               password: passwordController.text);
-                            if (await validate(user)) {
-                              Navigator.of(context)
-                                  .pushReplacement(MaterialPageRoute(
-                                      builder: (context) => TransactionsPage(
-                                            user: user,
-                                          )));
+                            bool isValid = await validate(user, context);
+                            print('validating user $isValid');
+                            if (isValid) {
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => HomePage(
+                                    user: user,
+                                  ),
+                                ),
+                              );
                             }
                           },
                           style: greenButtonStyle,
@@ -149,12 +153,18 @@ class _BodyState extends State<Body> {
                                 email: mailController.text,
                                 password: passwordController.text);
 
-                            if (await validateCreateAccount(user)) {
-                              Navigator.of(context)
-                                  .pushReplacement(MaterialPageRoute(
-                                  builder: (context) => TransactionsPage(
-                                    user: user ,
-                                  )));
+                            bool isValid = await validateCreateAccount(user, context);
+                            print('validating create user $isValid');
+
+                            if (isValid) {
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => HomePage(
+                                    user: user,
+                                  ),
+                                ),
+                              );
                             }
                           },
                           style: orangeButton,
@@ -255,7 +265,10 @@ class _BodyState extends State<Body> {
     );
   }
 
-  Future<bool> validate(SimpleUser user) async {
+  Future<bool> validate(SimpleUser user, BuildContext context) async {
+    print('Validating the user');
+    final CreateUserServiceImpl createUserServiceImpl = Provider.of<CreateUserServiceImpl>(context, listen: false);
+
     var email = user.email;
     var password = user.password;
 
@@ -270,14 +283,18 @@ class _BodyState extends State<Body> {
     }
 
     var userExists = await createUserServiceImpl.getUser(user);
+    print('user searched and the result is $userExists');
     if (userExists == null) {
-      showMessage(mensagem_user_exists);
+      showMessage(mensagem_user_not_found);
+      return false;
     }
 
     return true;
   }
 
-  Future<bool> validateCreateAccount(SimpleUser user) async {
+  Future<bool> validateCreateAccount(SimpleUser user, BuildContext context) async {
+    final CreateUserServiceImpl createUserServiceImpl = Provider.of<CreateUserServiceImpl>(context, listen: false);
+
     var email = mailController.text;
     var password = passwordController.text;
 

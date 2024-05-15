@@ -5,7 +5,7 @@ import 'package:firebase_database/firebase_database.dart';
 class SimpleUser {
   late String name;
   late String email;
-  late String userId;
+  String userId = '';
   late String password;
 
   SimpleUser({required this.name, required this.email, required this.password});

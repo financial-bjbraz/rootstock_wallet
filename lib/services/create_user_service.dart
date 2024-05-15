@@ -47,7 +47,7 @@ print("3");
     final db = await database;
 print("4");
     // Query the table for all the dogs.
-    final List<Map<String, Object?>> walletMaps = await db.query('users');
+    final List<Map<String, Object?>> walletMaps = await db.query('users', where: 'email = ? and password = ?', whereArgs: [user.email, user.password]);
 print("5");
     // Convert the list of each dog's fields into a list of `Dog` objects.
     var list = [

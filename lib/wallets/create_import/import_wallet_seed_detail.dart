@@ -8,15 +8,20 @@ import '../../util/util.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ImportNewWalletBySeedDetail extends StatefulWidget {
-  const ImportNewWalletBySeedDetail({super.key});
+  final SimpleUser user;
+
+  const ImportNewWalletBySeedDetail({super.key, required this.user});
 
   @override
-  _ImportNewWalletBySeedDetail createState() => _ImportNewWalletBySeedDetail();
+  _ImportNewWalletBySeedDetail createState() => _ImportNewWalletBySeedDetail(user);
 }
 
 class _ImportNewWalletBySeedDetail extends State<ImportNewWalletBySeedDetail> {
   late WalletServiceImpl walletService = Provider.of<WalletServiceImpl>(context, listen: false);
   bool inputSeedEnabled = true;
+  late SimpleUser _user;
+
+  _ImportNewWalletBySeedDetail(this._user);
 
   @override
   Widget build(BuildContext context) {
@@ -110,18 +115,14 @@ class _ImportNewWalletBySeedDetail extends State<ImportNewWalletBySeedDetail> {
                                           var privateKey = await walletService.getPrivateKey(seed);
                                           var publicKey = await walletService.getPublicKeyString(privateKey);
                                           var walletId = await getIndex();
-                                          WalletEntity wallet = WalletEntity(privateKey: privateKey, publicKey: publicKey, walletId: walletId, walletName: "Wallet #");
+                                          WalletEntity wallet = WalletEntity(privateKey: privateKey, publicKey: publicKey, walletId: walletId, walletName: "Wallet #", ownerEmail: _user.email);
 
                                           walletService.persistNewWallet(wallet);
-                                          showMessage("Account #2 Created", context);
+                                          showMessage("Account Created", context);
                                           Navigator.of(context)
                                               .pushReplacement(MaterialPageRoute(
                                               builder: (context) => HomePage(
-                                                user: SimpleUser(
-                                                    name: AppLocalizations.of(context)!.anonimus,
-                                                    email:
-                                                    "${AppLocalizations.of(context)!.passwordField}@${AppLocalizations.of(context)!.passwordField}.com",
-                                                    password: ""),
+                                                user: _user,
                                               )));
 
                                         }

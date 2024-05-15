@@ -56,7 +56,7 @@ class WalletServiceImpl extends ChangeNotifier implements WalletAddressService {
     return address.hex;
   }
 
-  Future<List<WalletEntity>> getWallets() async {
+  Future<List<WalletEntity>> getWallets(final String ownerEmail) async {
 
     WidgetsFlutterBinding.ensureInitialized();
     // Open the database and store the reference.
@@ -69,31 +69,41 @@ class WalletServiceImpl extends ChangeNotifier implements WalletAddressService {
     // Get a reference to the database.
     final db = await database;
 
-    // Query the table for all the dogs.
-    final List<Map<String, Object?>> walletMaps = await db.query('wallets');
+    // Query the table for all the wallets.
+    final List<Map<String, Object?>> walletMaps = await db.query('wallets', where: 'ownerEmail = ?', whereArgs: [ownerEmail]);
 
-    // Convert the list of each dog's fields into a list of `Dog` objects.
+    // Convert the list of each fields into a list of `Wallet` objects.
     return [
       for (final {
-      'privateKey': privateKey as String,
-      'walletName': walletName as String,
-      'walletId': walletId as String,
-      'publicKey': publicKey as String,
-      } in walletMaps)
-        WalletEntity(privateKey: privateKey, publicKey: publicKey, walletId: walletId, walletName: walletName),
+        'privateKey': privateKey as String,
+        'walletName': walletName as String,
+        'walletId': walletId as String,
+        'publicKey': publicKey as String,
+        'ownerEmail': ownerEmail as String,
+        } in walletMaps)
+        WalletEntity(privateKey: privateKey, publicKey: publicKey, walletId: walletId, walletName: walletName, ownerEmail: ownerEmail),
     ];
   }
 
   void persistNewWallet(WalletEntity wallet) async {
     print("Persisting");
     print(wallet);
-    final db = await openDataBase();
+    final database = openDatabase(
+      // Set the path to the database. Note: Using the `join` function from the
+      // `path` package is best practice to ensure the path is correctly
+      // constructed for each platform.
+      join(await getDatabasesPath(), DATABASE_NAME),
+    );
+    // Get a reference to the database.
+    final db = await database;
 
     await db.insert(
       'wallets',
       wallet.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
+
+    db.close();
   }
 
   void delete(WalletEntity wallet) async {
@@ -131,10 +141,11 @@ class WalletServiceImpl extends ChangeNotifier implements WalletAddressService {
     final wei = await getBalanceInWei(wallet);
     final usdPrice = await getPrice();
     final value =  wei.getWei() * usdPrice;
+    final formatter = NumberFormat("#,##0.00", "en_US");
     walletDto.amountInWeis = wei.getWei();
     walletDto.amountInUsd = value;
     walletDto.valueInWeiFormatted = (wei.toRBTCTrimmedString());
-    walletDto.valueInUsdFormatted = (value.toStringAsFixed(2));
+    walletDto.valueInUsdFormatted = formatter.format(value);
     return walletDto;
   }
 
