@@ -24,7 +24,7 @@ class _CreateSendTransaction extends State<CreateSendTransaction> with Automatic
   bool _showSaldo = false;
   String currentBalance = " 0,00";
   final TextEditingController _controller = TextEditingController();
-  late WalletServiceImpl walletService = Provider.of<WalletServiceImpl>(context);
+  late WalletServiceImpl walletService = Provider.of<WalletServiceImpl>(context, listen: false);
   late List<WalletEntity> wallets;
 
   _CreateSendTransaction({required this.user}){
@@ -33,21 +33,22 @@ class _CreateSendTransaction extends State<CreateSendTransaction> with Automatic
 
   @override
   Widget build(BuildContext context) {
-    currentBalance = "walletDTO.valueInUsdFormatted;";
+    currentBalance = "widget.user"
     super.build(context);
 
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          title: const Padding(
-            padding: EdgeInsets.all(20),
+          title: Padding(
+            padding: const EdgeInsets.all(20),
             child: Row(
               children: <Widget>[
-                Icon(Icons.call_made, color: Colors.grey),
-                SizedBox(
+                Image.asset('assets/icons/rbtc.png',
+                    height: 30),
+                const SizedBox(
                   width: 5,
                 ),
-                Text(
+                const Text(
                   "SEND",
                   style: TextStyle(
                     color: Colors.white,

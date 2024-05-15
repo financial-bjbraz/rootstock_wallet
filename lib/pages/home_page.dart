@@ -68,7 +68,7 @@ class _HomePageState extends State<HomePage> {
       bottomNavigationBar:
           CurvedNavigationBar(color: orange(), backgroundColor: Colors.black, buttonBackgroundColor: orange(), items: [
             const Icon(Icons.home, color: Colors.white),
-            _walletQuantity > 1 ? GestureDetector(
+            _walletQuantity > 0 ? GestureDetector(
           child: const Icon(Icons.call_made, color: Colors.white),
           onTap: () => {
             Navigator.of(context).push(PageRouteBuilder(
@@ -92,7 +92,7 @@ class _HomePageState extends State<HomePage> {
           },
         ) : const SizedBox(),
 
-            _walletQuantity > 1 ? const Icon(Icons.call_received, color: Colors.white) : const SizedBox(),
+            _walletQuantity > 0 ? const Icon(Icons.call_received, color: Colors.white) : const SizedBox(),
       ]),
       body: Stack(
         alignment: Alignment.topCenter,
