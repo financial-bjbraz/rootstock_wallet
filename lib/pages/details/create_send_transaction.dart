@@ -33,7 +33,7 @@ class _CreateSendTransaction extends State<CreateSendTransaction> with Automatic
 
   @override
   Widget build(BuildContext context) {
-    currentBalance = "widget.user"
+    currentBalance = "widget.user";
     super.build(context);
 
     return Scaffold(
