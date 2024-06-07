@@ -6,7 +6,7 @@ import 'package:my_rootstock_wallet/pages/item_menu_botton.dart';
 
 class BottomMenu extends StatefulWidget {
   final bool showMenu;
-  const BottomMenu({Key? key, required this.showMenu}) : super(key: key);
+  const BottomMenu({super.key, required this.showMenu});
   @override
   _BottomMenuState createState() => _BottomMenuState();
 }
@@ -22,7 +22,7 @@ class _BottomMenuState extends State<BottomMenu> {
   }
 
   Future<void> delayAnimation() async {
-    Future.delayed(Duration(milliseconds: 0), () {
+    Future.delayed(const Duration(milliseconds: 0), () {
       (() {
         _tween = Tween<double>(begin: 150.0, end: 0.0);
       });
@@ -33,11 +33,11 @@ class _BottomMenuState extends State<BottomMenu> {
   Widget build(BuildContext context) {
     return TweenAnimationBuilder<double>(
         tween: _tween,
-        duration: Duration(milliseconds: 350),
+        duration: const Duration(milliseconds: 350),
         curve: Curves.easeOutExpo,
         builder: (context, value, child) {
           return AnimatedPositioned(
-            duration: Duration(milliseconds: 350),
+            duration: const Duration(milliseconds: 350),
             bottom: !widget.showMenu
                 ? 0 + MediaQuery.of(context).padding.bottom
                 : 0,
@@ -47,58 +47,58 @@ class _BottomMenuState extends State<BottomMenu> {
             child: IgnorePointer(
               ignoring: widget.showMenu,
               child: AnimatedOpacity(
-                duration: Duration(milliseconds: 200),
+                duration: const Duration(milliseconds: 200),
                 opacity: !widget.showMenu ? 1 : 0,
                 child: Container(
                   color: Colors.black,
                   child: ListView(
-                    physics: BouncingScrollPhysics(),
+                    physics: const BouncingScrollPhysics(),
                     scrollDirection: Axis.horizontal,
                     children: <Widget>[
                       ItemMenuBottom(
                         icon: Icons.person_add,
                         text: AppLocalizations.of(context)!.refer,
-                        widget: AccountStatementsDetail(),
+                        widget: const AccountStatementsDetail(),
                       ),
                       ItemMenuBottom(
                         icon: Icons.phone_android,
                         text: AppLocalizations.of(context)!.recarga,
-                        widget: AccountStatementsDetail(),
+                        widget: const AccountStatementsDetail(),
                       ),
                       ItemMenuBottom(
                         icon: Icons.chat,
                         text: AppLocalizations.of(context)!.cobrar,
-                        widget: AccountStatementsDetail(),
+                        widget: const AccountStatementsDetail(),
                       ),
                       ItemMenuBottom(
                         icon: Icons.monetization_on,
                         text: AppLocalizations.of(context)!.emprestimos,
-                        widget: AccountStatementsDetail(),
+                        widget: const AccountStatementsDetail(),
                       ),
                       ItemMenuBottom(
                         icon: Icons.move_to_inbox,
                         text: AppLocalizations.of(context)!.depositar,
-                        widget: AccountStatementsDetail(),
+                        widget: const AccountStatementsDetail(),
                       ),
                       ItemMenuBottom(
                         icon: Icons.mobile_screen_share,
                         text: AppLocalizations.of(context)!.transferir,
-                        widget: AccountStatementsDetail(),
+                        widget: const AccountStatementsDetail(),
                       ),
                       ItemMenuBottom(
                         icon: Icons.format_align_center,
                         text: AppLocalizations.of(context)!.limits,
-                        widget: AccountStatementsDetail(),
+                        widget: const AccountStatementsDetail(),
                       ),
                       ItemMenuBottom(
                         icon: Icons.chrome_reader_mode,
                         text: AppLocalizations.of(context)!.pagar,
-                        widget: AccountStatementsDetail(),
+                        widget: const AccountStatementsDetail(),
                       ),
                       ItemMenuBottom(
                         icon: Icons.lock_open,
                         text: AppLocalizations.of(context)!.bloquear,
-                        widget: AccountStatementsDetail(),
+                        widget: const AccountStatementsDetail(),
                       ),
                     ],
                   ),

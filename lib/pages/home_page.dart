@@ -15,22 +15,21 @@ import 'details/detail_list.dart';
 class HomePage extends StatefulWidget {
   final SimpleUser user;
 
-  const HomePage({Key? key, required this.user}) : super(key: key);
+  const HomePage({super.key, required this.user});
 
   @override
-  _HomePageState createState() => _HomePageState(user);
+  _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
   late bool _showMenu;
   late int _currentIndex;
   late double _yPosition = 0;
-  late SimpleUser _user;
   late int _walletQuantity;
   late WalletServiceImpl walletService =
       Provider.of<WalletServiceImpl>(context);
 
-  _HomePageState(this._user);
+  _HomePageState();
 
   @override
   void initState() {
@@ -42,24 +41,24 @@ class _HomePageState extends State<HomePage> {
 
   loadWallets() async {
     try {
-      walletService.getWallets(_user.email).then((walletsLoaded) =>
+      walletService.getWallets(widget.user.email).then((walletsLoaded) =>
       {
         setState(() {
           _walletQuantity = walletsLoaded.length;
         }),
       });
     }catch(e) {
-      print('error occurred $e');
+      // print('error occurred $e');
     }
   }
 
   @override
   Widget build(BuildContext context) {
     loadWallets();
-    double _heightScreen = MediaQuery.of(context).size.height;
+    double heightScreen = MediaQuery.of(context).size.height;
 
     if (_yPosition == 0) {
-      _yPosition = _heightScreen * .24;
+      _yPosition = heightScreen * .24;
     }
     return Scaffold(
       backgroundColor: Colors.black,
@@ -71,7 +70,7 @@ class _HomePageState extends State<HomePage> {
           onTap: () => {
             Navigator.of(context).push(PageRouteBuilder(
               pageBuilder: (context, animation, secondaryAnimation) =>
-                  DetailList(child: CreateSendTransaction(user: _user,)),
+                  DetailList(child: CreateSendTransaction(user: widget.user,)),
               transitionsBuilder:
                   (context, animation, secondaryAnimation, child) {
                 var begin = const Offset(0.0, 1.0);
@@ -97,17 +96,17 @@ class _HomePageState extends State<HomePage> {
         children: <Widget>[
           MyAppBar(
             showMenu: _showMenu,
-            userName: _user.name,
+            userName: widget.user.name,
             onTap: () {
               setState(() {
                 _showMenu = !_showMenu;
                 _yPosition =
-                    _showMenu ? _heightScreen * .75 : _heightScreen * .24;
+                    _showMenu ? heightScreen * .75 : heightScreen * .24;
               });
             },
           ),
           MenuApp(
-            top: _heightScreen * .205,
+            top: heightScreen * .205,
             showMenu: _showMenu,
           ),
           // BottomMenu(
@@ -115,12 +114,12 @@ class _HomePageState extends State<HomePage> {
           // ),
           MyDotsApp(
             showMenu: _showMenu,
-            top: _heightScreen * .70,
+            top: heightScreen * .70,
             currentIndex: _currentIndex,
             walletQuantity: _walletQuantity,
           ),
           PageViewApp(
-            user: _user,
+            user: widget.user,
             showMenu: _showMenu,
             top: _yPosition,
             onChanged: (index) {
@@ -129,8 +128,8 @@ class _HomePageState extends State<HomePage> {
               });
             },
             onPanUpdated: (details) {
-              double positionBottonLimit = _heightScreen * .75;
-              double positionTopLimit = _heightScreen * .24;
+              double positionBottonLimit = heightScreen * .75;
+              double positionTopLimit = heightScreen * .24;
               double middlePosition = positionBottonLimit - positionTopLimit;
               middlePosition = middlePosition / 2;
 

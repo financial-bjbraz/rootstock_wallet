@@ -2,9 +2,11 @@
 import 'package:flutter/material.dart';
 
 class AccountStatementsDetail extends StatelessWidget {
-  bool _showSaldo = false;
-  String currentBalance = "R\$ 0,00";
+  final String currentBalance = "R\$ 0,00";
 
+  const AccountStatementsDetail({super.key});
+
+  @override
   Widget build(BuildContext context) {
     return Expanded(child: TextFormField(
       decoration: InputDecoration(

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_rootstock_wallet/pages/login.dart';
 
 class Splash extends StatefulWidget {
-  Splash({Key? key}) : super(key: key);
+  const Splash({super.key});
 
   @override
   _SplashPageState createState() => _SplashPageState();

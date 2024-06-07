@@ -8,11 +8,10 @@ class MyAppBar extends StatelessWidget {
   final String userName;
 
   const MyAppBar(
-      {Key? key,
+      {super.key,
       required this.showMenu,
       required this.onTap,
-      required this.userName})
-      : super(key: key);
+      required this.userName});
 
   @override
   Widget build(BuildContext context) {

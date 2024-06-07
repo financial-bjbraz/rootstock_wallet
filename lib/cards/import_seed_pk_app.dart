@@ -6,14 +6,11 @@ import '../wallets/create_import/import_wallet_pk_detail.dart';
 import '../wallets/create_import/import_wallet_seed_detail.dart';
 
 class ImportSeedPkApp extends StatelessWidget {
-  late ImportNewWalletByPrivateKeyDetail importWalletByPrivateKey ;
-  late ImportNewWalletBySeedDetail importWalletBySeed;
+  final ImportNewWalletByPrivateKeyDetail importWalletByPrivateKey ;
+  final ImportNewWalletBySeedDetail importWalletBySeed;
   final SimpleUser user;
 
-  ImportSeedPkApp({super.key, required this.user}){
-    importWalletByPrivateKey = ImportNewWalletByPrivateKeyDetail(user: user,);
-    importWalletBySeed = ImportNewWalletBySeedDetail(user: user,);
-  }
+  const ImportSeedPkApp({super.key, required this.user, required this.importWalletByPrivateKey, required this.importWalletBySeed});
 
   @override
   Widget build(BuildContext context) {

@@ -14,14 +14,16 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     verifyAndCreateDataBase();
-    return Scaffold(
-      backgroundColor: const Color.fromRGBO(0, 0, 0, 0),
+    return const Scaffold(
+      backgroundColor: Color.fromRGBO(0, 0, 0, 0),
       body: Body(),
     );
   }
 }
 
 class Body extends StatefulWidget {
+  const Body({super.key});
+
   @override
   _BodyState createState() => _BodyState();
 }

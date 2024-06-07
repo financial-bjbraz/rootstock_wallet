@@ -1,4 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -20,7 +20,7 @@ class _AccountInfoState extends State<AccountInfo> with AutomaticKeepAliveClient
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    final FirebaseAuth auth = FirebaseAuth.instance;
+    // final FirebaseAuth auth = FirebaseAuth.instance;
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(5),
@@ -62,7 +62,6 @@ class _AccountInfoState extends State<AccountInfo> with AutomaticKeepAliveClient
                           _showSaldo
                               ? "assets/icons/eye-outline.svg"
                               : "assets/icons/eye-off-outline.svg",
-                          color: Colors.grey,
                           semanticsLabel: "visualizar",
                         ),
                       ),

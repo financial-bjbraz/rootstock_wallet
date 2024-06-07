@@ -8,11 +8,9 @@ import '../entities/simple_user.dart';
 class CreateWalletApp extends StatelessWidget {
   final SimpleUser user;
   final CreateWallet child = const CreateWallet();
-  late CreateNewWalletDetail detailChild;
+  final CreateNewWalletDetail detailChild;
 
-  CreateWalletApp({super.key, required this.user}){
-    detailChild = CreateNewWalletDetail(user: user,);
-  }
+  const CreateWalletApp({super.key, required this.user, required this.detailChild});
 
   @override
   Widget build(BuildContext context) {

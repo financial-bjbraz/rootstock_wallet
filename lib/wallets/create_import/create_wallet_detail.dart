@@ -37,12 +37,10 @@ class _CreateNewWalletDetail extends State<CreateNewWalletDetail> {
   void createNewAccount() async {
     if (!_created) {
       walletService = Provider.of<WalletServiceImpl>(context);
-      //showMessage("Gerando uma nova conta");
       final mnemonic = walletService.generateMnemonic();
       final privateKey = await walletService.getPrivateKey(mnemonic);
-      address = await walletService.getPublicKey(privateKey);
+      address = walletService.getPublicKey(privateKey);
       splittedMnemonic = mnemonic.split(' ');
-      //showMessage("Nova conta gerada com sucesso!");
       setState(() {
         splittedMnemonic = mnemonic.split(' ');
       });

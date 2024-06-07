@@ -61,15 +61,15 @@ class _RewardsState extends State<Rewards> with AutomaticKeepAliveClientMixin {
             height: 50,
             width: double.infinity,
             decoration: BoxDecoration(
-              border: Border.all(width: 0.7, color: const Color(0x293145)),
+              border: Border.all(width: 0.7, color: const Color(0x00293145)),
             ),
             child: ElevatedButton(
-              child: const Text("ATIVE O SEU REWARDS 0 "),
               style: ElevatedButton.styleFrom(
                   textStyle: const TextStyle(fontSize: 14)),
               onPressed: () {
                 setState(() {});
               },
+              child: const Text("ATIVE O SEU REWARDS 0 "),
             ),
 
             // elevation: 0,

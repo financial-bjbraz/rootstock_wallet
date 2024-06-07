@@ -6,7 +6,7 @@ import 'package:path/path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
 
-const DATABASE_NAME = "my_rootstock_wallet.db";
+const databaseName = "my_rootstock_wallet.db";
 
 orange() => const Color.fromRGBO(255, 145, 0, 1);
 pink() => const Color.fromRGBO(255, 112, 224, 1);
@@ -96,14 +96,14 @@ verifyAndCreateDataBase() async {
 
 Future<bool> isTableCreated() async {
   final prefs = await SharedPreferences.getInstance();
-  var created = await prefs.getString("dataBaseCreated_2");
+  var created = prefs.getString("dataBaseCreated_2");
   return created != null;
 }
 
 Future<String> getIndex() async {
   var index = 0;
   final prefs = await SharedPreferences.getInstance();
-  var indexStorage = await prefs.getString("index");
+  var indexStorage = prefs.getString("index");
 
   if(indexStorage != null) {
     index = int.parse(indexStorage);
@@ -129,7 +129,7 @@ setLastUsdPrice(int price) async {
 
 Future<int> getLastUsdPrice() async {
   final prefs = await SharedPreferences.getInstance();
-  final String? valor = await prefs.getString("lastBtcPrice");
+  final String? valor = prefs.getString("lastBtcPrice");
   return int.parse(valor ?? "0");
 }
 
@@ -140,7 +140,7 @@ Future<Database> openDataBase() async {
   }
 
   var databasesPath = await getDatabasesPath();
-  String path = join(databasesPath, DATABASE_NAME);
+  String path = join(databasesPath, databaseName);
   Database database = await openDatabase(path, version: 3,
         onCreate: (Database db, int version) async {
           await db.execute(

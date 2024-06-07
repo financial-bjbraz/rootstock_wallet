@@ -7,13 +7,12 @@ class ItemMenuBottom extends StatelessWidget {
   final StatelessWidget widget;
 
   const ItemMenuBottom(
-      {Key? key, required this.icon, required this.text, required this.widget})
-      : super(key: key);
+      {super.key, required this.icon, required this.text, required this.widget});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      child: Container(
+      child: SizedBox(
         height: MediaQuery.of(context).size.height * .15,
         child: Padding(
           padding: const EdgeInsets.symmetric(
@@ -48,7 +47,7 @@ class ItemMenuBottom extends StatelessWidget {
       onTap: () {
         Navigator.of(context).push(PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) =>
-              DetailList(child: this.widget),
+              DetailList(child: widget),
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             var begin = const Offset(0.0, 1.0);
             var end = Offset.zero;

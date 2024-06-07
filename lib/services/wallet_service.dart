@@ -7,7 +7,7 @@ import 'package:hex/hex.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:my_rootstock_wallet/entities/wallet_dto.dart';
-import 'package:my_rootstock_wallet/util/CoinGeckoResponse.dart';
+import 'package:my_rootstock_wallet/util/coingeck_resopnse.dart';
 import 'package:my_rootstock_wallet/util/wei.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
@@ -19,7 +19,7 @@ import '../util/util.dart';
 abstract class WalletAddressService {
   String generateMnemonic();
   Future<String> getPrivateKey(String mnemonic);
-  Future<EthereumAddress> getPublicKey(String privateKey);
+  EthereumAddress getPublicKey(String privateKey);
 }
 
 class WalletServiceImpl extends ChangeNotifier implements WalletAddressService {
@@ -42,15 +42,15 @@ class WalletServiceImpl extends ChangeNotifier implements WalletAddressService {
   }
 
   @override
-  Future<EthereumAddress> getPublicKey(String privateKey) async {
+  EthereumAddress getPublicKey(String privateKey) {
     final private = EthPrivateKey.fromHex(privateKey);
-    final address = await private.address;
+    final address = private.address;
     return address;
   }
 
   Future<String> getPublicKeyString(String privateKey) async {
     final private = EthPrivateKey.fromHex(privateKey);
-    final address = await private.address;
+    final address = private.address;
     return address.hex;
   }
 
@@ -62,7 +62,7 @@ class WalletServiceImpl extends ChangeNotifier implements WalletAddressService {
       // Set the path to the database. Note: Using the `join` function from the
       // `path` package is best practice to ensure the path is correctly
       // constructed for each platform.
-      join(await getDatabasesPath(), DATABASE_NAME),
+      join(await getDatabasesPath(), databaseName),
     );
     // Get a reference to the database.
     final db = await database;
@@ -88,7 +88,7 @@ class WalletServiceImpl extends ChangeNotifier implements WalletAddressService {
       // Set the path to the database. Note: Using the `join` function from the
       // `path` package is best practice to ensure the path is correctly
       // constructed for each platform.
-      join(await getDatabasesPath(), DATABASE_NAME),
+      join(await getDatabasesPath(), databaseName),
     );
     // Get a reference to the database.
     final db = await database;

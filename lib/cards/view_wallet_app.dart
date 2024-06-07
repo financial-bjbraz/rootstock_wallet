@@ -19,13 +19,12 @@ class ViewWalletApp extends StatefulWidget {
   final WalletEntity wallet;
 
   @override
-  _ViewWalletApp createState() => _ViewWalletApp(wallet);
+  _ViewWalletApp createState() => _ViewWalletApp();
 }
 
 class _ViewWalletApp extends State<ViewWalletApp>
     with AutomaticKeepAliveClientMixin {
-  final ViewWalletDetail detailChild = ViewWalletDetail();
-  final WalletEntity wallet;
+  final ViewWalletDetail detailChild = const ViewWalletDetail();
   late WalletDTO walletDto;
   late WalletServiceImpl walletService =
       Provider.of<WalletServiceImpl>(context, listen: false);
@@ -35,7 +34,7 @@ class _ViewWalletApp extends State<ViewWalletApp>
   late String title = "";
   late String address = "";
 
-  _ViewWalletApp(this.wallet);
+  _ViewWalletApp();
 
   @override
   bool get wantKeepAlive => true;
@@ -55,9 +54,8 @@ class _ViewWalletApp extends State<ViewWalletApp>
   }
 
   loadWalletData() async {
-    print("Calling getBalance for account ${wallet.publicKey}");
     return await Future.delayed(const Duration(seconds: 5), () {
-      walletService.createWalletToDisplay(wallet).then((dto) => {
+      walletService.createWalletToDisplay(widget.wallet).then((dto) => {
         setState(() {
           walletDto = dto;
           title = walletDto.getName();
@@ -97,7 +95,7 @@ class _ViewWalletApp extends State<ViewWalletApp>
               ),
               child: const Text('Delete'),
               onPressed: () {
-                walletService.delete(wallet);
+                walletService.delete(widget.wallet);
                 showMessage("Wallet deleted", context);
 
                 Navigator.of(context)
@@ -174,7 +172,6 @@ class _ViewWalletApp extends State<ViewWalletApp>
                               _showSaldo
                                   ? "assets/icons/eye-off-outline.svg"
                                   : "assets/icons/eye-outline.svg",
-                              color: Colors.grey,
                               semanticsLabel: "visualizar",
                             ),
                           ),
@@ -188,7 +185,6 @@ class _ViewWalletApp extends State<ViewWalletApp>
                             },
                             child: SvgPicture.asset(
                               "assets/icons/delete-button.svg",
-                              color: Colors.grey,
                               width: 20,
                               semanticsLabel: "excluir",
                             ),
@@ -238,7 +234,7 @@ class _ViewWalletApp extends State<ViewWalletApp>
                                         color: Colors.grey),
                                     onTap: () async {
                                       await Clipboard.setData(ClipboardData(
-                                          text: wallet.publicKey.toString()));
+                                          text: widget.wallet.publicKey.toString()));
                                       showMessage(
                                           "Copied to the clipboard", context);
                                     },
@@ -331,26 +327,25 @@ class _ViewWalletApp extends State<ViewWalletApp>
                                     ),
                                   ]),
                               onTap: () {
-                                if (detailChild != null) {
-                                  Navigator.of(context).push(PageRouteBuilder(
-                                    pageBuilder: (context, animation,
-                                            secondaryAnimation) =>
-                                        DetailList(child: detailChild),
-                                    transitionsBuilder: (context, animation,
-                                        secondaryAnimation, child) {
-                                      var begin = Offset(0.0, 1.0);
-                                      var end = Offset.zero;
-                                      var curve = Curves.ease;
-                                      var tween = Tween(begin: begin, end: end)
-                                          .chain(CurveTween(curve: curve));
+                                Navigator.of(context).push(PageRouteBuilder(
+                                  pageBuilder: (context, animation,
+                                          secondaryAnimation) =>
+                                      DetailList(child: detailChild),
+                                  transitionsBuilder: (context, animation,
+                                      secondaryAnimation, child) {
+                                    var begin = const Offset(0.0, 1.0);
+                                    var end = Offset.zero;
+                                    var curve = Curves.ease;
+                                    var tween = Tween(begin: begin, end: end)
+                                        .chain(CurveTween(curve: curve));
 
-                                      return SlideTransition(
-                                        position: animation.drive(tween),
-                                        child: child,
-                                      );
-                                    },
-                                  ));
-                                } //if
+                                    return SlideTransition(
+                                      position: animation.drive(tween),
+                                      child: child,
+                                    );
+                                  },
+                                ));
+                              //if
                               },
                             ),
                           ],

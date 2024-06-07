@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 
 class MyDotsApp extends StatelessWidget {
   const MyDotsApp(
-      {Key? key,
+      {super.key,
       required this.currentIndex,
       required this.top,
       required this.showMenu,
-      required this.walletQuantity})
-      : super(key: key);
+      required this.walletQuantity});
 
   final int currentIndex;
   final double top;

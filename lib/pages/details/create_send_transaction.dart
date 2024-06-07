@@ -15,19 +15,18 @@ class CreateSendTransaction extends StatefulWidget {
   final SimpleUser user;
 
   @override
-  _CreateSendTransaction createState() => _CreateSendTransaction(user: user);
+  _CreateSendTransaction createState() => _CreateSendTransaction();
 }
 
 class _CreateSendTransaction extends State<CreateSendTransaction> with AutomaticKeepAliveClientMixin {
-  SimpleUser user;
   bool _showSaldo = false;
   String currentBalance = " 0,00";
   final TextEditingController _controller = TextEditingController();
   late WalletServiceImpl walletService = Provider.of<WalletServiceImpl>(context, listen: false);
   late List<WalletEntity> wallets;
 
-  _CreateSendTransaction({required this.user}){
-       walletService.getWallets(user.email).then((value) => wallets = value);
+  _CreateSendTransaction(){
+       walletService.getWallets(widget.user.email).then((value) => wallets = value);
   }
 
   @override
@@ -100,13 +99,11 @@ class _CreateSendTransaction extends State<CreateSendTransaction> with Automatic
                                 _showSaldo = !_showSaldo;
                               });
 
-                              print("clicado");
                             },
                             child: SvgPicture.asset(
                               _showSaldo
                                   ? "assets/icons/eye-outline.svg"
                                   : "assets/icons/eye-off-outline.svg",
-                              color: Colors.black,
                               semanticsLabel: "visualizar",
                             ),
                           ),
@@ -214,7 +211,7 @@ class _CreateSendTransaction extends State<CreateSendTransaction> with Automatic
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            Icon(Icons.credit_card, color: Colors.grey),
+                            const Icon(Icons.credit_card, color: Colors.grey),
                             const SizedBox(
                               width: 10,
                             ),
@@ -240,7 +237,7 @@ class _CreateSendTransaction extends State<CreateSendTransaction> with Automatic
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            Icon(Icons.credit_card, color: Colors.grey),
+                            const Icon(Icons.credit_card, color: Colors.grey),
                             const SizedBox(
                               width: 10,
                             ),
@@ -266,7 +263,7 @@ class _CreateSendTransaction extends State<CreateSendTransaction> with Automatic
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            Icon(Icons.credit_card, color: Colors.grey),
+                            const Icon(Icons.credit_card, color: Colors.grey),
                             const SizedBox(
                               width: 10,
                             ),

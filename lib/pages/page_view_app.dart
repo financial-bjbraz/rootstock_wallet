@@ -6,6 +6,9 @@ import 'package:provider/provider.dart';
 import '../cards/import_seed_pk_app.dart';
 import '../cards/view_wallet_app.dart';
 import '../services/wallet_service.dart';
+import '../wallets/create_import/create_wallet_detail.dart';
+import '../wallets/create_import/import_wallet_pk_detail.dart';
+import '../wallets/create_import/import_wallet_seed_detail.dart';
 
 class PageViewApp extends StatefulWidget {
   final double top;
@@ -15,28 +18,24 @@ class PageViewApp extends StatefulWidget {
   final SimpleUser user;
 
   const PageViewApp(
-      {Key? key,
+      {super.key,
       required this.top,
       required this.onChanged,
       required this.onPanUpdated,
       required this.showMenu,
-      required this.user})
-      : super(key: key);
+      required this.user});
 
   @override
-  _PageViewAppState createState() => _PageViewAppState(user);
+  _PageViewAppState createState() => _PageViewAppState();
 }
 
 class _PageViewAppState extends State<PageViewApp> {
   late WalletServiceImpl walletService =
       Provider.of<WalletServiceImpl>(context);
-
   late Tween<double> _tween;
-  final SimpleUser user;
-
   var widgets = <Widget>{};
 
-  _PageViewAppState(this.user);
+  _PageViewAppState();
 
   @override
   void initState() {
@@ -52,11 +51,10 @@ class _PageViewAppState extends State<PageViewApp> {
   }
 
   loadWallets() async {
-    walletService.getWallets(user.email).then((walletsLoaded) => {
+    walletService.getWallets(widget.user.email).then((walletsLoaded) => {
       for (final item in walletsLoaded) {
         widgets.add(ViewWalletApp(wallet: item)),
       },
-      print("Wallets loaded ${user.email}")
     });
   }
 
@@ -92,8 +90,8 @@ class _PageViewAppState extends State<PageViewApp> {
                     : const BouncingScrollPhysics(),
                 children: <Widget>[
                   ...widgets,
-                  CreateWalletApp(user: user,),
-                  ImportSeedPkApp(user: user,),
+                  CreateWalletApp(user: widget.user,    detailChild:CreateNewWalletDetail(user: widget.user,)),
+                  ImportSeedPkApp(user: widget.user,    importWalletByPrivateKey: ImportNewWalletByPrivateKeyDetail(user: widget.user,),importWalletBySeed: ImportNewWalletBySeedDetail(user: widget.user)),
                   // CardApp(
                   //   detailChild: AccountStatementsDetail(),
                   //   child: const AccountInfo(),

@@ -60,17 +60,12 @@ class MyApp extends StatelessWidget {
 
     return FutureBuilder(builder: (context, snapshot) {
       if (snapshot.connectionState == ConnectionState.done) {
-        return MaterialApp(
+        return const MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'Maniva Wallet',
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
-          // theme: ThemeData(
-          //   scaffoldBackgroundColor: const Color.fromRGBO(41, 49, 69, 20),
-          //   brightness: Brightness.dark,
-          // ),
           home: Splash(),
-          // ignore: missing_return, missing_return
         );
       }
       return const Center(child: Center(
