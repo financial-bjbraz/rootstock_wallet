@@ -70,5 +70,5 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_name: ${{ github.event.repository.name }}release.apk
-          asset_path: build/android/release/app-release.apk
+          asset_path: apk/app-release.apk
           asset_content_type: application/zip
