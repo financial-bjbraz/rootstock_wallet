@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
 class ViewWalletDetail extends StatelessWidget {
+  const ViewWalletDetail({super.key});
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -107,6 +110,9 @@ class ViewWalletDetail extends StatelessWidget {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(5),
                         child: Container(
+                          width: 7,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5)),
                           child: Column(
                             children: <Widget>[
                               Expanded(
@@ -120,9 +126,6 @@ class ViewWalletDetail extends StatelessWidget {
                                   child: Container(color: Colors.green)),
                             ],
                           ),
-                          width: 7,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5)),
                         ),
                       ),
                     ),
@@ -132,6 +135,7 @@ class ViewWalletDetail extends StatelessWidget {
               Expanded(
                 flex: 2,
                 child: Container(
+                  color: Colors.grey[200],
                   child: Padding(
                     padding: const EdgeInsets.all(20),
                     child: ListView(
@@ -140,11 +144,11 @@ class ViewWalletDetail extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            Icon(Icons.shopping_cart, color: Colors.grey),
-                            SizedBox(
+                            const Icon(Icons.shopping_cart, color: Colors.grey),
+                            const SizedBox(
                               width: 10,
                             ),
-                            Flexible(
+                            const Flexible(
                               child: Text(
                                 "Compra mais recente em Super Mercado no valor de R\$ 250,99",
                                 style: TextStyle(
@@ -160,17 +164,17 @@ class ViewWalletDetail extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            Icon(Icons.shopping_cart, color: Colors.grey),
-                            SizedBox(
+                            const Icon(Icons.shopping_cart, color: Colors.grey),
+                            const SizedBox(
                               width: 10,
                             ),
-                            Flexible(
+                            const Flexible(
                               child: Text(
                                 "Compra mais recente em Super Mercado no valor de R\$ 250,99",
                                 style: TextStyle(
@@ -186,17 +190,17 @@ class ViewWalletDetail extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            Icon(Icons.shopping_cart, color: Colors.grey),
-                            SizedBox(
+                            const Icon(Icons.shopping_cart, color: Colors.grey),
+                            const SizedBox(
                               width: 10,
                             ),
-                            Flexible(
+                            const Flexible(
                               child: Text(
                                 "Compra mais recente em Super Mercado no valor de R\$ 250,99",
                                 style: TextStyle(
@@ -212,17 +216,17 @@ class ViewWalletDetail extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            Icon(Icons.shopping_cart, color: Colors.grey),
-                            SizedBox(
+                            const Icon(Icons.shopping_cart, color: Colors.grey),
+                            const SizedBox(
                               width: 10,
                             ),
-                            Flexible(
+                            const Flexible(
                               child: Text(
                                 "Compra mais recente em Super Mercado no valor de R\$ 250,99",
                                 style: TextStyle(
@@ -238,17 +242,17 @@ class ViewWalletDetail extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            Icon(Icons.shopping_cart, color: Colors.grey),
-                            SizedBox(
+                            const Icon(Icons.shopping_cart, color: Colors.grey),
+                            const SizedBox(
                               width: 10,
                             ),
-                            Flexible(
+                            const Flexible(
                               child: Text(
                                 "Compra mais recente em Super Mercado no valor de R\$ 250,99",
                                 style: TextStyle(
@@ -264,17 +268,17 @@ class ViewWalletDetail extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            Icon(Icons.shopping_cart, color: Colors.grey),
-                            SizedBox(
+                            const Icon(Icons.shopping_cart, color: Colors.grey),
+                            const SizedBox(
                               width: 10,
                             ),
-                            Flexible(
+                            const Flexible(
                               child: Text(
                                 "Compra mais recente em Super Mercado no valor de R\$ 250,99",
                                 style: TextStyle(
@@ -290,17 +294,17 @@ class ViewWalletDetail extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            Icon(Icons.shopping_cart, color: Colors.grey),
-                            SizedBox(
+                            const Icon(Icons.shopping_cart, color: Colors.grey),
+                            const SizedBox(
                               width: 10,
                             ),
-                            Flexible(
+                            const Flexible(
                               child: Text(
                                 "Compra mais recente em Super Mercado no valor de R\$ 250,99",
                                 style: TextStyle(
@@ -316,17 +320,17 @@ class ViewWalletDetail extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            Icon(Icons.shopping_cart, color: Colors.grey),
-                            SizedBox(
+                            const Icon(Icons.shopping_cart, color: Colors.grey),
+                            const SizedBox(
                               width: 10,
                             ),
-                            Flexible(
+                            const Flexible(
                               child: Text(
                                 "Compra mais recente em Super Mercado no valor de R\$ 250,99",
                                 style: TextStyle(
@@ -342,17 +346,17 @@ class ViewWalletDetail extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            Icon(Icons.shopping_cart, color: Colors.grey),
-                            SizedBox(
+                            const Icon(Icons.shopping_cart, color: Colors.grey),
+                            const SizedBox(
                               width: 10,
                             ),
-                            Flexible(
+                            const Flexible(
                               child: Text(
                                 "Compra mais recente em Super Mercado no valor de R\$ 250,99",
                                 style: TextStyle(
@@ -368,17 +372,17 @@ class ViewWalletDetail extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            Icon(Icons.shopping_cart, color: Colors.grey),
-                            SizedBox(
+                            const Icon(Icons.shopping_cart, color: Colors.grey),
+                            const SizedBox(
                               width: 10,
                             ),
-                            Flexible(
+                            const Flexible(
                               child: Text(
                                 "Compra mais recente em Super Mercado no valor de R\$ 250,99",
                                 style: TextStyle(
@@ -394,17 +398,17 @@ class ViewWalletDetail extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            Icon(Icons.shopping_cart, color: Colors.grey),
-                            SizedBox(
+                            const Icon(Icons.shopping_cart, color: Colors.grey),
+                            const SizedBox(
                               width: 10,
                             ),
-                            Flexible(
+                            const Flexible(
                               child: Text(
                                 "Compra mais recente em Super Mercado no valor de R\$ 250,99",
                                 style: TextStyle(
@@ -420,17 +424,17 @@ class ViewWalletDetail extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            Icon(Icons.shopping_cart, color: Colors.grey),
-                            SizedBox(
+                            const Icon(Icons.shopping_cart, color: Colors.grey),
+                            const SizedBox(
                               width: 10,
                             ),
-                            Flexible(
+                            const Flexible(
                               child: Text(
                                 "Compra mais recente em Super Mercado no valor de R\$ 250,99",
                                 style: TextStyle(
@@ -446,17 +450,17 @@ class ViewWalletDetail extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            Icon(Icons.shopping_cart, color: Colors.grey),
-                            SizedBox(
+                            const Icon(Icons.shopping_cart, color: Colors.grey),
+                            const SizedBox(
                               width: 10,
                             ),
-                            Flexible(
+                            const Flexible(
                               child: Text(
                                 "Compra mais recente em Super Mercado no valor de R\$ 250,99",
                                 style: TextStyle(
@@ -472,17 +476,17 @@ class ViewWalletDetail extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            Icon(Icons.shopping_cart, color: Colors.grey),
-                            SizedBox(
+                            const Icon(Icons.shopping_cart, color: Colors.grey),
+                            const SizedBox(
                               width: 10,
                             ),
-                            Flexible(
+                            const Flexible(
                               child: Text(
                                 "Compra mais recente em Super Mercado no valor de R\$ 250,99",
                                 style: TextStyle(
@@ -498,17 +502,17 @@ class ViewWalletDetail extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            Icon(Icons.shopping_cart, color: Colors.grey),
-                            SizedBox(
+                            const Icon(Icons.shopping_cart, color: Colors.grey),
+                            const SizedBox(
                               width: 10,
                             ),
-                            Flexible(
+                            const Flexible(
                               child: Text(
                                 "Compra mais recente em Super Mercado no valor de R\$ 250,99",
                                 style: TextStyle(
@@ -524,17 +528,17 @@ class ViewWalletDetail extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            Icon(Icons.shopping_cart, color: Colors.grey),
-                            SizedBox(
+                            const Icon(Icons.shopping_cart, color: Colors.grey),
+                            const SizedBox(
                               width: 10,
                             ),
-                            Flexible(
+                            const Flexible(
                               child: Text(
                                 "Compra mais recente em Super Mercado no valor de R\$ 250,99",
                                 style: TextStyle(
@@ -550,17 +554,17 @@ class ViewWalletDetail extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            Icon(Icons.shopping_cart, color: Colors.grey),
-                            SizedBox(
+                            const Icon(Icons.shopping_cart, color: Colors.grey),
+                            const SizedBox(
                               width: 10,
                             ),
-                            Flexible(
+                            const Flexible(
                               child: Text(
                                 "Compra mais recente em Super Mercado no valor de R\$ 250,99",
                                 style: TextStyle(
@@ -576,17 +580,17 @@ class ViewWalletDetail extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            Icon(Icons.shopping_cart, color: Colors.grey),
-                            SizedBox(
+                            const Icon(Icons.shopping_cart, color: Colors.grey),
+                            const SizedBox(
                               width: 10,
                             ),
-                            Flexible(
+                            const Flexible(
                               child: Text(
                                 "Compra mais recente em Super Mercado no valor de R\$ 250,99",
                                 style: TextStyle(
@@ -602,17 +606,17 @@ class ViewWalletDetail extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            Icon(Icons.shopping_cart, color: Colors.grey),
-                            SizedBox(
+                            const Icon(Icons.shopping_cart, color: Colors.grey),
+                            const SizedBox(
                               width: 10,
                             ),
-                            Flexible(
+                            const Flexible(
                               child: Text(
                                 "Compra mais recente em Super Mercado no valor de R\$ 250,99",
                                 style: TextStyle(
@@ -628,17 +632,17 @@ class ViewWalletDetail extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            Icon(Icons.shopping_cart, color: Colors.grey),
-                            SizedBox(
+                            const Icon(Icons.shopping_cart, color: Colors.grey),
+                            const SizedBox(
                               width: 10,
                             ),
-                            Flexible(
+                            const Flexible(
                               child: Text(
                                 "Compra mais recente em Super Mercado no valor de R\$ 250,99",
                                 style: TextStyle(
@@ -654,17 +658,17 @@ class ViewWalletDetail extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            Icon(Icons.shopping_cart, color: Colors.grey),
-                            SizedBox(
+                            const Icon(Icons.shopping_cart, color: Colors.grey),
+                            const SizedBox(
                               width: 10,
                             ),
-                            Flexible(
+                            const Flexible(
                               child: Text(
                                 "Compra mais recente em Super Mercado no valor de R\$ 250,99",
                                 style: TextStyle(
@@ -680,17 +684,17 @@ class ViewWalletDetail extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            Icon(Icons.shopping_cart, color: Colors.grey),
-                            SizedBox(
+                            const Icon(Icons.shopping_cart, color: Colors.grey),
+                            const SizedBox(
                               width: 10,
                             ),
-                            Flexible(
+                            const Flexible(
                               child: Text(
                                 "Compra mais recente em Super Mercado no valor de R\$ 250,99",
                                 style: TextStyle(
@@ -706,17 +710,17 @@ class ViewWalletDetail extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            Icon(Icons.shopping_cart, color: Colors.grey),
-                            SizedBox(
+                            const Icon(Icons.shopping_cart, color: Colors.grey),
+                            const SizedBox(
                               width: 10,
                             ),
-                            Flexible(
+                            const Flexible(
                               child: Text(
                                 "Compra mais recente em Super Mercado no valor de R\$ 250,99",
                                 style: TextStyle(
@@ -732,17 +736,17 @@ class ViewWalletDetail extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            Icon(Icons.shopping_cart, color: Colors.grey),
-                            SizedBox(
+                            const Icon(Icons.shopping_cart, color: Colors.grey),
+                            const SizedBox(
                               width: 10,
                             ),
-                            Flexible(
+                            const Flexible(
                               child: Text(
                                 "Compra mais recente em Super Mercado no valor de R\$ 250,99",
                                 style: TextStyle(
@@ -761,7 +765,6 @@ class ViewWalletDetail extends StatelessWidget {
                       ],
                     ),
                   ),
-                  color: Colors.grey[200],
                 ),
               ),
               // Center(

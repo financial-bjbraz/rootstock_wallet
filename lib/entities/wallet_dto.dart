@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:my_rootstock_wallet/entities/wallet_entity.dart';
 
 class WalletDTO {

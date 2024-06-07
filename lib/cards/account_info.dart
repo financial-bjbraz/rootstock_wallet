@@ -1,9 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class AccountInfo extends StatefulWidget {
-  const AccountInfo({Key? key}) : super(key: key);
+  const AccountInfo({super.key});
 
   @override
   _AccountInfoState createState() => _AccountInfoState();
@@ -19,6 +19,7 @@ class _AccountInfoState extends State<AccountInfo> with AutomaticKeepAliveClient
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     final FirebaseAuth auth = FirebaseAuth.instance;
 
     return ClipRRect(
@@ -90,7 +91,7 @@ class _AccountInfoState extends State<AccountInfo> with AutomaticKeepAliveClient
                                   text: currentBalance,
                                 ),
                                 textAlign: TextAlign.start,
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: Colors.black,
                                   fontSize: 28,
                                 ),
@@ -110,16 +111,17 @@ class _AccountInfoState extends State<AccountInfo> with AutomaticKeepAliveClient
           Expanded(
             flex: 1,
             child: Container(
+              color: Colors.grey[200],
               child: Padding(
                 padding: const EdgeInsets.all(20),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Icon(Icons.credit_card, color: Colors.grey),
-                    SizedBox(
+                    const Icon(Icons.credit_card, color: Colors.grey),
+                    const SizedBox(
                       width: 10,
                     ),
-                    Flexible(
+                    const Flexible(
                       child: Text(
                         "Compra mais recente em Super Mercado no valor de R\$ 150,99",
                         style: TextStyle(
@@ -136,7 +138,6 @@ class _AccountInfoState extends State<AccountInfo> with AutomaticKeepAliveClient
                   ],
                 ),
               ),
-              color: Colors.grey[200],
             ),
           ),
         ],

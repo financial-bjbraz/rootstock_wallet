@@ -1,10 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:my_rootstock_wallet/pages/transactions.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:my_rootstock_wallet/entities/simple_user.dart';
 import 'package:my_rootstock_wallet/pages/home_page.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:my_rootstock_wallet/services/auth.dart';
 import 'package:provider/provider.dart';
 
 import '../services/create_user_service.dart';
@@ -37,13 +35,11 @@ class _BodyState extends State<Body> {
 
   TextEditingController passwordController = TextEditingController();
   TextEditingController mailController = TextEditingController();
-  late bool _buttonPressed = false;
-  late String _email, _password;
-  late String mensagem_invalid_email = AppLocalizations.of(context)!.mensagem_invalid_email;
-  late String mensagem_invalid_password = AppLocalizations.of(context)!.mensagem_invalid_password;
-  late String mensagem_user_exists = AppLocalizations.of(context)!.mensagem_user_exists;
-  late String mensagem_user_not_found = AppLocalizations.of(context)!.mensagem_user_not_found;
-  late String user_created_successfully = AppLocalizations.of(context)!.user_created_successfully;
+  late String mensagemInvalidEmail = AppLocalizations.of(context)!.mensagem_invalid_email;
+  late String mensagemInvalidPassword = AppLocalizations.of(context)!.mensagem_invalid_password;
+  late String mensagemUserExists = AppLocalizations.of(context)!.mensagem_user_exists;
+  late String mensagemUserNotFound = AppLocalizations.of(context)!.mensagem_user_not_found;
+  late String userCreatedSuccessfully = AppLocalizations.of(context)!.user_created_successfully;
 
   late User user;
   final auth = FirebaseAuth.instance;
@@ -52,7 +48,6 @@ class _BodyState extends State<Body> {
     final String loginAnonimousText = AppLocalizations.of(context)!.alogin;
     final String login = AppLocalizations.of(context)!.login;
     final String createAccount = AppLocalizations.of(context)!.createAccount;
-    final String title = AppLocalizations.of(context)!.title;
     FocusNode textSecondFocusNode = FocusNode();
 
     return ClipRRect(
@@ -108,7 +103,6 @@ class _BodyState extends State<Body> {
                               email: mailController.text,
                               password: passwordController.text);
                             bool isValid = await validate(user, context);
-                            print('validating user $isValid');
                             if (isValid) {
                               Navigator.pushReplacement(
                                 context,
@@ -154,7 +148,6 @@ class _BodyState extends State<Body> {
                                 password: passwordController.text);
 
                             bool isValid = await validateCreateAccount(user, context);
-                            print('validating create user $isValid');
 
                             if (isValid) {
                               Navigator.pushReplacement(
@@ -266,26 +259,24 @@ class _BodyState extends State<Body> {
   }
 
   Future<bool> validate(SimpleUser user, BuildContext context) async {
-    print('Validating the user');
     final CreateUserServiceImpl createUserServiceImpl = Provider.of<CreateUserServiceImpl>(context, listen: false);
 
     var email = user.email;
     var password = user.password;
 
     if (email.isEmpty) {
-      showMessage(mensagem_invalid_email);
+      showMessage(mensagemInvalidEmail);
       return false;
     }
 
     if (password.isEmpty ||  password.length < 8) {
-      showMessage(mensagem_invalid_password);
+      showMessage(mensagemInvalidPassword);
       return false;
     }
 
     var userExists = await createUserServiceImpl.getUser(user);
-    print('user searched and the result is $userExists');
     if (userExists == null) {
-      showMessage(mensagem_user_not_found);
+      showMessage(mensagemUserNotFound);
       return false;
     }
 
@@ -299,22 +290,20 @@ class _BodyState extends State<Body> {
     var password = passwordController.text;
 
     if (email.isEmpty) {
-      showMessage(mensagem_invalid_email);
+      showMessage(mensagemInvalidEmail);
       return false;
     }
 
     if (password.isEmpty ||  password.length < 8) {
-      showMessage(mensagem_invalid_password);
+      showMessage(mensagemInvalidPassword);
       return false;
     }
-    print("getting user in database");
     var userExists = await createUserServiceImpl.getUser(user);
-    print("user retrieved $userExists");
     if (userExists != null) {
-      showMessage(mensagem_user_exists);
+      showMessage(mensagemUserExists);
     } else {
       createUserServiceImpl.createUser(user);
-      showMessage(user_created_successfully);
+      showMessage(userCreatedSuccessfully);
     }
     return true;
   }

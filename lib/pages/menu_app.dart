@@ -1,12 +1,11 @@
-import 'package:my_rootstock_wallet/pages/item_menu.dart';
 import 'package:flutter/material.dart';
+import 'package:my_rootstock_wallet/pages/item_menu.dart';
 import 'package:my_rootstock_wallet/pages/login.dart';
 
 class MenuApp extends StatelessWidget {
-  MenuApp({Key? key, required this.top, required this.showMenu})
-      : super(key: key);
+  const MenuApp({super.key, required this.top, required this.showMenu});
   final double top;
-  bool showMenu;
+  final bool showMenu;
 
   Route _createRoute() {
     return PageRouteBuilder(
@@ -31,8 +30,8 @@ class MenuApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ButtonStyle raisedButtonStyle = ElevatedButton.styleFrom(
-      minimumSize: Size(88, 36),
-      padding: EdgeInsets.symmetric(horizontal: 16),
+      minimumSize: const Size(88, 36),
+      padding: const EdgeInsets.symmetric(horizontal: 16),
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(2)),
       ),
@@ -43,13 +42,13 @@ class MenuApp extends StatelessWidget {
       left: 0,
       right: 0,
       child: AnimatedOpacity(
-        duration: Duration(milliseconds: 800),
+        duration: const Duration(milliseconds: 800),
         opacity: showMenu ? 1 : 0,
         child: Container(
             //color: Colors.red,
             height: MediaQuery.of(context).size.height * 0.55,
             child: SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               child: Column(
                 children: <Widget>[
                   Image.network(

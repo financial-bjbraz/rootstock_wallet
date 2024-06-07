@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:my_rootstock_wallet/entities/wallet_dto.dart';
-import 'package:my_rootstock_wallet/services/wallet_service.dart';
-import 'package:provider/provider.dart';
 
 class CreateWallet extends StatelessWidget {
   const CreateWallet({super.key});

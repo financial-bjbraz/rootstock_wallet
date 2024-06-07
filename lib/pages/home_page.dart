@@ -1,16 +1,14 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:flutter/material.dart';
 import 'package:my_rootstock_wallet/entities/simple_user.dart';
-import 'package:my_rootstock_wallet/entities/wallet_dto.dart';
-import 'package:my_rootstock_wallet/entities/wallet_entity.dart';
 import 'package:my_rootstock_wallet/pages/menu_app.dart';
 import 'package:my_rootstock_wallet/pages/my_app_bar.dart';
 import 'package:my_rootstock_wallet/pages/my_dots_app.dart';
 import 'package:my_rootstock_wallet/pages/page_view_app.dart';
-import 'package:flutter/material.dart';
 import 'package:my_rootstock_wallet/util/util.dart';
 import 'package:provider/provider.dart';
+
 import '../services/wallet_service.dart';
-import 'details/account_statements_detail.dart';
 import 'details/create_send_transaction.dart';
 import 'details/detail_list.dart';
 

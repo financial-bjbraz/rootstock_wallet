@@ -22,8 +22,8 @@ Future<User?> siginInWithGoogle() async {
       idToken: googleSignInAuthentication.idToken,
       accessToken: googleSignInAuthentication.accessToken);
 
-  final UserCredential _authResult = await _auth.signInWithCredential(credential);
-  final User? user = _authResult.user;
+  final UserCredential authResult = await _auth.signInWithCredential(credential);
+  final User? user = authResult.user;
 
   assert(!user!.isAnonymous);
   assert(await user!.getIdToken() != null);

@@ -1,7 +1,5 @@
-import 'package:my_rootstock_wallet/pages/details/detail_list.dart';
-import 'package:my_rootstock_wallet/pages/details/account_statements_detail.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:my_rootstock_wallet/pages/details/detail_list.dart';
 
 class ItemMenuBottom extends StatelessWidget {
   final IconData icon;

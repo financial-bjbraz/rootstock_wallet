@@ -1,21 +1,20 @@
 import 'dart:convert';
 
-import 'package:hex/hex.dart';
 import 'package:bip39/bip39.dart' as bip39;
+import 'package:ed25519_hd_key/ed25519_hd_key.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:hex/hex.dart';
+import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:my_rootstock_wallet/entities/wallet_dto.dart';
 import 'package:my_rootstock_wallet/util/CoinGeckoResponse.dart';
 import 'package:my_rootstock_wallet/util/wei.dart';
 import 'package:path/path.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:ed25519_hd_key/ed25519_hd_key.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:web3dart/credentials.dart';
+import 'package:web3dart/web3dart.dart';
+
 import '../entities/wallet_entity.dart';
 import '../util/util.dart';
-import 'package:http/http.dart' as http;
-import 'package:web3dart/web3dart.dart';
 
 abstract class WalletAddressService {
   String generateMnemonic();
@@ -24,10 +23,10 @@ abstract class WalletAddressService {
 }
 
 class WalletServiceImpl extends ChangeNotifier implements WalletAddressService {
-  static const PRIVATE_KEY = "flutter_k1";
-  static const WALLET_NAME = "flutter_k2";
-  static const PUBLIC_KEY = "flutter_k3";
-  static const WID = "flutter_k4";
+  static const privateKey = "flutter_k1";
+  static const walletName = "flutter_k2";
+  static const publickey = "flutter_k3";
+  static const wid = "flutter_k4";
 
   @override
   String generateMnemonic() {
@@ -49,7 +48,6 @@ class WalletServiceImpl extends ChangeNotifier implements WalletAddressService {
     return address;
   }
 
-  @override
   Future<String> getPublicKeyString(String privateKey) async {
     final private = EthPrivateKey.fromHex(privateKey);
     final address = await private.address;
@@ -86,8 +84,6 @@ class WalletServiceImpl extends ChangeNotifier implements WalletAddressService {
   }
 
   void persistNewWallet(WalletEntity wallet) async {
-    print("Persisting");
-    print(wallet);
     final database = openDatabase(
       // Set the path to the database. Note: Using the `join` function from the
       // `path` package is best practice to ensure the path is correctly
@@ -107,8 +103,6 @@ class WalletServiceImpl extends ChangeNotifier implements WalletAddressService {
   }
 
   void delete(WalletEntity wallet) async {
-    print("Deleting");
-    print(wallet);
     final db = await openDataBase();
     await db.delete("wallets", where: 'privateKey = ?', whereArgs: [wallet.privateKey]);
   }
@@ -131,7 +125,7 @@ class WalletServiceImpl extends ChangeNotifier implements WalletAddressService {
       final address = credentials.address;
       balance = await client.getBalance(address);
     } catch(error) {
-      print(error);
+      // error
     }
     return Wei(src: balance.getInWei, currency: "wei");
   }
@@ -159,7 +153,7 @@ class WalletServiceImpl extends ChangeNotifier implements WalletAddressService {
           .map(
             (dynamic item) => CoinGeckoResponse.fromJson2(item),
       ).toList();
-      var price = (prices.elementAt(0).current_price);
+      var price = (prices.elementAt(0).currentPrice);
 
       setLastUsdPrice(price);
 

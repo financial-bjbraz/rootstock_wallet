@@ -1,12 +1,12 @@
 import 'dart:convert';
 
 class CoinGeckoResponse {
-  final int current_price;
+  final int currentPrice;
   final int high_24h;
   final int low_24h;
 
   const CoinGeckoResponse({
-    required this.current_price,
+    required this.currentPrice,
     required this.high_24h,
     required this.low_24h,
   });
@@ -14,12 +14,12 @@ class CoinGeckoResponse {
   factory CoinGeckoResponse.fromJson(Map<String, dynamic> json) {
     return switch (json) {
       {
-        'current_price': int current_price,
+        'currentPrice': int currentPrice,
         'high_24h': int high_24h,
         'low_24h': int low_24h,
       } =>
         CoinGeckoResponse(
-          current_price: current_price,
+          currentPrice: currentPrice,
           high_24h: high_24h,
           low_24h: low_24h,
         ),
@@ -27,12 +27,12 @@ class CoinGeckoResponse {
     };
   }
   factory CoinGeckoResponse.fromJson2(Map<String, dynamic> json) => CoinGeckoResponse(
-    current_price: json["current_price"],
+    currentPrice: json["current_price"],
     high_24h: json["high_24h"],
     low_24h: json["low_24h"],
   );
   Map<String, dynamic> toJson() => {
-    "current_price": current_price,
+    "current_price": currentPrice,
     "high_24h": high_24h,
     "low_24h": low_24h,
   };

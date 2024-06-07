@@ -1,14 +1,14 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:my_rootstock_wallet/pages/splash.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:my_rootstock_wallet/services/create_user_service.dart';
 import 'package:my_rootstock_wallet/services/wallet_service.dart';
-import 'package:my_rootstock_wallet/util/util.dart';
 import 'package:provider/provider.dart';
+
 import 'firebase_options.dart';
 
 void main() async {

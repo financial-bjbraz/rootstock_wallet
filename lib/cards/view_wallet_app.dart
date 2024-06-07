@@ -1,15 +1,16 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:my_rootstock_wallet/entities/wallet_dto.dart';
 import 'package:my_rootstock_wallet/pages/details/detail_list.dart';
-import 'package:flutter/material.dart';
 import 'package:my_rootstock_wallet/wallets/info/view_wallet_detail.dart';
-import '../entities/wallet_entity.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 import '../../entities/simple_user.dart';
 import '../../pages/home_page.dart';
 import '../../services/wallet_service.dart';
+import '../entities/wallet_entity.dart';
 import '../util/util.dart';
 
 class ViewWalletApp extends StatefulWidget {

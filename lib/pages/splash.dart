@@ -1,5 +1,5 @@
-import 'package:my_rootstock_wallet/pages/login.dart';
 import 'package:flutter/material.dart';
+import 'package:my_rootstock_wallet/pages/login.dart';
 
 class Splash extends StatefulWidget {
   Splash({Key? key}) : super(key: key);

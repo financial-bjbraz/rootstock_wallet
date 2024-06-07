@@ -16,7 +16,6 @@ abstract class CreateUserService {
 class CreateUserServiceImpl extends ChangeNotifier implements CreateUserService {
   @override
   void changePassword(String password) {
-    // TODO: implement changePassword
   }
 
   @override
@@ -32,9 +31,9 @@ class CreateUserServiceImpl extends ChangeNotifier implements CreateUserService 
 
   @override
   Future<SimpleUser?> getUser(SimpleUser user) async {
-print("1");
+
     WidgetsFlutterBinding.ensureInitialized();
-print("2");
+
     // Open the database and store the reference.
     final database = openDatabase(
       // Set the path to the database. Note: Using the `join` function from the
@@ -42,13 +41,13 @@ print("2");
       // constructed for each platform.
         join(await getDatabasesPath(), DATABASE_NAME),
     );
-print("3");
+
     // Get a reference to the database.
     final db = await database;
-print("4");
+
     // Query the table for all the dogs.
     final List<Map<String, Object?>> walletMaps = await db.query('users', where: 'email = ? and password = ?', whereArgs: [user.email, user.password]);
-print("5");
+
     // Convert the list of each dog's fields into a list of `Dog` objects.
     var list = [
     for (final {
@@ -58,7 +57,6 @@ print("5");
     } in walletMaps)
     SimpleUser(name: name, email: email, password: password),
     ];
-print("6");
     return list.firstOrNull;
   }
 

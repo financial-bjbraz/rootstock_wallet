@@ -1,9 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter/widgets.dart';
-import 'dart:async';
 import 'package:sqflite/sqflite.dart';
 
 const DATABASE_NAME = "my_rootstock_wallet.db";
@@ -146,11 +146,15 @@ Future<Database> openDataBase() async {
           await db.execute(
             'CREATE TABLE wallets(privateKey TEXT PRIMARY KEY, walletName TEXT, walletId TEXT,publicKey TEXT, ownerEmail TEXT)',
           );
-          print("creating table users ");
+          if (kDebugMode) {
+            print("creating table users ");
+          }
           await db.execute(
             'CREATE TABLE users(name TEXT PRIMARY KEY, email TEXT, userId TEXT, password TEXT)',
           );
-          print("created table users ");
+          if (kDebugMode) {
+            print("created table users ");
+          }
         });
   try {
     database.transaction((txn) async {
@@ -162,7 +166,9 @@ Future<Database> openDataBase() async {
           "CREATE TABLE users(name TEXT PRIMARY KEY, email TEXT, userId TEXT, password TEXT)");
     });
   } catch(e){
-    print("Error occurred");
+    if (kDebugMode) {
+      print("Error occurred");
+    }
   }
 
   if (kDebugMode) {
@@ -178,7 +184,6 @@ createTable() async {
 }
 
 InputDecoration simmpleDecoration(final String labelText, final Icon icon) {
-  FocusNode textSecondFocusNode = FocusNode();
   return InputDecoration(
       focusColor: Colors.white,
       enabled: true,

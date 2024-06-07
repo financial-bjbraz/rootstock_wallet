@@ -6,19 +6,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class Rewards extends StatefulWidget {
-  const Rewards({Key? key}) : super(key: key);
+  const Rewards({super.key});
 
   @override
   _RewardsState createState() => _RewardsState();
 }
 
 class _RewardsState extends State<Rewards> with AutomaticKeepAliveClientMixin {
-  bool _buttonPressed = false;
   var randon = Random();
 
   final ButtonStyle raisedButtonStyle = ElevatedButton.styleFrom(
-    minimumSize: Size(88, 36),
-    padding: EdgeInsets.symmetric(horizontal: 16),
+    minimumSize: const Size(88, 36),
+    padding: const EdgeInsets.symmetric(horizontal: 16),
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.all(Radius.circular(2)),
     ),
@@ -29,6 +28,7 @@ class _RewardsState extends State<Rewards> with AutomaticKeepAliveClientMixin {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Padding(
       padding: const EdgeInsets.all(30),
       child: Column(
@@ -40,14 +40,14 @@ class _RewardsState extends State<Rewards> with AutomaticKeepAliveClientMixin {
           ),
           Column(
             children: [
-              Text(
+              const Text(
                 "Nubank Rewards",
                 style: TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
                     fontSize: 26),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 15,
               ),
               Text(

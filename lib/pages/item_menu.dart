@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ItemMenu extends StatelessWidget {
-  const ItemMenu({Key? key, required this.icone, required this.text})
-      : super(key: key);
+  const ItemMenu({super.key, required this.icone, required this.text});
 
   final IconData icone;
   final String text;
@@ -10,8 +9,8 @@ class ItemMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ButtonStyle raisedButtonStyle = ElevatedButton.styleFrom(
-      minimumSize: Size(88, 36),
-      padding: EdgeInsets.symmetric(horizontal: 16),
+      minimumSize: const Size(88, 36),
+      padding: const EdgeInsets.symmetric(horizontal: 16),
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(2)),
       ),

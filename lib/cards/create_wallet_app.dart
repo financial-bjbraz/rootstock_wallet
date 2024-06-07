@@ -1,6 +1,5 @@
-import 'package:my_rootstock_wallet/pages/details/detail_list.dart';
-import 'package:my_rootstock_wallet/pages/details/account_statements_detail.dart';
 import 'package:flutter/material.dart';
+import 'package:my_rootstock_wallet/pages/details/detail_list.dart';
 import 'package:my_rootstock_wallet/wallets/create_import/create_wallet.dart';
 import 'package:my_rootstock_wallet/wallets/create_import/create_wallet_detail.dart';
 

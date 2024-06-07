@@ -1,5 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 import '../entities/simple_user.dart';
 import '../pages/details/detail_list.dart';
 import '../wallets/create_import/import_wallet_pk_detail.dart';

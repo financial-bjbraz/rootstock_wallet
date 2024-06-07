@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:my_rootstock_wallet/wallets/create_import/import_wallet_seed_detail.dart';
 import 'package:provider/provider.dart';
-import 'package:web3dart/src/credentials/address.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:web3dart/web3dart.dart';
 import '../../entities/simple_user.dart';
 import '../../pages/details/detail_list.dart';
 import '../../services/wallet_service.dart';
-import 'package:flutter/services.dart';
 import '../../util/util.dart';
 
 class CreateNewWalletDetail extends StatefulWidget {
@@ -15,24 +15,23 @@ class CreateNewWalletDetail extends StatefulWidget {
   const CreateNewWalletDetail({super.key, required this.user});
 
   @override
-  _CreateNewWalletDetail createState() => _CreateNewWalletDetail(user);
+  _CreateNewWalletDetail createState() {
+    return _CreateNewWalletDetail();
+  }
 }
 
 class _CreateNewWalletDetail extends State<CreateNewWalletDetail> {
-  late bool _showSeed;
   bool processing = false;
   bool _created = false;
   late WalletServiceImpl walletService;
   List<String> splittedMnemonic = List<String>.filled(1, "");
   late EthereumAddress address;
-  late SimpleUser _user;
 
-  _CreateNewWalletDetail(this._user);
+  _CreateNewWalletDetail();
 
   @override
   void initState() {
     super.initState();
-    _showSeed = false;
   }
 
   void createNewAccount() async {
@@ -46,7 +45,6 @@ class _CreateNewWalletDetail extends State<CreateNewWalletDetail> {
       //showMessage("Nova conta gerada com sucesso!");
       setState(() {
         splittedMnemonic = mnemonic.split(' ');
-        _showSeed = true;
       });
       _created = !_created;
     }
@@ -92,7 +90,7 @@ class _CreateNewWalletDetail extends State<CreateNewWalletDetail> {
       processing = false;
       Navigator.of(context).push(PageRouteBuilder(
         pageBuilder: (context, animation, secondaryAnimation) =>
-            DetailList(child: ImportNewWalletBySeedDetail(user: _user,)),
+            DetailList(child: ImportNewWalletBySeedDetail(user: widget.user,)),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           var begin = const Offset(0.0, 1.0);
           var end = Offset.zero;
@@ -239,7 +237,6 @@ class _CreateNewWalletDetail extends State<CreateNewWalletDetail> {
 
                                             setState(() {
                                               processing = true;
-                                              print("Processing === true");
                                               delay(context, 5)
                                                   .whenComplete(() {
                                                     processing = false;
