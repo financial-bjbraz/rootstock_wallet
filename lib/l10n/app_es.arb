@@ -3,7 +3,7 @@
     "@title": {
       "description": "The conventional newborn programmer greeting"
     },
-  "emailField": "Type your e-mail",
+  "emailField": "Rellena su correo",
   "passwordField": "Type your password",
   "login": "Login",
   "createAccount": "Create account",

@@ -277,6 +277,7 @@ class _BodyState extends State<Body> {
     }
 
     var userExists = await createUserServiceImpl.getUser(user);
+
     if (userExists == null) {
       showMessage(mensagemUserNotFound);
       return false;
