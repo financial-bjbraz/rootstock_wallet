@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:my_rootstock_wallet/cards/create_wallet_app.dart';
 import 'package:my_rootstock_wallet/entities/simple_user.dart';
 import 'package:provider/provider.dart';
-
-import '../cards/account_info.dart';
-import '../cards/card_app.dart';
 import '../cards/import_seed_pk_app.dart';
 import '../cards/view_wallet_app.dart';
 import '../entities/wallet_entity.dart';
@@ -12,8 +9,6 @@ import '../services/wallet_service.dart';
 import '../wallets/create_import/create_wallet_detail.dart';
 import '../wallets/create_import/import_wallet_pk_detail.dart';
 import '../wallets/create_import/import_wallet_seed_detail.dart';
-import 'details/account_statements_detail.dart';
-import 'my_dots_app.dart';
 
 class PageViewApp extends StatefulWidget {
   final double top;
