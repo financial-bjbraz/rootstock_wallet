@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:my_rootstock_wallet/services/wallet_service.dart';
 
 class MyDotsApp extends StatelessWidget {
   const MyDotsApp(
@@ -15,7 +14,6 @@ class MyDotsApp extends StatelessWidget {
   final int walletQuantity;
 
   getColor(int index) {
-    print("index is ${index} and current index is ${currentIndex}");
     return index != currentIndex ? Colors.white38 : Colors.white;
   }
 
@@ -24,8 +22,6 @@ class MyDotsApp extends StatelessWidget {
     var widgets = <Widget>{};
 
     if(walletQuantity > 0) {
-      print("walletQuantity");
-      print(walletQuantity);
       for (int i = 0; i < walletQuantity; i++) {
         widgets.add(SizedBox(
           width: 8,
