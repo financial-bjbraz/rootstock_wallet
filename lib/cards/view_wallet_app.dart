@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -6,7 +8,6 @@ import 'package:my_rootstock_wallet/entities/wallet_dto.dart';
 import 'package:my_rootstock_wallet/pages/details/detail_list.dart';
 import 'package:my_rootstock_wallet/wallets/info/view_wallet_detail.dart';
 import 'package:provider/provider.dart';
-
 import '../../entities/simple_user.dart';
 import '../../pages/home_page.dart';
 import '../../services/wallet_service.dart';
@@ -14,9 +15,10 @@ import '../entities/wallet_entity.dart';
 import '../util/util.dart';
 
 class ViewWalletApp extends StatefulWidget {
-  const ViewWalletApp({super.key, required this.wallet});
+  const ViewWalletApp({super.key, required this.wallet, required this.user});
 
   final WalletEntity wallet;
+  final SimpleUser user;
 
   @override
   _ViewWalletApp createState() => _ViewWalletApp();
@@ -54,7 +56,7 @@ class _ViewWalletApp extends State<ViewWalletApp>
   }
 
   loadWalletData() async {
-    return await Future.delayed(const Duration(seconds: 5), () {
+    return await Future.delayed(const Duration(seconds: 1), () {
       walletService.createWalletToDisplay(widget.wallet).then((dto) => {
         setState(() {
           walletDto = dto;
@@ -94,13 +96,14 @@ class _ViewWalletApp extends State<ViewWalletApp>
                 textStyle: Theme.of(context).textTheme.labelLarge,
               ),
               child: const Text('Delete'),
-              onPressed: () {
+              onPressed: () async {
                 walletService.delete(widget.wallet);
                 showMessage("Wallet deleted", context);
-
+                final List<WalletEntity> wallets = await walletService.getWallets(widget.user.email);
                 Navigator.of(context)
                     .pushReplacement(MaterialPageRoute(
                     builder: (context) => HomePage(
+                      wallets: wallets,
                       user: SimpleUser(
                           name: AppLocalizations.of(
                               context)!
@@ -146,7 +149,8 @@ class _ViewWalletApp extends State<ViewWalletApp>
                           Row(
                             children: <Widget>[
                               const Icon(Icons.wallet_rounded,
-                                  color: Colors.grey),
+                                  size: 40,
+                                  color: Colors.white),
                               const SizedBox(
                                 width: 5,
                               ),
@@ -170,9 +174,10 @@ class _ViewWalletApp extends State<ViewWalletApp>
                             },
                             child: SvgPicture.asset(
                               _showSaldo
-                                  ? "assets/icons/eye-off-outline.svg"
-                                  : "assets/icons/eye-outline.svg",
-                              semanticsLabel: "visualizar",
+                                  ? "assets/icons/eye-off-svgrepo-com.svg"
+                                  : "assets/icons/eye-svgrepo-com.svg",
+                              semanticsLabel: "view",
+                              width: 40,
                             ),
                           ),
                           GestureDetector(
@@ -184,9 +189,8 @@ class _ViewWalletApp extends State<ViewWalletApp>
                               });
                             },
                             child: SvgPicture.asset(
-                              "assets/icons/delete-button.svg",
-                              width: 20,
-                              semanticsLabel: "excluir",
+                              "assets/icons/delete-1487-svgrepo-com.svg",
+                              width: 30,
                             ),
                           ),
                         ],
@@ -231,7 +235,7 @@ class _ViewWalletApp extends State<ViewWalletApp>
                                   ),
                                   GestureDetector(
                                     child: const Icon(Icons.copy,
-                                        color: Colors.grey),
+                                        color: Colors.white),
                                     onTap: () async {
                                       await Clipboard.setData(ClipboardData(
                                           text: widget.wallet.publicKey.toString()));
@@ -255,22 +259,19 @@ class _ViewWalletApp extends State<ViewWalletApp>
                                           right: 10),
                                       child: Row(
                                         children: [
-                                          const Icon(
-                                            Icons.money,
-                                            color: Color.fromRGBO(
-                                                158, 118, 255, 1),
-                                            size: 48,
+                                          Image.asset(
+                                           "assets/icons/rbtc2.png",
+                                            width: 48,
                                           ),
                                           _showSaldo
                                               ? Text.rich(
                                                   TextSpan(
                                                       text: balance,
-                                                      style: const TextStyle(
+                                                      style: TextStyle(
                                                         fontWeight:
                                                             FontWeight.bold,
                                                         backgroundColor:
-                                                            Color.fromRGBO(158,
-                                                                118, 255, 1),
+                                                            green(),
                                                       )),
                                                   textAlign: TextAlign.start,
                                                   style: const TextStyle(

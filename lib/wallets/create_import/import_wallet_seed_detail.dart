@@ -7,6 +7,8 @@ import '../../pages/home_page.dart';
 import '../../services/wallet_service.dart';
 import '../../util/util.dart';
 
+
+// validate seed and generate new wallet
 class ImportNewWalletBySeedDetail extends StatefulWidget {
   final SimpleUser user;
 
@@ -117,10 +119,12 @@ class _ImportNewWalletBySeedDetail extends State<ImportNewWalletBySeedDetail> {
 
                                         walletService.persistNewWallet(wallet);
                                         showMessage("Account Created", context);
+                                        final List<WalletEntity> wallets = await walletService.getWallets(widget.user.email);
                                         Navigator.of(context)
                                             .pushReplacement(MaterialPageRoute(
                                             builder: (context) => HomePage(
                                               user: widget.user,
+                                              wallets: wallets
                                             )));
 
                                       }

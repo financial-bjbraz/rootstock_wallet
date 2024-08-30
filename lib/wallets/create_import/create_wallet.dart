@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// Box component on the first page
 class CreateWallet extends StatelessWidget {
   const CreateWallet({super.key});
 

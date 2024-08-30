@@ -5,7 +5,9 @@ import 'package:my_rootstock_wallet/entities/simple_user.dart';
 import 'package:my_rootstock_wallet/pages/home_page.dart';
 import 'package:provider/provider.dart';
 
+import '../entities/wallet_entity.dart';
 import '../services/create_user_service.dart';
+import '../services/wallet_service.dart';
 import '../util/util.dart';
 
 class LoginPage extends StatelessWidget {
@@ -45,6 +47,7 @@ class _BodyState extends State<Body> {
 
   late User user;
   final auth = FirebaseAuth.instance;
+  late WalletServiceImpl walletService =  Provider.of<WalletServiceImpl>(context, listen: false);
 
   Widget loginButton() {
     final String loginAnonimousText = AppLocalizations.of(context)!.alogin;
@@ -106,14 +109,7 @@ class _BodyState extends State<Body> {
                               password: passwordController.text);
                             bool isValid = await validate(user, context);
                             if (isValid) {
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => HomePage(
-                                    user: user,
-                                  ),
-                                ),
-                              );
+                              goToHome(user);
                             }
                           },
                           style: greenButtonStyle,
@@ -152,14 +148,7 @@ class _BodyState extends State<Body> {
                             bool isValid = await validateCreateAccount(user, context);
 
                             if (isValid) {
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => HomePage(
-                                    user: user,
-                                  ),
-                                ),
-                              );
+                              goToHome(user);
                             }
                           },
                           style: orangeButton,
@@ -237,16 +226,24 @@ class _BodyState extends State<Body> {
     );
   }
 
-  void clickLoginAnonimous() {
+  void clickLoginAnonimous() async {
+    final anonimousUser = SimpleUser(
+      name: AppLocalizations.of(context)!.anonimus,
+      email:
+      "${AppLocalizations.of(context)!.passwordField}@${AppLocalizations.of(context)!.passwordField}.com",
+      password: "",);
+    goToHome(anonimousUser);
+  }
+
+  void goToHome(SimpleUser user) async {
+    final List<WalletEntity> wallets = await walletService.getWallets(user.email);
+
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
         builder: (context) => HomePage(
-          user: SimpleUser(
-              name: AppLocalizations.of(context)!.anonimus,
-              email:
-                  "${AppLocalizations.of(context)!.passwordField}@${AppLocalizations.of(context)!.passwordField}.com",
-              password: "",),
+          wallets: wallets,
+          user: user,
         ),
       ),
     );

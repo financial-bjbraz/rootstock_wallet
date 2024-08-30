@@ -179,6 +179,7 @@ Future<Database> openDataBase() async {
   return database;
 }
 
+
 createTable() async {
   openDataBase();
 }

@@ -133,17 +133,21 @@ class _ImportNewWalletByPKDetail
                                         showMessage(
                                             "Account ${wallet.walletName} Created",
                                             context);
+                                        final user = SimpleUser(
+                                            name: AppLocalizations.of(
+                                                context)!
+                                                .anonimus,
+                                            email:
+                                            "${AppLocalizations.of(context)!.passwordField}@${AppLocalizations.of(context)!.passwordField}.com",
+                                            password: "");
+                                        final List<WalletEntity> wallets = await walletService.getWallets(user.email);
+
                                         Navigator.of(context).pushReplacement(
                                             MaterialPageRoute(
                                                 builder:
                                                     (context) => HomePage(
-                                                          user: SimpleUser(
-                                                              name: AppLocalizations.of(
-                                                                      context)!
-                                                                  .anonimus,
-                                                              email:
-                                                                  "${AppLocalizations.of(context)!.passwordField}@${AppLocalizations.of(context)!.passwordField}.com",
-                                                              password: ""),
+                                                          wallets: wallets,
+                                                          user: user,
                                                         )));
                                       }
                                     },

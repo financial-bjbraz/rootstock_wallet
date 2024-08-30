@@ -7,7 +7,7 @@ import '../entities/simple_user.dart';
 
 class CreateWalletApp extends StatelessWidget {
   final SimpleUser user;
-  final CreateWallet child = const CreateWallet();
+  final CreateWallet createWalletBox = const CreateWallet();
   final CreateNewWalletDetail detailChild;
 
   const CreateWalletApp({super.key, required this.user, required this.detailChild});
@@ -74,7 +74,7 @@ class CreateWalletApp extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20), color: Colors.black, border: Border.all(color: Colors.white)),
-          child: child,
+          child: createWalletBox,
         ),
         onTap: () {
           dialogBuilder(context);

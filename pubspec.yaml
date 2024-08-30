@@ -85,6 +85,11 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+    - assets/icons/rbtc.png
+    - assets/icons/delete-button.svg
+    - assets/icons/eye-off-outline.svg
+    - assets/icons/eye-outline.svg
+    - assets/icons/rbtc2.png
     - assets/icons/
     - assets/images/
 
