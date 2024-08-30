@@ -17,6 +17,10 @@ class MyDotsApp extends StatelessWidget {
     return index != currentIndex ? Colors.white38 : Colors.white;
   }
 
+  getWidth() {
+    return 8.0;
+  }
+
   @override
   Widget build(BuildContext context) {
     var widgets = <Widget>{};
@@ -24,7 +28,7 @@ class MyDotsApp extends StatelessWidget {
     if(walletQuantity > 0) {
       for (int i = 0; i < walletQuantity; i++) {
         widgets.add(SizedBox(
-          width: 8,
+          width: getWidth(),
         ));
         widgets.add(AnimatedContainer(
           duration: const Duration(milliseconds: 300),
