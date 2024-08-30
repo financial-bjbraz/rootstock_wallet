@@ -9,6 +9,8 @@ import '../../pages/details/detail_list.dart';
 import '../../services/wallet_service.dart';
 import '../../util/util.dart';
 
+
+// seeed generation page, this component doesnt create a new wallet, just creates seed to be imported
 class CreateNewWalletDetail extends StatefulWidget {
   final SimpleUser user;
 

@@ -8,14 +8,16 @@ import 'package:my_rootstock_wallet/pages/page_view_app.dart';
 import 'package:my_rootstock_wallet/util/util.dart';
 import 'package:provider/provider.dart';
 
+import '../entities/wallet_entity.dart';
 import '../services/wallet_service.dart';
 import 'details/create_send_transaction.dart';
 import 'details/detail_list.dart';
 
 class HomePage extends StatefulWidget {
   final SimpleUser user;
+  final List<WalletEntity> wallets;
 
-  const HomePage({super.key, required this.user});
+  const HomePage({super.key, required this.user, required this.wallets});
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -26,8 +28,6 @@ class _HomePageState extends State<HomePage> {
   late int _currentIndex;
   late double _yPosition = 0;
   late int _walletQuantity;
-  late WalletServiceImpl walletService =
-      Provider.of<WalletServiceImpl>(context);
 
   _HomePageState();
 
@@ -41,12 +41,9 @@ class _HomePageState extends State<HomePage> {
 
   loadWallets() async {
     try {
-      walletService.getWallets(widget.user.email).then((walletsLoaded) =>
-      {
         setState(() {
-          _walletQuantity = walletsLoaded.length;
-        }),
-      });
+          _walletQuantity = widget.wallets.length;
+        });
     }catch(e) {
       // print('error occurred $e');
     }
@@ -62,35 +59,7 @@ class _HomePageState extends State<HomePage> {
     }
     return Scaffold(
       backgroundColor: Colors.black,
-      bottomNavigationBar:
-          CurvedNavigationBar(color: orange(), backgroundColor: Colors.black, buttonBackgroundColor: orange(), items: [
-            const Icon(Icons.home, color: Colors.white),
-            _walletQuantity > 0 ? GestureDetector(
-          child: const Icon(Icons.call_made, color: Colors.white),
-          onTap: () => {
-            Navigator.of(context).push(PageRouteBuilder(
-              pageBuilder: (context, animation, secondaryAnimation) =>
-                  DetailList(child: CreateSendTransaction(user: widget.user,)),
-              transitionsBuilder:
-                  (context, animation, secondaryAnimation, child) {
-                var begin = const Offset(0.0, 1.0);
-                var end = Offset.zero;
-                var curve = Curves.ease;
 
-                var tween = Tween(begin: begin, end: end)
-                    .chain(CurveTween(curve: curve));
-
-                return SlideTransition(
-                  position: animation.drive(tween),
-                  child: child,
-                );
-              },
-            ))
-          },
-        ) : const SizedBox(),
-
-            _walletQuantity > 0 ? const Icon(Icons.call_received, color: Colors.white) : const SizedBox(),
-      ]),
       body: Stack(
         alignment: Alignment.topCenter,
         children: <Widget>[
@@ -109,19 +78,13 @@ class _HomePageState extends State<HomePage> {
             top: heightScreen * .205,
             showMenu: _showMenu,
           ),
-          // BottomMenu(
-          //   showMenu: _showMenu,
-          // ),
-          MyDotsApp(
-            showMenu: _showMenu,
-            top: heightScreen * .70,
-            currentIndex: _currentIndex,
-            walletQuantity: _walletQuantity,
-          ),
+
+
           PageViewApp(
             user: widget.user,
             showMenu: _showMenu,
             top: _yPosition,
+            wallets: widget.wallets,
             onChanged: (index) {
               setState(() {
                 _currentIndex = index;
@@ -165,8 +128,45 @@ class _HomePageState extends State<HomePage> {
               });
             },
           ),
+
+          MyDotsApp(
+            showMenu: _showMenu,
+            top: heightScreen * .70,
+            currentIndex: _currentIndex,
+            walletQuantity: _walletQuantity,
+          ),
         ],
       ),
+
+      bottomNavigationBar:
+      CurvedNavigationBar(color: orange(), backgroundColor: Colors.black, buttonBackgroundColor: orange(), items: [
+        const Icon(Icons.home, color: Colors.white),
+        _walletQuantity > 0 ? GestureDetector(
+          child: const Icon(Icons.call_made, color: Colors.white),
+          onTap: () => {
+            Navigator.of(context).push(PageRouteBuilder(
+              pageBuilder: (context, animation, secondaryAnimation) =>
+                  DetailList(child: CreateSendTransaction(user: widget.user,)),
+              transitionsBuilder:
+                  (context, animation, secondaryAnimation, child) {
+                var begin = const Offset(0.0, 1.0);
+                var end = Offset.zero;
+                var curve = Curves.ease;
+
+                var tween = Tween(begin: begin, end: end)
+                    .chain(CurveTween(curve: curve));
+
+                return SlideTransition(
+                  position: animation.drive(tween),
+                  child: child,
+                );
+              },
+            ))
+          },
+        ) : const SizedBox(),
+
+        _walletQuantity > 0 ? const Icon(Icons.call_received, color: Colors.white) : const SizedBox(),
+      ]),
     );
   }
 }

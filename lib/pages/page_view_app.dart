@@ -3,12 +3,17 @@ import 'package:my_rootstock_wallet/cards/create_wallet_app.dart';
 import 'package:my_rootstock_wallet/entities/simple_user.dart';
 import 'package:provider/provider.dart';
 
+import '../cards/account_info.dart';
+import '../cards/card_app.dart';
 import '../cards/import_seed_pk_app.dart';
 import '../cards/view_wallet_app.dart';
+import '../entities/wallet_entity.dart';
 import '../services/wallet_service.dart';
 import '../wallets/create_import/create_wallet_detail.dart';
 import '../wallets/create_import/import_wallet_pk_detail.dart';
 import '../wallets/create_import/import_wallet_seed_detail.dart';
+import 'details/account_statements_detail.dart';
+import 'my_dots_app.dart';
 
 class PageViewApp extends StatefulWidget {
   final double top;
@@ -16,6 +21,7 @@ class PageViewApp extends StatefulWidget {
   final GestureDragUpdateCallback onPanUpdated;
   final bool showMenu;
   final SimpleUser user;
+  final List<WalletEntity> wallets;
 
   const PageViewApp(
       {super.key,
@@ -23,7 +29,8 @@ class PageViewApp extends StatefulWidget {
       required this.onChanged,
       required this.onPanUpdated,
       required this.showMenu,
-      required this.user});
+      required this.user,
+      required this.wallets});
 
   @override
   _PageViewAppState createState() => _PageViewAppState();
@@ -51,11 +58,11 @@ class _PageViewAppState extends State<PageViewApp> {
   }
 
   loadWallets() async {
-    walletService.getWallets(widget.user.email).then((walletsLoaded) => {
-      for (final item in walletsLoaded) {
-        widgets.add(ViewWalletApp(wallet: item)),
-      },
-    });
+    for (final item in widget.wallets) {
+      widgets.add(ViewWalletApp(wallet: item, user: widget.user));
+    }
+    widgets.add(CreateWalletApp(user: widget.user,    detailChild:CreateNewWalletDetail(user: widget.user,)));
+    widgets.add(ImportSeedPkApp(user: widget.user,    importWalletByPrivateKey: ImportNewWalletByPrivateKeyDetail(user: widget.user,),importWalletBySeed: ImportNewWalletBySeedDetail(user: widget.user)));
   }
 
   Future<void> delayAnimation() async {
@@ -68,7 +75,6 @@ class _PageViewAppState extends State<PageViewApp> {
 
   @override
   Widget build(BuildContext context) {
-
     return TweenAnimationBuilder<double>(
         tween: _tween,
         duration: const Duration(milliseconds: 300),
@@ -90,8 +96,7 @@ class _PageViewAppState extends State<PageViewApp> {
                     : const BouncingScrollPhysics(),
                 children: <Widget>[
                   ...widgets,
-                  CreateWalletApp(user: widget.user,    detailChild:CreateNewWalletDetail(user: widget.user,)),
-                  ImportSeedPkApp(user: widget.user,    importWalletByPrivateKey: ImportNewWalletByPrivateKeyDetail(user: widget.user,),importWalletBySeed: ImportNewWalletBySeedDetail(user: widget.user)),
+
                   // CardApp(
                   //   detailChild: AccountStatementsDetail(),
                   //   child: const AccountInfo(),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_rootstock_wallet/services/wallet_service.dart';
 
 class MyDotsApp extends StatelessWidget {
   const MyDotsApp(
@@ -14,6 +15,7 @@ class MyDotsApp extends StatelessWidget {
   final int walletQuantity;
 
   getColor(int index) {
+    print("index is ${index} and current index is ${currentIndex}");
     return index != currentIndex ? Colors.white38 : Colors.white;
   }
 
@@ -22,8 +24,10 @@ class MyDotsApp extends StatelessWidget {
     var widgets = <Widget>{};
 
     if(walletQuantity > 0) {
+      print("walletQuantity");
+      print(walletQuantity);
       for (int i = 0; i < walletQuantity; i++) {
-        widgets.add(const SizedBox(
+        widgets.add(SizedBox(
           width: 8,
         ));
         widgets.add(AnimatedContainer(
@@ -31,11 +35,17 @@ class MyDotsApp extends StatelessWidget {
           height: 7,
           width: 7,
           decoration: BoxDecoration(
-            color: getColor(4 + i),
+            color: getColor(i),
             shape: BoxShape.circle,
           ),
         ));
       }
+    }else{
+      widgets.add(
+          const SizedBox(
+           width: 8,
+          )
+      );
     }
 
     return Positioned(
@@ -45,12 +55,16 @@ class MyDotsApp extends StatelessWidget {
         opacity: showMenu ? 0 : 1,
         child: Row(
           children: <Widget>[
+            ...widgets,
+            const SizedBox(
+              width: 8,
+            ),
             AnimatedContainer(
               duration: const Duration(milliseconds: 300),
               height: 7,
               width: 7,
               decoration: BoxDecoration(
-                color: getColor(0),
+                color: getColor(walletQuantity+0),
                 shape: BoxShape.circle,
               ),
             ),
@@ -62,25 +76,11 @@ class MyDotsApp extends StatelessWidget {
               height: 7,
               width: 7,
               decoration: BoxDecoration(
-                color: getColor(1),
+                color: getColor(walletQuantity+1),
                 shape: BoxShape.circle,
               ),
             ),
-            const SizedBox(
-              width: 8,
-            ),
-            AnimatedContainer(
-              duration: const Duration(milliseconds: 300),
-              height: 7,
-              width: 7,
-              decoration: BoxDecoration(
-                color: getColor(2),
-                shape: BoxShape.circle,
-              ),
-            ),
-            const SizedBox(
-              width: 8,
-            ),
+
             // AnimatedContainer(
             //   duration: const Duration(milliseconds: 300),
             //   height: 7,
