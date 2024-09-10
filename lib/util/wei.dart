@@ -17,6 +17,11 @@ class Wei {
     return valueMul.toStringAsFixed(2);
   }
 
+  String toRBTCTrimmedStringPlaces(int places) {
+    var valueMul = src / conversor;
+    return valueMul.toStringAsFixed(places);
+  }
+
   double getWei() {
     return src / conversor;
   }

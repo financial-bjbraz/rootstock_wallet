@@ -122,11 +122,13 @@ class _ImportNewWalletByPKDetail
                                             .getPublicKeyString(privateKey);
                                         var walletId = await getIndex();
                                         WalletEntity wallet = WalletEntity(
+                                            BigInt.zero.toDouble(),
                                             privateKey: privateKey,
                                             publicKey: publicKey,
                                             walletId: walletId,
                                             walletName: "Wallet #",
-                                            ownerEmail: widget.user.email);
+                                            ownerEmail: widget.user.email,
+                                           );
 
                                         walletService
                                             .persistNewWallet(wallet);

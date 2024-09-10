@@ -12,9 +12,9 @@ import 'package:my_rootstock_wallet/util/wei.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:web3dart/web3dart.dart';
-
 import '../entities/wallet_entity.dart';
 import '../util/util.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 abstract class WalletAddressService {
   String generateMnemonic();
@@ -78,8 +78,9 @@ class WalletServiceImpl extends ChangeNotifier implements WalletAddressService {
         'walletId': walletId as String,
         'publicKey': publicKey as String,
         'ownerEmail': ownerEmail as String,
+        'amount': amountValue as double,
         } in walletMaps)
-        WalletEntity(privateKey: privateKey, publicKey: publicKey, walletId: walletId, walletName: walletName, ownerEmail: ownerEmail),
+        WalletEntity(amountValue, privateKey: privateKey, publicKey: publicKey, walletId: walletId, walletName: walletName, ownerEmail: ownerEmail),
     ];
   }
 
@@ -120,7 +121,10 @@ class WalletServiceImpl extends ChangeNotifier implements WalletAddressService {
   Future<Wei> getBalanceInWei(WalletEntity wallet) async {
     var balance = EtherAmount.zero();
     try {
-      final client = Web3Client("http://192.168.15.6:4444", http.Client());
+      print('Getting rsk node...');
+      final rskNode = dotenv.env['ROOTSTOCK_NODE'];
+      print(rskNode);
+      final client = Web3Client(rskNode!, http.Client());
       final credentials = EthPrivateKey.fromHex(wallet.privateKey);
       final address = credentials.address;
       balance = await client.getBalance(address);
@@ -138,8 +142,14 @@ class WalletServiceImpl extends ChangeNotifier implements WalletAddressService {
     final formatter = NumberFormat("#,##0.00", "en_US");
     walletDto.amountInWeis = wei.getWei();
     walletDto.amountInUsd = value;
-    walletDto.valueInWeiFormatted = (wei.toRBTCTrimmedString());
+    walletDto.valueInWeiFormatted = (wei.toRBTCTrimmedStringPlaces(10));
     walletDto.valueInUsdFormatted = formatter.format(value);
+
+    if(wei.src.compareTo(BigInt.from(wallet.amount)) != 0) {
+      wallet.amount = wei.src.toDouble();
+      persistNewWallet(wallet);
+    }
+
     return walletDto;
   }
 
