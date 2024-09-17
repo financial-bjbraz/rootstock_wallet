@@ -144,7 +144,7 @@ Future<Database> openDataBase() async {
   Database database = await openDatabase(path, version: 3,
         onCreate: (Database db, int version) async {
           await db.execute(
-            'CREATE TABLE wallets(privateKey TEXT PRIMARY KEY, walletName TEXT, walletId TEXT,publicKey TEXT, ownerEmail TEXT)',
+            'CREATE TABLE wallets(privateKey TEXT PRIMARY KEY, walletName TEXT, walletId TEXT,publicKey TEXT, ownerEmail TEXT, amount REAL)',
           );
           if (kDebugMode) {
             print("creating table users ");
@@ -159,7 +159,7 @@ Future<Database> openDataBase() async {
   try {
     database.transaction((txn) async {
       await txn.execute(
-          "CREATE TABLE wallets(privateKey TEXT PRIMARY KEY, walletName TEXT, walletId TEXT,publicKey TEXT, ownerEmail TEXT);");
+          "CREATE TABLE wallets(privateKey TEXT PRIMARY KEY, walletName TEXT, walletId TEXT,publicKey TEXT, ownerEmail TEXT, amount REAL);");
     });
     database.transaction((txn) async {
       await txn.execute(
