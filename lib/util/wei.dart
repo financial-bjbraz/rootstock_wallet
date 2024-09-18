@@ -21,4 +21,9 @@ class Wei {
     return src / conversor;
   }
 
+  String toRBTCTrimmedStringPlaces(int places) {
+    var valueMul = src / conversor;
+    return valueMul.toStringAsFixed(places);
+  }
+
 }
