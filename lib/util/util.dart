@@ -15,6 +15,23 @@ lightBlue() => const Color.fromRGBO(8, 255, 208, 1);
 purple() => const Color.fromRGBO(158, 118, 255, 1);
 yellow() => const Color.fromRGBO(222, 255, 26, 1);
 
+
+const shimmerGradient = LinearGradient(
+  colors: [
+    Color(0xFFEBEBF4),
+    Color(0xFFF4F4F4),
+    Color(0xFFEBEBF4),
+  ],
+  stops: [
+    0.1,
+    0.3,
+    0.4,
+  ],
+  begin: Alignment(-1.0, -0.3),
+  end: Alignment(1.0, 0.3),
+  tileMode: TileMode.clamp,
+);
+
 void showMessage(String message, BuildContext context) {
   final snackBar = SnackBar(
     content: Text(message),
