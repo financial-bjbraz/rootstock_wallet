@@ -138,7 +138,7 @@ class WalletServiceImpl extends ChangeNotifier implements WalletAddressService {
     final wei = await getBalanceInWei(wallet);
     final usdPrice = await getPrice();
     final value =  wei.getWei() * usdPrice;
-    final formatter = NumberFormat("#,##0.00", "en_US");
+    final formatter = NumberFormat.simpleCurrency();
     walletDto.amountInWeis = wei.getWei();
     walletDto.amountInUsd = value;
     walletDto.valueInWeiFormatted = (wei.toRBTCTrimmedStringPlaces(10));

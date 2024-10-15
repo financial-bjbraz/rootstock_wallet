@@ -3,6 +3,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:my_rootstock_wallet/pages/splash.dart';
 import 'package:my_rootstock_wallet/services/create_user_service.dart';
@@ -21,7 +22,7 @@ void main() async {
 
     ),
   );
-
+  await dotenv.load(fileName: ".env");
   runApp(
     MultiProvider(providers: [
       ChangeNotifierProvider<WalletServiceImpl> (
