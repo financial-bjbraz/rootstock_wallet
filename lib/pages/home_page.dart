@@ -76,7 +76,6 @@ class _HomePageState extends State<HomePage> {
             showMenu: _showMenu,
           ),
 
-
           PageViewApp(
             user: widget.user,
             showMenu: _showMenu,
@@ -124,6 +123,7 @@ class _HomePageState extends State<HomePage> {
                 }
               });
             },
+
           ),
 
           MyDotsApp(

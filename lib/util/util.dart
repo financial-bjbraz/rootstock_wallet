@@ -53,49 +53,91 @@ final ButtonStyle raisedButtonStyle = ElevatedButton.styleFrom(
 );
 
 final ButtonStyle orangeButton = ElevatedButton.styleFrom(
-  minimumSize: const Size(88, 36),
-  backgroundColor: const Color.fromRGBO(255, 145, 0, 1),
+  minimumSize: const Size(85, 36),
+  backgroundColor: orange(),
   padding: const EdgeInsets.symmetric(horizontal: 16),
-  shape: const RoundedRectangleBorder(
-    borderRadius: BorderRadius.all(Radius.circular(2)),
+  shape: const StadiumBorder(),
+  side: const BorderSide(
+      width: 2,
+      color: Colors.black
   ),
 );
 
 final ButtonStyle yellowButton = ElevatedButton.styleFrom(
-  minimumSize: const Size(88, 36),
+  minimumSize: const Size(85, 36),
   backgroundColor: yellow(),
   padding: const EdgeInsets.symmetric(horizontal: 16),
-  shape: const RoundedRectangleBorder(
-    borderRadius: BorderRadius.all(Radius.circular(2)),
+  shape: const StadiumBorder(),
+  side: const BorderSide(
+      width: 2,
+      color: Colors.black
   ),
 );
 
 final ButtonStyle lightBlueButton = ElevatedButton.styleFrom(
-  minimumSize: const Size(88, 36),
+  minimumSize: const Size(85, 36),
   backgroundColor: lightBlue(),
   padding: const EdgeInsets.symmetric(horizontal: 16),
-  shape: const RoundedRectangleBorder(
-    borderRadius: BorderRadius.all(Radius.circular(2)),
+  shape: const StadiumBorder(),
+  side: const BorderSide(
+      width: 2,
+      color: Colors.black
   ),
 );
 
-final ButtonStyle greenButtonStyle = ElevatedButton.styleFrom(
-  minimumSize: const Size(88, 36),
-  backgroundColor: const Color.fromRGBO(121, 198, 0, 1),
+final ButtonStyle pinkButton = ElevatedButton.styleFrom(
+  minimumSize: const Size(85, 36),
+  backgroundColor: pink(),
   padding: const EdgeInsets.symmetric(horizontal: 16),
-  shape: const RoundedRectangleBorder(
-    borderRadius: BorderRadius.all(Radius.circular(2)),
+  shape: const StadiumBorder(),
+  side: const BorderSide(
+      width: 2,
+      color: Colors.black
+  ),
+);
+
+final ButtonStyle greenButton = ElevatedButton.styleFrom(
+  minimumSize: const Size(85, 36),
+  backgroundColor: green(),
+  padding: const EdgeInsets.symmetric(horizontal: 16),
+  shape: const StadiumBorder(),
+  side: const BorderSide(
+      width: 2,
+      color: Colors.black
   ),
 );
 
 final ButtonStyle pinkButtonStyle = ElevatedButton.styleFrom(
-  minimumSize: const Size(88, 36),
+  minimumSize: const Size(85, 36),
   backgroundColor: pink(),
   padding: const EdgeInsets.symmetric(horizontal: 16),
-  shape: const RoundedRectangleBorder(
-    borderRadius: BorderRadius.all(Radius.circular(2)),
+  shape: const StadiumBorder(),
+  side: const BorderSide(
+      width: 2,
+      color: Colors.black
   ),
 );
+
+final ButtonStyle blackWhiteButton = ElevatedButton.styleFrom(
+  minimumSize: const Size(90, 36),
+  backgroundColor: Colors.white,
+  padding: const EdgeInsets.symmetric(horizontal: 16),
+  shape: const StadiumBorder(),
+  side: const BorderSide(
+      width: 2,
+      color: Colors.black
+  ),
+);
+
+const whiteText = TextStyle(
+    fontWeight: FontWeight.normal,
+    fontSize: 20,
+    color: Colors.white);
+
+const blackText = TextStyle(
+    fontWeight: FontWeight.normal,
+    fontSize: 20,
+    color: Colors.black);
 
 Future<void> delay(BuildContext context, int seconds) {
   return Future.delayed(Duration(seconds: seconds), () {});
@@ -109,6 +151,22 @@ verifyAndCreateDataBase() async {
   if(!created) {
     createTable();
   }
+}
+
+TextSpan addressText(String address) {
+  return TextSpan(
+      text: address,
+      style: const TextStyle(
+        fontWeight: FontWeight.bold,
+      ));
+}
+
+EdgeInsets createPaddingBetweenRows() {
+  return const EdgeInsets.only(left: 2, top: 5, bottom: 5, right: 2);
+}
+
+EdgeInsets createPaddingBetweenDifferentRows() {
+  return const EdgeInsets.only(left: 2, top: 45, bottom: 5, right: 2);
 }
 
 Future<bool> isTableCreated() async {
@@ -199,6 +257,13 @@ Future<Database> openDataBase() async {
 
 createTable() async {
   openDataBase();
+}
+
+String formatAddress(final String publicKey) {
+  var address = publicKey;
+  address = "${address.substring(0, 8)}...${address.substring(
+      address.length - 8, address.length)}";
+  return address;
 }
 
 InputDecoration simmpleDecoration(final String labelText, final Icon icon) {
