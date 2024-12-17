@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:my_rootstock_wallet/cards/create_wallet_app.dart';
-import 'package:my_rootstock_wallet/cards/view_wallet_info.dart';
 import 'package:my_rootstock_wallet/entities/simple_user.dart';
 import 'package:provider/provider.dart';
 import '../cards/import_seed_pk_app.dart';
 import '../cards/view_wallet_app.dart';
 import '../entities/wallet_entity.dart';
 import '../services/wallet_service.dart';
-import '../util/ExmpleUiLoadingAnimation.dart';
 import '../wallets/create_import/create_wallet_detail.dart';
 import '../wallets/create_import/import_wallet_pk_detail.dart';
 import '../wallets/create_import/import_wallet_seed_detail.dart';
+import 'details/create_send_transaction.dart';
 
 class PageViewApp extends StatefulWidget {
   final double top;
@@ -60,8 +59,17 @@ class _PageViewAppState extends State<PageViewApp> {
       widgets.add(ViewWalletApp(wallet: item, user: widget.user));
     }
 
-    widgets.add(CreateWalletApp(user: widget.user,    detailChild:CreateNewWalletDetail(user: widget.user,)));
-    widgets.add(ImportSeedPkApp(user: widget.user,    importWalletByPrivateKey: ImportNewWalletByPrivateKeyDetail(user: widget.user,),importWalletBySeed: ImportNewWalletBySeedDetail(user: widget.user)));
+    widgets.add(CreateWalletApp(
+        user: widget.user,
+        detailChild: CreateNewWalletDetail(
+          user: widget.user,
+        )));
+    widgets.add(ImportSeedPkApp(
+        user: widget.user,
+        importWalletByPrivateKey: ImportNewWalletByPrivateKeyDetail(
+          user: widget.user,
+        ),
+        importWalletBySeed: ImportNewWalletBySeedDetail(user: widget.user)));
   }
 
   Future<void> delayAnimation() async {
@@ -86,17 +94,14 @@ class _PageViewAppState extends State<PageViewApp> {
             right: value * -1,
             top: widget.top,
             height: MediaQuery.of(context).size.height * .45,
-            child: GestureDetector(
-              onPanUpdate: widget.onPanUpdated,
-              child: PageView(
-                onPageChanged: widget.onChanged,
-                physics: widget.showMenu
-                    ? const NeverScrollableScrollPhysics()
-                    : const BouncingScrollPhysics(),
-                children: <Widget>[
-                  ...widgets,
-                ],
-              ),
+            child: PageView(
+              onPageChanged: widget.onChanged,
+              physics: widget.showMenu
+                  ? const NeverScrollableScrollPhysics()
+                  : const BouncingScrollPhysics(),
+              children: <Widget>[
+                ...widgets,
+              ],
             ),
           );
         });

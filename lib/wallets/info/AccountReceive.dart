@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:my_rootstock_wallet/entities/wallet_dto.dart';
 import 'package:my_rootstock_wallet/wallets/create_import/import_wallet_seed_detail.dart';
 import 'package:provider/provider.dart';
 import 'package:web3dart/web3dart.dart';
@@ -9,27 +10,25 @@ import '../../pages/details/detail_list.dart';
 import '../../services/wallet_service.dart';
 import '../../util/util.dart';
 
-
-// seeed generation page, this component doesnt create a new wallet, just creates seed to be imported
-class CreateNewWalletDetail extends StatefulWidget {
+class Receive extends StatefulWidget {
   final SimpleUser user;
-
-  const CreateNewWalletDetail({super.key, required this.user});
+  final WalletDTO walletDTO;
+  const Receive({super.key, required this.user, required this.walletDTO});
 
   @override
-  _CreateNewWalletDetail createState() {
-    return _CreateNewWalletDetail();
+  _Receive createState() {
+    return _Receive();
   }
 }
 
-class _CreateNewWalletDetail extends State<CreateNewWalletDetail> {
+class _Receive extends State<Receive> {
   bool processing = false;
   bool _created = false;
   late WalletServiceImpl walletService;
   List<String> splittedMnemonic = List<String>.filled(1, "");
   late EthereumAddress address;
 
-  _CreateNewWalletDetail();
+  _Receive();
 
   @override
   void initState() {
@@ -88,7 +87,7 @@ class _CreateNewWalletDetail extends State<CreateNewWalletDetail> {
           var end = Offset.zero;
           var curve = Curves.ease;
           var tween =
-              Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+          Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
 
           return SlideTransition(
             position: animation.drive(tween),
@@ -145,7 +144,7 @@ class _CreateNewWalletDetail extends State<CreateNewWalletDetail> {
                                   padding: createPaddingBetweenRows(),
                                   child: Row(
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    CrossAxisAlignment.start,
                                     children: [
                                       createTextFieldWithSeed(
                                           splittedMnemonic.length > contador ? splittedMnemonic.elementAt(contador) : ""),
@@ -163,7 +162,7 @@ class _CreateNewWalletDetail extends State<CreateNewWalletDetail> {
                                   padding: createPaddingBetweenRows(),
                                   child: Row(
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    CrossAxisAlignment.start,
                                     children: [
                                       createTextFieldWithSeed(
                                           splittedMnemonic.length > contador ? splittedMnemonic.elementAt(contador) : ""),
@@ -181,7 +180,7 @@ class _CreateNewWalletDetail extends State<CreateNewWalletDetail> {
                                   padding: createPaddingBetweenRows(),
                                   child: Row(
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    CrossAxisAlignment.start,
                                     children: [
                                       createTextFieldWithSeed(
                                           splittedMnemonic.length > contador ? splittedMnemonic.elementAt(contador) : ""),
@@ -199,7 +198,7 @@ class _CreateNewWalletDetail extends State<CreateNewWalletDetail> {
                                   padding: createPaddingBetweenRows(),
                                   child: Row(
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    CrossAxisAlignment.start,
                                     children: [
                                       createTextFieldWithSeed(
                                           splittedMnemonic.length > contador ? splittedMnemonic.elementAt(contador) : ""),
@@ -216,54 +215,54 @@ class _CreateNewWalletDetail extends State<CreateNewWalletDetail> {
                                   padding: createPaddingBetweenDifferentRows(),
                                   child: !processing
                                       ? ElevatedButton(
-                                          onPressed: () async {
-                                            await Clipboard.setData(
-                                                ClipboardData(
-                                                    text: splittedMnemonic
-                                                        .toString()
-                                                        .replaceAll("[", "")
-                                                        .replaceAll("]", "")));
-                                            showMessage(
-                                                "Copied to the clipboard",
-                                                context);
+                                    onPressed: () async {
+                                      await Clipboard.setData(
+                                          ClipboardData(
+                                              text: splittedMnemonic
+                                                  .toString()
+                                                  .replaceAll("[", "")
+                                                  .replaceAll("]", "")));
+                                      showMessage(
+                                          "Copied to the clipboard",
+                                          context);
 
-                                            setState(() {
-                                              processing = true;
-                                              delay(context, 5)
-                                                  .whenComplete(() {
-                                                    processing = false;
-                                                    sentToDetail();
-                                                  });
+                                      setState(() {
+                                        processing = true;
+                                        delay(context, 5)
+                                            .whenComplete(() {
+                                          processing = false;
+                                          sentToDetail();
+                                        });
 
-                                            });
-                                          },
-                                          style: raisedButtonStyle,
-                                          child: Row(
-                                            children: <Widget>[
-                                              Row(
-                                                children: <Widget>[
-                                                  const Icon(Icons.copy),
-                                                  const SizedBox(
-                                                    width: 10,
-                                                  ),
-                                                  Text(
-                                                    copy,
-                                                    style: const TextStyle(
-                                                        fontSize: 20),
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                        )
+                                      });
+                                    },
+                                    style: raisedButtonStyle,
+                                    child: Row(
+                                      children: <Widget>[
+                                        Row(
+                                          children: <Widget>[
+                                            const Icon(Icons.copy),
+                                            const SizedBox(
+                                              width: 10,
+                                            ),
+                                            Text(
+                                              copy,
+                                              style: const TextStyle(
+                                                  fontSize: 20),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  )
                                       : const Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                              CircularProgressIndicator()
-                                            ]),
+                                      crossAxisAlignment:
+                                      CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.center,
+                                      children: [
+                                        CircularProgressIndicator()
+                                      ]),
                                 ),
                               ],
                             ),

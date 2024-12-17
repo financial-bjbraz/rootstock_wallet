@@ -1,5 +1,7 @@
 import 'package:my_rootstock_wallet/entities/wallet_entity.dart';
 
+import '../util/util.dart';
+
 class WalletDTO {
 
   late String? publicKey;
@@ -20,10 +22,7 @@ class WalletDTO {
   }
 
   String getAddress() {
-    var address = wallet.publicKey;
-    address = "${address.substring(0, 8)}...${address.substring(
-        address.length - 8, address.length)}";
-    return address;
+    return formatAddress(wallet.publicKey);
   }
 
   String getValueInUsd(){

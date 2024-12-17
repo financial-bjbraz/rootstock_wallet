@@ -112,7 +112,7 @@ class _BodyState extends State<Body> {
                               goToHome(user);
                             }
                           },
-                          style: greenButtonStyle,
+                          style: pinkButton,
                           child: Row(
                             children: <Widget>[
                               Row(
@@ -151,7 +151,7 @@ class _BodyState extends State<Body> {
                               goToHome(user);
                             }
                           },
-                          style: orangeButton,
+                          style: greenButton,
                           child: Row(
                             children: <Widget>[
                               Row(
@@ -189,9 +189,9 @@ class _BodyState extends State<Body> {
                     style: TextStyle(fontSize: 12),
                   ),
                   SizedBox(height: MediaQuery.of(context).size.height * 0.02),
-                  OutlinedButton(
+                  ElevatedButton(
                     onPressed: clickLoginAnonimous,
-                    style: pinkButtonStyle,
+                    style: lightBlueButton,
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
                       child: Row(
