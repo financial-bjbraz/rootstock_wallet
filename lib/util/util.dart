@@ -139,6 +139,11 @@ const blackText = TextStyle(
     fontSize: 20,
     color: Colors.black);
 
+const smallBlackText = TextStyle(
+    fontWeight: FontWeight.normal,
+    fontSize: 12,
+    color: Colors.black);
+
 Future<void> delay(BuildContext context, int seconds) {
   return Future.delayed(Duration(seconds: seconds), () {});
 }

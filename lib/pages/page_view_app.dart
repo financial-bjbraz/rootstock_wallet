@@ -9,7 +9,6 @@ import '../services/wallet_service.dart';
 import '../wallets/create_import/create_wallet_detail.dart';
 import '../wallets/create_import/import_wallet_pk_detail.dart';
 import '../wallets/create_import/import_wallet_seed_detail.dart';
-import 'details/create_send_transaction.dart';
 
 class PageViewApp extends StatefulWidget {
   final double top;

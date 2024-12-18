@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:my_rootstock_wallet/entities/wallet_dto.dart';
 import 'package:my_rootstock_wallet/pages/details/detail_list.dart';
@@ -11,8 +10,8 @@ import '../../pages/home_page.dart';
 import '../../services/wallet_service.dart';
 import '../entities/wallet_entity.dart';
 import '../util/util.dart';
-import 'Shimmer.dart';
-import 'ShimmerLoading.dart';
+import 'widget_shimmer.dart';
+import 'shimmer_loading.dart';
 
 class ViewWalletInfo extends StatefulWidget {
   const ViewWalletInfo({super.key, required this.wallet, required this.user});
@@ -30,7 +29,7 @@ class _ViewWalletInfo extends State<ViewWalletInfo> {
   late WalletServiceImpl walletService =
   Provider.of<WalletServiceImpl>(context, listen: false);
   bool _showSaldo = false;
-  bool _isLoading = true;
+  final bool _isLoading = true;
   late String balance = "0";
   late String balanceInUsd = "0";
   late String title = "";
@@ -356,6 +355,5 @@ class _ViewWalletInfo extends State<ViewWalletInfo> {
         ),
       ),
     );
-    loadWalletData();
   }
 }

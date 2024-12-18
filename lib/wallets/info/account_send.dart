@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:my_rootstock_wallet/entities/wallet_dto.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../entities/simple_user.dart';
 import '../../services/wallet_service.dart';
 import '../../util/util.dart';
@@ -21,7 +22,6 @@ class Send extends StatefulWidget {
 class _Send extends State<Send> {
   bool processing = false;
   bool _showSaldo = false;
-  bool _isLoading = false;
   String address = "";
   late WalletServiceImpl walletService;
   List<String> splittedMnemonic = List<String>.filled(1, "");
@@ -222,26 +222,26 @@ class _Send extends State<Send> {
                                     style: blackWhiteButton,
                                     onPressed: () async {
                                       final Uri url = Uri.parse('https://flutter.dev');
-                                      // if (!await launchUrl(url)) {
-                                      //   throw Exception('Could not launch $_url');
-                                      // }
+                                      if (!await launchUrl(url)) {
+                                        throw Exception('Could not launch $url');
+                                      }
                                     },
-                                    child: Row(
+                                    child: const Row(
                                       children: <Widget>[
                                         Row(
                                           children: <Widget>[
-                                            const Icon(Icons.remove_circle, color: Colors.red),
-                                            const SizedBox(
+                                            Icon(Icons.remove_circle, color: Colors.red),
+                                            SizedBox(
                                               width: 10,
                                             ),
                                             Text(
-                                              "0x123456123654987564",
-                                              style: blackText,
+                                              "0xe6e495a493d67ae081cc473ca7db387f7adacb376ac8fb74f1fdb6501205fc3d",
+                                              style: smallBlackText,
                                             ),
-                                            const SizedBox(
+                                            SizedBox(
                                               width: 10,
                                             ),
-                                            const Icon(
+                                            Icon(
                                               Icons.open_in_new,
                                               color: Colors.black,
                                             ),

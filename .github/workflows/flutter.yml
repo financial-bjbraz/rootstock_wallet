@@ -39,6 +39,12 @@ jobs:
       # Run widget tests for our flutter project.
       - run: flutter test
 
+      - run: |
+          touch .env
+          echo ROOTSTOCK_NODE=${{ secrets.ROOTSTOCK_NODE }} >> .env
+          echo BLOCK_EXPLORER_URL=${{ secrets.BLOCK_EXPLORER_URL }} >> .env
+          cat .env
+
       # Build apk.
       - run: flutter build apk
 
