@@ -4,15 +4,15 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:my_rootstock_wallet/entities/wallet_dto.dart';
 import 'package:my_rootstock_wallet/pages/details/detail_list.dart';
-import 'package:my_rootstock_wallet/wallets/info/AccountReceive.dart';
-import 'package:my_rootstock_wallet/wallets/info/AccountSend.dart';
+import 'package:my_rootstock_wallet/wallets/info/account_receive.dart';
+import 'package:my_rootstock_wallet/wallets/info/account_send.dart';
 import 'package:provider/provider.dart';
 import '../../entities/simple_user.dart';
 import '../../services/wallet_service.dart';
 import '../entities/wallet_entity.dart';
 import '../util/util.dart';
-import 'Shimmer.dart';
-import 'ShimmerLoading.dart';
+import 'widget_shimmer.dart';
+import 'shimmer_loading.dart';
 
 class ViewWalletApp extends StatefulWidget {
   const ViewWalletApp({super.key, required this.wallet, required this.user});
@@ -30,6 +30,7 @@ class _ViewWalletApp extends State<ViewWalletApp> {
       Provider.of<WalletServiceImpl>(context, listen: false);
   bool _showSaldo = true;
   bool _isLoading = true;
+  final double icon_size = 48;
   late String balance = "0";
   late String balanceInUsd = "0";
   late String address = formatAddress(widget.wallet.publicKey);
@@ -66,19 +67,19 @@ class _ViewWalletApp extends State<ViewWalletApp> {
     return ShimmerLoading(
       isLoading: _isLoading,
       child: Padding(
-        padding: const EdgeInsets.only(left: 10, top: 3, bottom: 10, right: 10),
+        padding: const EdgeInsets.only(left: 10, top: 1, bottom: 5, right: 10),
         child: Row(
           children: <Widget>[
-            Icon(Icons.wallet_rounded, size: 40, color: pink()),
+            Icon(Icons.wallet_rounded, size: icon_size, color: pink()),
             const SizedBox(
               width: 5,
             ),
             Text(
               (widget.wallet.walletName + widget.wallet.walletId),
               textAlign: TextAlign.start,
-              style: const TextStyle(
+              style: TextStyle(
                   color: Colors.white,
-                  backgroundColor: Color.fromRGBO(255, 113, 224, 1),
+                  backgroundColor: pink(),
                   fontSize: 28,
                   fontWeight: FontWeight.bold),
             ),
@@ -95,13 +96,13 @@ class _ViewWalletApp extends State<ViewWalletApp> {
           isLoading: _isLoading,
           child: Padding(
             padding:
-                const EdgeInsets.only(left: 10, top: 10, bottom: 10, right: 10),
+                const EdgeInsets.only(left: 10, top: 5, bottom: 5, right: 10),
             child: Row(
               children: [
                 Icon(
                   Icons.wallet_rounded,
                   color: lightBlue(),
-                  size: 48,
+                  size: icon_size,
                 ),
                 _showSaldo
                     ? Text.rich(
@@ -264,11 +265,12 @@ class _ViewWalletApp extends State<ViewWalletApp> {
                 ],
               ),
             ),
+
             ElevatedButton(
               style: blackWhiteButton,
               onPressed: () {
                 final Receive receiveScreenChild =
-                    Receive(user: widget.user, walletDTO: walletDto);
+                    Receive(user: widget.user, walletDto: walletDto);
                 Navigator.of(context).push(PageRouteBuilder(
                   pageBuilder: (context, animation, secondaryAnimation) =>
                       DetailList(child: receiveScreenChild),

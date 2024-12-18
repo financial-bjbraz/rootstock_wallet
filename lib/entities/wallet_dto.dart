@@ -25,6 +25,10 @@ class WalletDTO {
     return formatAddress(wallet.publicKey);
   }
 
+  String getCompleteAddress() {
+    return wallet.publicKey;
+  }
+
   String getValueInUsd(){
     return valueInUsdFormatted;
   }

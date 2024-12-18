@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:my_rootstock_wallet/entities/wallet_dto.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../entities/simple_user.dart';
 import '../../services/wallet_service.dart';
 import '../../util/util.dart';
@@ -209,166 +210,53 @@ class _AccountTransactions extends State<AccountTransactions> {
                             endIndent: 0,
                             color: Colors.black,
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          ExpansionTile(
+                            title: const Text('Transaction Sent 0.001'),
+                            subtitle: const Text('USD 150.99'),
                             children: <Widget>[
-                              const Icon(Icons.credit_card, color: Colors.grey),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              const Flexible(
-                                child: Text(
-                                  "1 - account_statements_detail.dart de R\$ 150,99",
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 13,
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Expanded(child:
+                                  ElevatedButton(
+                                    style: blackWhiteButton,
+                                    onPressed: () async {
+                                      final Uri url = Uri.parse('https://flutter.dev');
+                                      if (!await launchUrl(url)) {
+                                        throw Exception('Could not launch $url');
+                                      }
+                                    },
+                                    child: const Row(
+                                      children: <Widget>[
+                                        Row(
+                                          children: <Widget>[
+                                            Icon(Icons.remove_circle, color: Colors.red),
+                                            SizedBox(
+                                              width: 10,
+                                            ),
+                                            Text(
+                                              "0xe6e495a493d67ae081cc473ca7db387f7adacb376ac8fb74f1fdb6501205fc3d",
+                                              style: smallBlackText,
+                                            ),
+                                            SizedBox(
+                                              width: 10,
+                                            ),
+                                            Icon(
+                                              Icons.open_in_new,
+                                              color: Colors.black,
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              ),
-                              Icon(
-                                Icons.chevron_right,
-                                color: Colors.grey[400],
-                                size: 18,
-                              ),
+                                  ),
+                                ],
+                              )
                             ],
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              const Icon(Icons.credit_card, color: Colors.grey),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              const Flexible(
-                                child: Text(
-                                  "1 - account_statements_detail.dart de R\$ 150,99",
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 13,
-                                  ),
-                                ),
-                              ),
-                              Icon(
-                                Icons.chevron_right,
-                                color: Colors.grey[400],
-                                size: 18,
-                              ),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              const Icon(Icons.credit_card, color: Colors.grey),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              const Flexible(
-                                child: Text(
-                                  "1 - account_statements_detail.dart de R\$ 150,99",
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 13,
-                                  ),
-                                ),
-                              ),
-                              Icon(
-                                Icons.chevron_right,
-                                color: Colors.grey[400],
-                                size: 18,
-                              ),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              const Icon(Icons.credit_card, color: Colors.grey),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              const Flexible(
-                                child: Text(
-                                  "1 - account_statements_detail.dart de R\$ 150,99",
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 13,
-                                  ),
-                                ),
-                              ),
-                              Icon(
-                                Icons.chevron_right,
-                                color: Colors.grey[400],
-                                size: 18,
-                              ),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              const Icon(Icons.credit_card, color: Colors.grey),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              const Flexible(
-                                child: Text(
-                                  "1 - account_statements_detail.dart de R\$ 150,99",
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 13,
-                                  ),
-                                ),
-                              ),
-                              Icon(
-                                Icons.chevron_right,
-                                color: Colors.grey[400],
-                                size: 18,
-                              ),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              const Icon(Icons.credit_card, color: Colors.grey),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              const Flexible(
-                                child: Text(
-                                  "1 - account_statements_detail.dart de R\$ 150,99",
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 13,
-                                  ),
-                                ),
-                              ),
-                              Icon(
-                                Icons.chevron_right,
-                                color: Colors.grey[400],
-                                size: 18,
-                              ),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              const Icon(Icons.credit_card, color: Colors.grey),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              const Flexible(
-                                child: Text(
-                                  "1 - account_statements_detail.dart de R\$ 150,99",
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 13,
-                                  ),
-                                ),
-                              ),
-                              Icon(
-                                Icons.chevron_right,
-                                color: Colors.grey[400],
-                                size: 18,
-                              ),
-                            ],
+                          const SizedBox(
+                            width: 10,
                           ),
 
                         ],

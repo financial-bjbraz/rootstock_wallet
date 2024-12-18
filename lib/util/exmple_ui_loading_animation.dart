@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../cards/CardListItem.dart';
-import '../cards/CircleListItem.dart';
-import '../cards/Shimmer.dart';
-import '../cards/ShimmerLoading.dart';
+import '../cards/card_list_item.dart';
+import '../cards/circle_list_item.dart';
+import '../cards/widget_shimmer.dart';
+import '../cards/shimmer_loading.dart';
 import '../entities/simple_user.dart';
 import '../entities/wallet_entity.dart';
 import '../services/wallet_service.dart';
