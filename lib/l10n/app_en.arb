@@ -36,7 +36,7 @@
   "send": "Send",
   "receive": "Receive",
   "sendTransaction": "Send new Transaction",
-  "receiveTransactions": "Receive new Transaction",
+  "receiveTransactions": "Your Rootstock Address",
   "transactions": "Last transactions",
   "txSent": "Tx Sent",
   "txReceived": "Tx Received"

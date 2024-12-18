@@ -37,7 +37,7 @@
   "send": "Enviar",
   "receive": "Recibir",
   "sendTransaction": "Enviar",
-  "receiveTransactions": "Recibir",
+  "receiveTransactions": "Su dirección Rootstock",
   "transactions": "Últimas transacciones",
   "txSent": "Transaccion enviada",
   "txReceived": "Transaccion recibida"
