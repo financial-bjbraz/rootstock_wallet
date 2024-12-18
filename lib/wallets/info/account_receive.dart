@@ -59,21 +59,11 @@ class _Receive extends State<Receive> {
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          title: Padding(
-            padding: const EdgeInsets.all(20),
+          title: const Padding(
+            padding: EdgeInsets.all(10),
             child: Row(
               children: <Widget>[
-                const Icon(Icons.add_circle, color: Colors.white),
-                const SizedBox(
-                  width: 5,
-                ),
-                Text(
-                  receiveTransactions,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                  ),
-                ),
+                Text("Your Rootstock address", style: TextStyle(color: Colors.black, fontSize: 20),),
               ],
             ),
           ),
@@ -91,7 +81,9 @@ class _Receive extends State<Receive> {
                       flex: 1,
                       child: Column(
                         children: [
-                          const Text("Your Rootstock address", style: TextStyle(color: Colors.black, fontSize: 24),),
+                          const SizedBox(
+                            width: 10,
+                          ),
                           QrImageView(
                             data: ethereum + completeAddress,
                             version: QrVersions.auto,
