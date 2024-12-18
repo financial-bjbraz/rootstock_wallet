@@ -59,14 +59,14 @@ class _Receive extends State<Receive> {
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          title: const Padding(
-            padding: EdgeInsets.all(10),
-            child: Row(
+          centerTitle: true,
+          iconTheme: const IconThemeData(color: Colors.white),
+          title: const Row(
               children: <Widget>[
-                Text("Your Rootstock address", style: TextStyle(color: Colors.black, fontSize: 20),),
+                Text("Your Rootstock address", style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),),
               ],
             ),
-          ),
+
           backgroundColor: const Color.fromRGBO(158, 118, 255, 1),
         ),
         body: ClipRRect(
