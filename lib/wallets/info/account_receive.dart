@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:my_rootstock_wallet/entities/wallet_dto.dart';
 import '../../entities/simple_user.dart';
 import '../../services/wallet_service.dart';
-import '../../util/util.dart';
+import 'dart:convert';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:share_plus/share_plus.dart';
+import '../../util/util.dart';
 
 class Receive extends StatefulWidget {
   final SimpleUser user;
@@ -20,7 +21,6 @@ class Receive extends StatefulWidget {
 
 class _Receive extends State<Receive> {
   bool processing = false;
-  final ethereum = "ethereum:";
   String address = "";
   String completeAddress = "";
   late WalletServiceImpl walletService;
@@ -53,149 +53,213 @@ class _Receive extends State<Receive> {
   @override
   Widget build(BuildContext context) {
     processAddress();
-    final String receiveTransactions =
-        AppLocalizations.of(context)!.receiveTransactions;
 
-    return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(
-          centerTitle: true,
-          iconTheme: const IconThemeData(color: Colors.white),
-          title: const Row(
-              children: <Widget>[
-                Text("Your Rootstock address", style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),),
-              ],
+    return Container(
+      margin: const EdgeInsets.only(top: 5, left: 15, right: 15),
+      height: 175,
+      color: Colors.black,
+      child: Column(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              height: 175,
+              decoration: const BoxDecoration(
+                  color: Colors.black,
+                  borderRadius: BorderRadius.all(Radius.circular(15)),
+                  boxShadow: [
+                    BoxShadow(
+                        blurRadius: 10, color: Colors.black, spreadRadius: 5)
+                  ]),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: ShowQrCode(completeAddress: completeAddress),
+                  ),
+                  const VerticalDivider(),
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                            ShareButton(completeAddress: completeAddress,),
+                            CopyButton(completeAddress: completeAddress,)
+                       ],
+                    ),
+                  )
+                ],
+              ),
+            )
+          ]),
+    );
+  }
+}
+
+class ShareAndCopy extends StatelessWidget {
+  final String completeAddress;
+  final ethereum = "ethereum:";
+  const ShareAndCopy({super.key, required this.completeAddress});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Column(
+          children: [
+            QrImageView(
+              data: ethereum + completeAddress,
+              version: QrVersions.auto,
+              backgroundColor: Colors.white,
+              embeddedImage: Image.asset("assets/icons/rbtc2.png").image,
+              size: 50.0,
             ),
-
-          backgroundColor: const Color.fromRGBO(158, 118, 255, 1),
+          ],
         ),
-        body: ClipRRect(
-          borderRadius: BorderRadius.circular(5),
-          child: Column(
+      ],
+    );
+  }
+}
+
+class ShowQrCode extends StatelessWidget {
+  final String completeAddress;
+  final ethereum = "ethereum:";
+  const ShowQrCode({super.key, required this.completeAddress});
+
+  @override
+  Widget build(BuildContext context) {
+    return QrImageView(
+      data: ethereum + completeAddress,
+      version: QrVersions.auto,
+      backgroundColor: Colors.white,
+      embeddedImage: Image.asset("assets/icons/rbtc2.png").image,
+      size: 175.0,
+    );
+  }
+}
+
+class ShareButton extends StatefulWidget {
+  final String completeAddress;
+  const ShareButton({super.key, required this.completeAddress});
+
+  @override
+  _ShareButton createState() => _ShareButton();
+}
+
+class _ShareButton extends State<ShareButton> {
+  bool checkingFlight = false;
+  bool success = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return !checkingFlight
+        ?             ElevatedButton(
+      style: blackWhiteButton,
+      onPressed: () async {
+
+        final box = context.findRenderObject() as RenderBox?;
+        final data = utf8.encode(widget.completeAddress);
+        await Share.shareXFiles(
+          [
+            XFile.fromData(
+              data,
+              // name: fileName, // Notice, how setting the name here does not work.
+              mimeType: 'text/plain',
+            ),
+          ],
+          sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size,
+          fileNameOverrides: [widget.completeAddress],
+        );
+
+        setState(() {
+          checkingFlight = true;
+        });
+        await Future.delayed(const Duration(seconds: 1));
+        setState(() {
+          success = true;
+        });
+        await Future.delayed(const Duration(milliseconds: 500));
+        Navigator.pop(context);
+      },
+      child: const Row(
+        children: <Widget>[
+          Row(
             children: <Widget>[
-              Expanded(
-                flex: 1,
-                child: Row(
-                  children: [
-                    Expanded(
-                      flex: 1,
-                      child: Column(
-                        children: [
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          QrImageView(
-                            data: ethereum + completeAddress,
-                            version: QrVersions.auto,
-                            backgroundColor: Colors.white,
-                            embeddedImage:
-                                Image.asset("assets/icons/rbtc2.png").image,
-                            size: 250.0,
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Expanded(
-                            flex: 1,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 10),
-                                  child: Text.rich(
-                                    addressText(completeAddress),
-                                    textAlign: TextAlign.center,
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      backgroundColor: Colors.black,
-                                      fontSize: 12,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          const Divider(
-                            height: 20,
-                            thickness: 5,
-                            indent: 5,
-                            endIndent: 0,
-                            color: Colors.black,
-                          ),
-                          Expanded(
-                            flex: 2,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 10),
-                                  child: GestureDetector(
-                                    child: const Icon(Icons.copy,
-                                        color: Colors.black, size: 48,),
-                                    onTap: () async {
-                                      await Clipboard.setData(
-                                          ClipboardData(text: completeAddress));
-                                      showMessage(
-                                          "Copied to the clipboard $completeAddress",
-                                          context);
-                                    },
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 10),
-                                  child: GestureDetector(
-                                    child: const Icon(Icons.share,
-                                        color: Colors.black, size: 48,
-                                    ),
-                                    onTap: () async {
-                                      await Clipboard.setData(
-                                          ClipboardData(text: completeAddress));
-                                      showMessage(
-                                          "Copied to the clipboard $completeAddress",
-                                          context);
-                                    },
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        top: 12,
-                        bottom: 12,
-                        left: 10,
-                        right: 15,
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(5),
-                        child: Container(
-                          width: 7,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5)),
-                          child: Column(
-                            children: <Widget>[
-                              Expanded(
-                                  flex: 1,
-                                  child: Container(color: Colors.orange)),
-                              Expanded(
-                                  flex: 2,
-                                  child: Container(color: Colors.blue)),
-                              Expanded(
-                                  flex: 3,
-                                  child: Container(color: Colors.green)),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+              Text("Share Your Address", style: smallBlackText),
+              SizedBox(
+                width: 10,
+              ),
+              Icon(
+                Icons.share,
+                color: Colors.black,
               ),
             ],
           ),
-        ));
+        ],
+      ),
+    )
+        : !success
+            ? const CircularProgressIndicator()
+            : const Icon(
+                Icons.check,
+                color: Colors.green,
+              );
+  }
+}
+
+
+class CopyButton extends StatefulWidget {
+  final String completeAddress;
+  const CopyButton({super.key, required this.completeAddress});
+
+  @override
+  _CopyButton createState() => _CopyButton();
+}
+
+class _CopyButton extends State<CopyButton> {
+  bool checkingFlight = false;
+  bool success = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return !checkingFlight
+        ?             ElevatedButton(
+      style: blackWhiteButton,
+      onPressed: () async {
+            await Clipboard.setData(ClipboardData(text: widget.completeAddress));
+
+            setState(() {
+              checkingFlight = true;
+            });
+            await Future.delayed(const Duration(seconds: 1));
+            setState(() {
+              success = true;
+            });
+            await Future.delayed(const Duration(milliseconds: 500));
+            Navigator.pop(context);
+
+      },
+      child: const Row(
+        children: <Widget>[
+          Row(
+            children: <Widget>[
+              Text("Copy Your Address", style: smallBlackText),
+              SizedBox(
+                width: 10,
+              ),
+              Icon(
+                Icons.copy,
+                color: Colors.black,
+              ),
+            ],
+          ),
+        ],
+      ),
+    )
+        : !success
+        ? const CircularProgressIndicator()
+        : const Icon(
+      Icons.check,
+      color: Colors.green,
+    );
   }
 }

@@ -7,8 +7,6 @@ import 'package:my_rootstock_wallet/pages/my_dots_app.dart';
 import 'package:my_rootstock_wallet/pages/page_view_app.dart';
 import 'package:my_rootstock_wallet/util/util.dart';
 import '../entities/wallet_entity.dart';
-import 'details/create_send_transaction.dart';
-import 'details/detail_list.dart';
 
 class HomePage extends StatefulWidget {
   final SimpleUser user;
@@ -137,13 +135,33 @@ class _HomePageState extends State<HomePage> {
 
       bottomNavigationBar:
       CurvedNavigationBar(color: orange(), backgroundColor: Colors.black, buttonBackgroundColor: orange(), items: [
-        const Icon(Icons.home, color: Colors.white),
+        GestureDetector(
+            child: const Icon(Icons.home, color: Colors.white),
+            onTap: () => {
+              Navigator.of(context).push(PageRouteBuilder(
+                pageBuilder: (context, animation, secondaryAnimation) => HomePage(user: widget.user, wallets: widget.wallets),
+                transitionsBuilder:
+                    (context, animation, secondaryAnimation, child) {
+                  var begin = const Offset(0.0, 1.0);
+                  var end = Offset.zero;
+                  var curve = Curves.ease;
+
+                  var tween = Tween(begin: begin, end: end)
+                      .chain(CurveTween(curve: curve));
+
+                  return SlideTransition(
+                    position: animation.drive(tween),
+                    child: child,
+                  );
+                },
+              ))
+            },
+        ),
         _walletQuantity > 0 ? GestureDetector(
           child: const Icon(Icons.call_made, color: Colors.white),
           onTap: () => {
             Navigator.of(context).push(PageRouteBuilder(
-              pageBuilder: (context, animation, secondaryAnimation) =>
-                  DetailList(child: CreateSendTransaction(user: widget.user,)),
+              pageBuilder: (context, animation, secondaryAnimation) => HomePage(user: widget.user, wallets: widget.wallets),
               transitionsBuilder:
                   (context, animation, secondaryAnimation, child) {
                 var begin = const Offset(0.0, 1.0);

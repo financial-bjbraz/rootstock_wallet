@@ -30,7 +30,7 @@ class _ViewWalletApp extends State<ViewWalletApp> {
       Provider.of<WalletServiceImpl>(context, listen: false);
   bool _showSaldo = true;
   bool _isLoading = true;
-  final double icon_size = 48;
+  final double iconSize = 48;
   late String balance = "0";
   late String balanceInUsd = "0";
   late String address = formatAddress(widget.wallet.publicKey);
@@ -70,7 +70,7 @@ class _ViewWalletApp extends State<ViewWalletApp> {
         padding: const EdgeInsets.only(left: 10, top: 1, bottom: 5, right: 10),
         child: Row(
           children: <Widget>[
-            Icon(Icons.wallet_rounded, size: icon_size, color: pink()),
+            Icon(Icons.wallet_rounded, size: iconSize, color: pink()),
             const SizedBox(
               width: 5,
             ),
@@ -102,7 +102,7 @@ class _ViewWalletApp extends State<ViewWalletApp> {
                 Icon(
                   Icons.wallet_rounded,
                   color: lightBlue(),
-                  size: icon_size,
+                  size: iconSize,
                 ),
                 _showSaldo
                     ? Text.rich(
@@ -226,8 +226,10 @@ class _ViewWalletApp extends State<ViewWalletApp> {
             ElevatedButton(
               style: blackWhiteButton,
               onPressed: (){
+
                 final Send sendScreenChild =
                 Send(user: widget.user, walletDto: walletDto);
+
                 Navigator.of(context).push(PageRouteBuilder(
                   pageBuilder: (context, animation, secondaryAnimation) =>
                       DetailList(child: sendScreenChild),
@@ -271,36 +273,24 @@ class _ViewWalletApp extends State<ViewWalletApp> {
               onPressed: () {
                 final Receive receiveScreenChild =
                     Receive(user: widget.user, walletDto: walletDto);
-                Navigator.of(context).push(PageRouteBuilder(
-                  pageBuilder: (context, animation, secondaryAnimation) =>
-                      DetailList(child: receiveScreenChild),
-                  transitionsBuilder:
-                      (context, animation, secondaryAnimation, child) {
-                    var begin = const Offset(0.0, 1.0);
-                    var end = Offset.zero;
-                    var curve = Curves.ease;
-                    var tween = Tween(begin: begin, end: end)
-                        .chain(CurveTween(curve: curve));
-
-                    return SlideTransition(
-                      position: animation.drive(tween),
-                      child: child,
-                    );
-                  },
-                ));
-              },
+                showBottomSheet(
+                    context: context,
+                    backgroundColor: Colors.black,
+                    builder: (context) => receiveScreenChild,
+                );
+               },
               child: Row(
                 children: <Widget>[
                   Row(
                     children: <Widget>[
+                      Text(receive, style: blackText),
+                      const SizedBox(
+                        width: 10,
+                      ),
                       const Icon(
                         Icons.call_received,
                         color: Colors.black,
                       ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      Text(receive, style: blackText),
                     ],
                   ),
                 ],
