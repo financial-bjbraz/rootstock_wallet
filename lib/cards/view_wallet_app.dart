@@ -36,6 +36,7 @@ class _ViewWalletApp extends State<ViewWalletApp> {
   late String address = formatAddress(widget.wallet.publicKey);
   int operation = 0;
   bool loaded = false;
+  bool receiveScreenOpened = false;
 
   TextEditingController addressController = TextEditingController();
   TextEditingController amountController = TextEditingController();
@@ -49,7 +50,7 @@ class _ViewWalletApp extends State<ViewWalletApp> {
   }
 
   loadWalletData() async {
-    if (_isLoading) {
+
       await Future.delayed(const Duration(seconds: 3), () {
         walletService.createWalletToDisplay(widget.wallet).then((dto) => {
               setState(() {
@@ -60,7 +61,7 @@ class _ViewWalletApp extends State<ViewWalletApp> {
               })
             });
       });
-    }
+
   }
 
   Widget _buildFirstLine() {
@@ -140,7 +141,7 @@ class _ViewWalletApp extends State<ViewWalletApp> {
                 children: [
                   Image.asset(
                     "assets/icons/rbtc2.png",
-                    width: 48,
+                    width: iconSize,
                   ),
                   _showSaldo
                       ? Text.rich(
@@ -169,7 +170,7 @@ class _ViewWalletApp extends State<ViewWalletApp> {
                             ? "assets/icons/eye-off-svgrepo-com.svg"
                             : "assets/icons/eye-svgrepo-com.svg",
                         semanticsLabel: "view",
-                        width: 40,
+                        width: iconSize,
                         color: orange()),
                   ),
                 ],
@@ -182,10 +183,10 @@ class _ViewWalletApp extends State<ViewWalletApp> {
                 const EdgeInsets.only(left: 10, top: 10, bottom: 10, right: 10),
             child: Row(
               children: [
-                const Icon(
+                Icon(
                   Icons.monetization_on_rounded,
-                  color: Color.fromRGBO(121, 198, 0, 1),
-                  size: 48,
+                  color: const Color.fromRGBO(121, 198, 0, 1),
+                  size: iconSize,
                 ),
                 _showSaldo
                     ? Text.rich(
@@ -271,13 +272,18 @@ class _ViewWalletApp extends State<ViewWalletApp> {
             ElevatedButton(
               style: blackWhiteButton,
               onPressed: () {
-                final Receive receiveScreenChild =
-                    Receive(user: widget.user, walletDto: walletDto);
-                showBottomSheet(
+                if(!receiveScreenOpened) {
+                  final Receive receiveScreenChild =
+                  Receive(user: widget.user, walletDto: walletDto);
+                  showBottomSheet(
                     context: context,
                     backgroundColor: Colors.black,
                     builder: (context) => receiveScreenChild,
-                );
+                  );
+                }else{
+                  Navigator.pop(context);
+                }
+                receiveScreenOpened =!receiveScreenOpened;
                },
               child: Row(
                 children: <Widget>[
@@ -305,11 +311,6 @@ class _ViewWalletApp extends State<ViewWalletApp> {
   @override
   void initState() {
     super.initState();
-    if (mounted) {
-      loadWalletData();
-    } else {
-      _isLoading = false;
-    }
   }
 
   @override
@@ -320,6 +321,7 @@ class _ViewWalletApp extends State<ViewWalletApp> {
 
   @override
   Widget build(BuildContext context) {
+    loadWalletData();
     return Scaffold(
       backgroundColor: Colors.black,
       body: Shimmer(
