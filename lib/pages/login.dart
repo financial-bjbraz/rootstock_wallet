@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:my_rootstock_wallet/entities/simple_user.dart';
@@ -45,8 +44,6 @@ class _BodyState extends State<Body> {
   late String mensagemUserNotFound = AppLocalizations.of(context)!.mensagem_user_not_found;
   late String userCreatedSuccessfully = AppLocalizations.of(context)!.user_created_successfully;
 
-  late User user;
-  final auth = FirebaseAuth.instance;
   late WalletServiceImpl walletService =  Provider.of<WalletServiceImpl>(context, listen: false);
 
   Widget loginButton() {

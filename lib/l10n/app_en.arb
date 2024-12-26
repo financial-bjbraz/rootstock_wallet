@@ -39,5 +39,7 @@
   "receiveTransactions": "Your Rootstock Address",
   "transactions": "Last transactions",
   "txSent": "Tx Sent",
-  "txReceived": "Tx Received"
+  "txReceived": "Tx Received",
+  "amount": "Enter amount",
+  "destination": "Destination address"
 }

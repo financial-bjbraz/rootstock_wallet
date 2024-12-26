@@ -1,6 +1,3 @@
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -9,8 +6,6 @@ import 'package:my_rootstock_wallet/pages/splash.dart';
 import 'package:my_rootstock_wallet/services/create_user_service.dart';
 import 'package:my_rootstock_wallet/services/wallet_service.dart';
 import 'package:provider/provider.dart';
-
-import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -44,17 +39,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Future<bool> myFuture() async {
-      await Firebase.initializeApp(
-        options: DefaultFirebaseOptions.currentPlatform,
-      );
-
-      await FirebaseMessaging.instance.setAutoInitEnabled(true);
-      final fcmToken = await FirebaseMessaging.instance.getToken();
-      if (kDebugMode) {
-        print("=================================");
-        print(fcmToken);
-        print("=================================");
-      }
+      // await Firebase.initializeApp(
+      //   options: DefaultFirebaseOptions.currentPlatform,
+      // );
+      //
+      // await FirebaseMessaging.instance.setAutoInitEnabled(true);
+      // final fcmToken = await FirebaseMessaging.instance.getToken();
+      // if (kDebugMode) {
+      //   print("=================================");
+      //   print(fcmToken);
+      //   print("=================================");
+      // }
 
       return true;
     }
