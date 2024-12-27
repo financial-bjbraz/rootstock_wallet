@@ -1,12 +1,12 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'package:flutter/material.dart';
-import 'package:my_rootstock_wallet/entities/simple_user.dart';
-import 'package:my_rootstock_wallet/pages/menu_app.dart';
-import 'package:my_rootstock_wallet/pages/my_app_bar.dart';
 import 'package:my_rootstock_wallet/pages/my_dots_app.dart';
 import 'package:my_rootstock_wallet/pages/page_view_app.dart';
 import 'package:my_rootstock_wallet/util/util.dart';
 import '../entities/wallet_entity.dart';
+import 'package:flutter/material.dart';
+import '../entities/simple_user.dart';
+import 'my_app_bar.dart';
+import 'menu_app.dart';
 
 class HomePage extends StatefulWidget {
   final SimpleUser user;
@@ -134,7 +134,7 @@ class _HomePageState extends State<HomePage> {
       ),
 
       bottomNavigationBar:
-      CurvedNavigationBar(color: orange(), backgroundColor: Colors.black, buttonBackgroundColor: orange(), items: [
+      CurvedNavigationBar(color: orange()!, backgroundColor: Colors.black, buttonBackgroundColor: orange(), items: [
         GestureDetector(
             child: const Icon(Icons.home, color: Colors.white),
             onTap: () => {

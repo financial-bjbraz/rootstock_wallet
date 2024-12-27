@@ -28,14 +28,15 @@ class MyDotsApp extends StatelessWidget {
     if(walletQuantity > 0) {
       for (int i = 0; i < walletQuantity; i++) {
         widgets.add(SizedBox(
-          width: getWidth(),
+          width: getWidth() as double?
+          ,
         ));
         widgets.add(AnimatedContainer(
           duration: const Duration(milliseconds: 300),
           height: 7,
           width: 7,
           decoration: BoxDecoration(
-            color: getColor(i),
+            color: getColor(i) as Color?,
             shape: BoxShape.circle,
           ),
         ));
@@ -64,7 +65,7 @@ class MyDotsApp extends StatelessWidget {
               height: 7,
               width: 7,
               decoration: BoxDecoration(
-                color: getColor(walletQuantity+0),
+                color: getColor(walletQuantity+0) as Color?,
                 shape: BoxShape.circle,
               ),
             ),
@@ -76,7 +77,7 @@ class MyDotsApp extends StatelessWidget {
               height: 7,
               width: 7,
               decoration: BoxDecoration(
-                color: getColor(walletQuantity+1),
+                color: getColor(walletQuantity+1) as Color?,
                 shape: BoxShape.circle,
               ),
             ),
