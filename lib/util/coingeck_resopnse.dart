@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+// ignore_for_file: argument_type_not_assignable
 class CoinGeckoResponse {
   final int currentPrice;
   final int high_24h;
@@ -27,9 +28,9 @@ class CoinGeckoResponse {
     };
   }
   factory CoinGeckoResponse.fromJson2(Map<String, dynamic> json) => CoinGeckoResponse(
-    currentPrice: json["current_price"],
-    high_24h: json["high_24h"],
-    low_24h: json["low_24h"],
+    currentPrice: json["current_price"] as int,
+    high_24h: json["high_24h"] as int,
+    low_24h: json["low_24h"] as int,
   );
   Map<String, dynamic> toJson() => {
     "current_price": currentPrice,

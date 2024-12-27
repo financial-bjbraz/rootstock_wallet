@@ -156,11 +156,11 @@ class WalletServiceImpl extends ChangeNotifier implements WalletAddressService {
     final response = await http.get(Uri.parse('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin&order=market_cap_desc&per_page=100&page=1&sparkline=false'));
 
     if (response.statusCode == 200) {
-      List<dynamic> body = jsonDecode(response.body);
+      List<dynamic> body = jsonDecode(response.body) as List<dynamic>;
 
       List<CoinGeckoResponse> prices = body
           .map(
-            (dynamic item) => CoinGeckoResponse.fromJson2(item),
+            (dynamic item) => CoinGeckoResponse.fromJson2(item as Map<String, dynamic>),
       ).toList();
       var price = (prices.elementAt(0).currentPrice);
 
