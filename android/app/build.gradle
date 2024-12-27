@@ -53,7 +53,13 @@ android {
         applicationId "br.com.bjbraz.my_rootstock_wallet"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
-        minSdkVersion localProperties.getProperty('flutter.minSdkVersion').toInteger()
+
+        def flutterVersionMin = 23
+        if (localProperties.getProperty('flutter.minSdkVersion') != null) {
+            flutterVersionMin = localProperties.getProperty('flutter.minSdkVersion').toInteger();
+        }
+
+        minSdkVersion flutterVersionMin
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
