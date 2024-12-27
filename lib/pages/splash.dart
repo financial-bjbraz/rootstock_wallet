@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_rootstock_wallet/pages/login.dart';
 
+// ignore_for_file: strict_raw_type
 class Splash extends StatefulWidget {
   const Splash({super.key});
 
@@ -16,7 +17,7 @@ class _SplashPageState extends State<Splash> {
   }
 
   Future<void> delay() async {
-    return await Future.delayed(const Duration(seconds: 5), () {
+    return Future.delayed(const Duration(seconds: 5), () {
       Navigator.pushReplacement(
         context,
         PageRouteBuilder(
