@@ -8,12 +8,12 @@ import 'package:sqflite/sqflite.dart';
 
 const databaseName = "my_rootstock_wallet.db";
 
-orange() => const Color.fromRGBO(255, 145, 0, 1);
-pink() => const Color.fromRGBO(255, 112, 224, 1);
-green() => const Color.fromRGBO(121, 198, 0, 1);
-lightBlue() => const Color.fromRGBO(8, 255, 208, 1);
-purple() => const Color.fromRGBO(158, 118, 255, 1);
-yellow() => const Color.fromRGBO(222, 255, 26, 1);
+Color? orange() => const Color.fromRGBO(255, 145, 0, 1);
+Color? pink() => const Color.fromRGBO(255, 112, 224, 1);
+Color? green() => const Color.fromRGBO(121, 198, 0, 1);
+Color? lightBlue() => const Color.fromRGBO(8, 255, 208, 1);
+Color? purple() => const Color.fromRGBO(158, 118, 255, 1);
+Color? yellow() => const Color.fromRGBO(222, 255, 26, 1);
 
 
 const shimmerGradient = LinearGradient(
