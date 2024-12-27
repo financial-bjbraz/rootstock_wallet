@@ -22,7 +22,7 @@ jobs:
           java-version: '22'
 
       # Setup the flutter environment.
-      - uses: subosito/flutter-action@v1
+      - uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.27.1' # you can also specify exact version of flutter
           # channel: 'beta' # 'dev', 'alpha', default to: 'stable'
