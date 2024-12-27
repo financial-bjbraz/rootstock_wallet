@@ -7,9 +7,9 @@ import '../../services/wallet_service.dart';
 import '../../util/util.dart';
 
 class Send extends StatefulWidget {
+  const Send({super.key, required this.user, required this.walletDto});
   final SimpleUser user;
   final WalletDTO walletDto;
-  const Send({super.key, required this.user, required this.walletDto});
 
   @override
   _Send createState() {
@@ -18,22 +18,24 @@ class Send extends StatefulWidget {
 }
 
 class _Send extends State<Send> {
+  _Send();
   bool processing = false;
   bool full = true;
   double _currentSliderValue = 5;
-  String address = "";
+  String address = '';
   late WalletServiceImpl walletService;
-  List<String> splittedMnemonic = List<String>.filled(1, "");
+  List<String> splittedMnemonic = List<String>.filled(1, '');
   final valueController = TextEditingController();
-  late String balance = "0";
-  late String balanceInUsd = "0";
+  String balance = '0';
+  String balanceInUsd = '0';
   final TextEditingController addressController = TextEditingController();
+  bool sendingTransaction = false;
+  bool success = false;
+
   Icon fullIcon = const Icon(
     Icons.account_balance_wallet,
     color: Colors.black,
   );
-
-  _Send();
 
   @override
   void initState() {
@@ -54,6 +56,10 @@ class _Send extends State<Send> {
     if (address.isEmpty) {
       address = widget.walletDto.getAddress();
     }
+
+    balance = widget.walletDto.valueInWeiFormatted;
+    balanceInUsd = widget.walletDto.valueInUsdFormatted;
+
     final String sendTransaction =
         AppLocalizations.of(context)!.sendTransaction;
 
@@ -109,7 +115,10 @@ class _Send extends State<Send> {
                         children: <Widget>[
                           Row(
                             children: <Widget>[
-                              const Icon(Icons.document_scanner_outlined, color: Colors.black,),
+                              const Icon(
+                                Icons.document_scanner_outlined,
+                                color: Colors.black,
+                              ),
                               const SizedBox(
                                 width: 10,
                               ),
@@ -199,13 +208,13 @@ class _Send extends State<Send> {
               ),
             ],
           )),
-          const Row(
+          Row(
             children: [
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: Text(
-                  "Max available: 0.01014",
-                  style: TextStyle(
+                  'Max available: ${balance}',
+                  style: const TextStyle(
                     color: Colors.grey,
                     fontSize: 13,
                   ),
@@ -245,10 +254,57 @@ class _Send extends State<Send> {
               ),
             ],
           ),
-          const Expanded(
+          Expanded(
               flex: 3,
               child: Row(
-                children: [Expanded(child: TextField())],
+                children: [
+                  const SizedBox(
+                    width: 15,
+                  ),
+                  Expanded(
+                      child: !sendingTransaction
+                          ? ElevatedButton(
+                              style: blackWhiteButton,
+                              onPressed: () async {
+                                setState(() {
+                                  sendingTransaction = true;
+                                });
+                                await Future.delayed(
+                                    const Duration(seconds: 1));
+                                setState(() {
+                                  success = true;
+                                });
+                                await Future.delayed(
+                                    const Duration(milliseconds: 500));
+                                Navigator.pop(context);
+                              },
+                              child: const Row(
+                                children: <Widget>[
+                                  Row(
+                                    children: <Widget>[
+                                      Icon(Icons.send),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        "Send Transaction",
+                                        style: blackText,
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            )
+                          : !success
+                              ? const LinearProgressIndicator()
+                              : const Icon(
+                                  Icons.check,
+                                  color: Colors.green,
+                                )),
+                  const SizedBox(
+                    width: 15,
+                  ),
+                ],
               )),
         ],
       ),
