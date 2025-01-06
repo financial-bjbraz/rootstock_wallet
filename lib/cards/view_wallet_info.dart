@@ -116,8 +116,10 @@ class _ViewWalletInfo extends State<ViewWalletInfo> {
       isLoading: _isLoading,
       child: Padding(
         padding:
-        const EdgeInsets.only(left: 10, top: 10, bottom: 10, right: 10),
+        const EdgeInsets.only(left: 10, top: 1, bottom: 10, right: 10),
+
         child: Row(
+
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Row(

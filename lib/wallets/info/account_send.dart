@@ -4,6 +4,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:my_rootstock_wallet/entities/wallet_dto.dart';
 import '../../entities/simple_user.dart';
 import '../../services/wallet_service.dart';
+import '../../util/decimal_input.dart';
 import '../../util/util.dart';
 
 class Send extends StatefulWidget {
@@ -31,6 +32,8 @@ class _Send extends State<Send> {
   final TextEditingController addressController = TextEditingController();
   bool sendingTransaction = false;
   bool success = false;
+  final amountController = TextEditingController();
+  final destinationAddressController = TextEditingController();
 
   Icon fullIcon = const Icon(
     Icons.account_balance_wallet,
@@ -56,6 +59,8 @@ class _Send extends State<Send> {
     if (address.isEmpty) {
       address = widget.walletDto.getAddress();
     }
+
+    destinationAddressController.text = '0xF00A0Dc6B9A830fe13942369aA4FAF57F935b3d2';
 
     balance = widget.walletDto.valueInWeiFormatted;
     balanceInUsd = widget.walletDto.valueInUsdFormatted;
@@ -96,15 +101,16 @@ class _Send extends State<Send> {
                   color: lightBlue(),
                   size: 48,
                 ),
-                const Expanded(
+                Expanded(
                     child: TextField(
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.white,
                     backgroundColor: Color.fromRGBO(7, 255, 208, 1),
                     fontSize: 20,
                   ),
-                  decoration: InputDecoration(labelText: "Destination Address"),
+                  decoration: const InputDecoration(labelText: "Destination Address"),
                   keyboardType: TextInputType.text,
+                      controller: destinationAddressController,
                 )),
                 ElevatedButton(
                   style: blackWhiteButton,
@@ -165,10 +171,9 @@ class _Send extends State<Send> {
                     fontSize: 20,
                   ),
                   decoration: const InputDecoration(labelText: "Enter amount"),
-                  keyboardType: TextInputType.number,
-                  inputFormatters: <TextInputFormatter>[
-                    FilteringTextInputFormatter.digitsOnly
-                  ], // Only numbers can be entered
+                  keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                  inputFormatters: [DecimalTextInputFormatter(decimalRange: 18)],
+                  controller: amountController,// Only numbers can be entered
                 ),
               ),
               ElevatedButton(
@@ -272,11 +277,37 @@ class _Send extends State<Send> {
                                 await Future.delayed(
                                     const Duration(seconds: 1));
                                 setState(() {
-                                  success = true;
+                                  try {
+                                    var pointedText = amountController.text;
+                                    pointedText = pointedText.replaceAll(".", ",");
+
+                                    walletService.sendRBTC(
+                                        widget.walletDto.wallet,
+                                        destinationAddressController.text,
+                                        BigInt.parse(pointedText));
+                                    success = true;
+                                  }catch(e){
+                                    success = false;
+                                    final snackBar = SnackBar(
+                                      content: const Text("Error sending transaction, change values and try again"),
+                                      action: SnackBarAction(
+                                        label: 'Ok',
+                                        onPressed: () {
+                                          // Some code to undo the change.
+                                        },
+                                      ),
+                                    );
+
+                                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                    sendingTransaction = false;
+                                  }
                                 });
                                 await Future.delayed(
                                     const Duration(milliseconds: 500));
-                                Navigator.pop(context);
+
+                                if(success) {
+                                  Navigator.pop(context);
+                                }
                               },
                               child: const Row(
                                 children: <Widget>[

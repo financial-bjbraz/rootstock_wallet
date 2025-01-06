@@ -232,6 +232,9 @@ Future<Database> openDataBase() async {
           await db.execute(
             'CREATE TABLE users(name TEXT PRIMARY KEY, email TEXT, userId TEXT, password TEXT)',
           );
+          await db.execute(
+            'CREATE TABLE transactions(transactionId TEXT PRIMARY KEY, walletId TEXT, amountInWeis TEXT, valueInUsdFormatted TEXT, valueinWeiFormatted TEXT, date TEXT, status TEXT)',
+          );
           if (kDebugMode) {
             print("created table users ");
           }
@@ -244,6 +247,9 @@ Future<Database> openDataBase() async {
     database.transaction((txn) async {
       await txn.execute(
           "CREATE TABLE users(name TEXT PRIMARY KEY, email TEXT, userId TEXT, password TEXT)");
+    });
+    database.transaction((txn) async {
+      await txn.execute('CREATE TABLE transactions(transactionId TEXT PRIMARY KEY, walletId TEXT, amountInWeis TEXT, valueInUsdFormatted TEXT, valueinWeiFormatted TEXT, date TEXT, status TEXT)');
     });
   } catch(e){
     if (kDebugMode) {
