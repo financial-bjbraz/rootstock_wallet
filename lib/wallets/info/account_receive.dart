@@ -82,9 +82,13 @@ class _Receive extends State<Receive> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                            ShareButton(completeAddress: completeAddress,),
-                            CopyButton(completeAddress: completeAddress,)
-                       ],
+                        ShareButton(
+                          completeAddress: completeAddress,
+                        ),
+                        CopyButton(
+                          completeAddress: completeAddress,
+                        )
+                      ],
                     ),
                   )
                 ],
@@ -152,51 +156,50 @@ class _ShareButton extends State<ShareButton> {
   @override
   Widget build(BuildContext context) {
     return !checkingFlight
-        ?             ElevatedButton(
-      style: blackWhiteButton,
-      onPressed: () async {
+        ? ElevatedButton(
+            style: blackWhiteButton,
+            onPressed: () async {
+              final box = context.findRenderObject() as RenderBox?;
+              final data = utf8.encode(widget.completeAddress);
+              await Share.shareXFiles(
+                [
+                  XFile.fromData(
+                    data,
+                    // name: fileName, // Notice, how setting the name here does not work.
+                    mimeType: 'text/plain',
+                  ),
+                ],
+                sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size,
+                fileNameOverrides: [widget.completeAddress],
+              );
 
-        final box = context.findRenderObject() as RenderBox?;
-        final data = utf8.encode(widget.completeAddress);
-        await Share.shareXFiles(
-          [
-            XFile.fromData(
-              data,
-              // name: fileName, // Notice, how setting the name here does not work.
-              mimeType: 'text/plain',
+              setState(() {
+                checkingFlight = true;
+              });
+              await Future.delayed(const Duration(seconds: 1));
+              setState(() {
+                success = true;
+              });
+              await Future.delayed(const Duration(milliseconds: 500));
+              Navigator.pop(context);
+            },
+            child: const Row(
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    Text("Share Your Address", style: smallBlackText),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Icon(
+                      Icons.share,
+                      color: Colors.black,
+                    ),
+                  ],
+                ),
+              ],
             ),
-          ],
-          sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size,
-          fileNameOverrides: [widget.completeAddress],
-        );
-
-        setState(() {
-          checkingFlight = true;
-        });
-        await Future.delayed(const Duration(seconds: 1));
-        setState(() {
-          success = true;
-        });
-        await Future.delayed(const Duration(milliseconds: 500));
-        Navigator.pop(context);
-      },
-      child: const Row(
-        children: <Widget>[
-          Row(
-            children: <Widget>[
-              Text("Share Your Address", style: smallBlackText),
-              SizedBox(
-                width: 10,
-              ),
-              Icon(
-                Icons.share,
-                color: Colors.black,
-              ),
-            ],
-          ),
-        ],
-      ),
-    )
+          )
         : !success
             ? const CircularProgressIndicator()
             : const Icon(
@@ -205,7 +208,6 @@ class _ShareButton extends State<ShareButton> {
               );
   }
 }
-
 
 class CopyButton extends StatefulWidget {
   final String completeAddress;
@@ -222,44 +224,44 @@ class _CopyButton extends State<CopyButton> {
   @override
   Widget build(BuildContext context) {
     return !checkingFlight
-        ?             ElevatedButton(
-      style: blackWhiteButton,
-      onPressed: () async {
-            await Clipboard.setData(ClipboardData(text: widget.completeAddress));
+        ? ElevatedButton(
+            style: blackWhiteButton,
+            onPressed: () async {
+              await Clipboard.setData(
+                  ClipboardData(text: widget.completeAddress));
 
-            setState(() {
-              checkingFlight = true;
-            });
-            await Future.delayed(const Duration(seconds: 1));
-            setState(() {
-              success = true;
-            });
-            await Future.delayed(const Duration(milliseconds: 500));
-            Navigator.pop(context);
-
-      },
-      child: const Row(
-        children: <Widget>[
-          Row(
-            children: <Widget>[
-              Text("Copy Your Address", style: smallBlackText),
-              SizedBox(
-                width: 10,
-              ),
-              Icon(
-                Icons.copy,
-                color: Colors.black,
-              ),
-            ],
-          ),
-        ],
-      ),
-    )
+              setState(() {
+                checkingFlight = true;
+              });
+              await Future.delayed(const Duration(seconds: 1));
+              setState(() {
+                success = true;
+              });
+              await Future.delayed(const Duration(milliseconds: 500));
+              Navigator.pop(context);
+            },
+            child: const Row(
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    Text("Copy Your Address", style: smallBlackText),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Icon(
+                      Icons.copy,
+                      color: Colors.black,
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          )
         : !success
-        ? const CircularProgressIndicator()
-        : const Icon(
-      Icons.check,
-      color: Colors.green,
-    );
+            ? const CircularProgressIndicator()
+            : const Icon(
+                Icons.check,
+                color: Colors.green,
+              );
   }
 }

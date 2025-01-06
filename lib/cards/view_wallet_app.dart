@@ -65,10 +65,11 @@ class _ViewWalletApp extends State<ViewWalletApp> {
   }
 
   Widget _buildFirstLine() {
+    final String tramsactops = AppLocalizations.of(context)!.transactions;
     return ShimmerLoading(
       isLoading: _isLoading,
       child: Padding(
-        padding: const EdgeInsets.only(left: 10, top: 1, bottom: 5, right: 10),
+        padding: const EdgeInsets.only(left: 10, top: 1, bottom: 20, right: 10),
         child: Row(
           children: <Widget>[
             Icon(Icons.wallet_rounded, size: iconSize, color: pink()),
@@ -83,6 +84,50 @@ class _ViewWalletApp extends State<ViewWalletApp> {
                   backgroundColor: pink(),
                   fontSize: 28,
                   fontWeight: FontWeight.bold),
+            ),
+            ElevatedButton(
+              style: blackWhiteButton,
+              onPressed: (){
+
+                final Send sendScreenChild =
+                Send(user: widget.user, walletDto: walletDto);
+
+                Navigator.of(context).push(PageRouteBuilder(
+                  pageBuilder: (context, animation, secondaryAnimation) =>
+                      DetailList(child: sendScreenChild),
+                  transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                    var begin = const Offset(0.0, 1.0);
+                    var end = Offset.zero;
+                    var curve = Curves.ease;
+                    var tween =
+                    Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+                    return SlideTransition(
+                      position: animation.drive(tween),
+                      child: child,
+                    );
+                  },
+                ));
+              },
+              child: Row(
+                children: <Widget>[
+                  Row(
+                    children: <Widget>[
+                      const Icon(
+                        Icons.text_snippet_rounded,
+                        color: Colors.black,
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        tramsactops,
+                        style: blackText,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ],
         ),

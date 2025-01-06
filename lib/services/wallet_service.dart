@@ -11,8 +11,7 @@ import 'package:my_rootstock_wallet/util/coingeck_resopnse.dart';
 import 'package:my_rootstock_wallet/util/wei.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:web3dart/web3dart.dart';
-
+import 'package:web3dart/web3dart.dart' as web3;
 import '../entities/wallet_entity.dart';
 import '../util/util.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -20,7 +19,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 abstract class WalletAddressService {
   String generateMnemonic();
   Future<String> getPrivateKey(String mnemonic);
-  EthereumAddress getPublicKey(String privateKey);
+  web3.EthereumAddress getPublicKey(String privateKey);
 }
 
 class WalletServiceImpl extends ChangeNotifier implements WalletAddressService {
@@ -43,14 +42,14 @@ class WalletServiceImpl extends ChangeNotifier implements WalletAddressService {
   }
 
   @override
-  EthereumAddress getPublicKey(String privateKey) {
-    final private = EthPrivateKey.fromHex(privateKey);
+  web3.EthereumAddress getPublicKey(String privateKey) {
+    final private = web3.EthPrivateKey.fromHex(privateKey);
     final address = private.address;
     return address;
   }
 
   Future<String> getPublicKeyString(String privateKey) async {
-    final private = EthPrivateKey.fromHex(privateKey);
+    final private = web3.EthPrivateKey.fromHex(privateKey);
     final address = private.address;
     return address.hex;
   }
@@ -120,11 +119,11 @@ class WalletServiceImpl extends ChangeNotifier implements WalletAddressService {
   }
 
   Future<Wei> getBalanceInWei(WalletEntity wallet) async {
-    var balance = EtherAmount.zero();
+    var balance = web3.EtherAmount.zero();
     try {
       final node = dotenv.env['ROOTSTOCK_NODE'];
-      final client = Web3Client(node!, http.Client());
-      final credentials = EthPrivateKey.fromHex(wallet.privateKey);
+      final client = web3.Web3Client(node!, http.Client());
+      final credentials = web3.EthPrivateKey.fromHex(wallet.privateKey);
       final address = credentials.address;
       balance = await client.getBalance(address);
     } catch(error) {
@@ -133,8 +132,38 @@ class WalletServiceImpl extends ChangeNotifier implements WalletAddressService {
     return Wei(src: balance.getInWei, currency: "wei");
   }
 
+  Future<bool> sendRBTC(WalletEntity wallet, String destinationAddress, BigInt amount) async {
+    bool finished = true;
+    try {
+      final node = dotenv.env['ROOTSTOCK_NODE'];
+      final client = web3.Web3Client(node!, http.Client());
+      final credentials = web3.EthPrivateKey.fromHex(wallet.privateKey);
+
+      await client.sendTransaction(
+        credentials,
+        web3.Transaction(
+          to: web3.EthereumAddress.fromHex(destinationAddress),
+          gasPrice: web3.EtherAmount.inWei(BigInt.one),
+          maxGas: 100000,
+          value: web3.EtherAmount.fromBigInt(web3.EtherUnit.ether, amount),
+        ),
+      );
+
+      await client.dispose();
+    } catch(error) {
+      finished = false;
+    }
+    return finished;
+  }
+
+  // Tentar reutilizar isso em alguma classe para nao buscar toda hora do .env
+  String getExplorerUrl(String transactionId) {
+    final blockExplorer = dotenv.env['BLOCK_EXPLORER_URL'];
+    return blockExplorer!+transactionId;
+  }
+
   Future<WalletDTO> createWalletToDisplay(WalletEntity wallet) async {
-    var walletDto = WalletDTO(wallet: wallet);
+    var walletDto = WalletDTO(wallet: wallet, transactions: null);
     final wei = await getBalanceInWei(wallet);
     final usdPrice = await getPrice();
     final value =  wei.getWei() * usdPrice;

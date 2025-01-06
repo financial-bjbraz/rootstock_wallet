@@ -1,3 +1,4 @@
+import 'package:my_rootstock_wallet/entities/simple_transaction.dart';
 import 'package:my_rootstock_wallet/entities/wallet_entity.dart';
 
 import '../util/util.dart';
@@ -10,8 +11,9 @@ class WalletDTO {
   late double amountInWeis;
   late String valueInUsdFormatted;
   late String valueInWeiFormatted;
+  Set<SimpleTransaction>? transactions;
 
-  WalletDTO({required this.wallet});
+  WalletDTO({required this.wallet, required this.transactions});
 
   String getName() {
     return "Wallet #${wallet.walletId}";
