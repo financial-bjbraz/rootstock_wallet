@@ -139,8 +139,10 @@ class WalletServiceImpl extends ChangeNotifier implements WalletAddressService {
       final client = web3.Web3Client(node!, http.Client());
       final credentials = web3.EthPrivateKey.fromHex(wallet.privateKey);
 
+
       await client.sendTransaction(
         credentials,
+        chainId: 31,
         web3.Transaction(
           to: web3.EthereumAddress.fromHex(destinationAddress),
           gasPrice: web3.EtherAmount.inWei(BigInt.one),

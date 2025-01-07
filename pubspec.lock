@@ -46,6 +46,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.11.0"
+  big_dart:
+    dependency: "direct main"
+    description:
+      name: big_dart
+      sha256: fced31c3db87e489f7ed95e44ae4778b50aa97f2dedcbfb2364372eef6769425
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.1"
   bip39:
     dependency: "direct main"
     description:

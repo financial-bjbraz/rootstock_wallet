@@ -1,3 +1,4 @@
+import 'package:big_dart/big_dart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -43,6 +44,7 @@ class _Send extends State<Send> {
   @override
   void initState() {
     super.initState();
+    walletService = WalletServiceImpl();
   }
 
   @override
@@ -279,12 +281,16 @@ class _Send extends State<Send> {
                                 setState(() {
                                   try {
                                     var pointedText = amountController.text;
-                                    pointedText = pointedText.replaceAll(".", ",");
+                                    pointedText = pointedText.replaceAll(",", ".");
+                                    var bp = Big(pointedText);
+                                    print(bp.toStringAsFixed(dp: 18, rm: RoundingMode.roundHalfEven));
+                                    print(bp.times(1000000000000000000));
+
 
                                     walletService.sendRBTC(
                                         widget.walletDto.wallet,
                                         destinationAddressController.text,
-                                        BigInt.parse(pointedText));
+                                        BigInt.parse(bp.times(1000000000000000000).toString()));
                                     success = true;
                                   }catch(e){
                                     success = false;

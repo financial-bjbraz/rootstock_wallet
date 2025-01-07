@@ -1,18 +1,11 @@
 enum RbtcMultiple { wei, kwei, mwei, gwei, rbtc }
 
-
 class Wei {
   late BigInt src;
   late String currency;
   final conversor = BigInt.from(1000000000000000000);
 
   Wei({required this.src, required this.currency});
-
-  //var numberRegex = RegExp("^[0-9]*(\.[0-9]*)?$/");
-
-  // conversor(double src, currency: RbtcMultiple){
-
-  //}
 
   String toRBTCString() {
     var valueMul2 =  src / conversor;
