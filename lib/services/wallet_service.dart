@@ -145,9 +145,9 @@ class WalletServiceImpl extends ChangeNotifier implements WalletAddressService {
         chainId: 31,
         web3.Transaction(
           to: web3.EthereumAddress.fromHex(destinationAddress),
-          gasPrice: web3.EtherAmount.inWei(BigInt.one),
+          gasPrice: web3.EtherAmount.inWei(BigInt.parse('50000000000000000')),
           maxGas: 100000,
-          value: web3.EtherAmount.fromBigInt(web3.EtherUnit.ether, amount),
+          value: web3.EtherAmount.inWei(BigInt.parse('59240000000000')),
         ),
       );
 
