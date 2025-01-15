@@ -80,9 +80,6 @@ class _Send extends State<Send> {
       address = widget.walletDto.getAddress();
     }
 
-    destinationAddressController.text =
-        '0xF00A0Dc6B9A830fe13942369aA4FAF57F935b3d2';
-
     balance = widget.walletDto.valueInWeiFormatted;
     balanceInUsd = widget.walletDto.valueInUsdFormatted;
 
