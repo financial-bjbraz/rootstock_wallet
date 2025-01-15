@@ -2,10 +2,12 @@
 
 class SimpleTransaction {
   late String transactionId;
-  late double amountInWeis;
+  late int amountInWeis;
   late String valueInUsdFormatted;
   late String valueInWeiFormatted;
+  late final bool? transactionSent;
   String date = '';
+
   final String walletId;
   final String? status;
 
