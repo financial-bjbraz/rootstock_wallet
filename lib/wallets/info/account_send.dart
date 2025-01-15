@@ -41,6 +41,8 @@ class _Send extends State<Send> {
     color: Colors.black,
   );
 
+  Icon sucessIcon = Icon(Icons.check,color: Colors.green,);
+
   @override
   void initState() {
     super.initState();
@@ -56,13 +58,30 @@ class _Send extends State<Send> {
     super.dispose();
   }
 
+  void displaySnackBar(String message) {
+    final snackBar = SnackBar(
+      content: Text(message),
+      action: SnackBarAction(
+        label: 'Ok',
+        onPressed: () {
+          setState(() {
+            success = true;
+            sendingTransaction = false;
+          });
+        },
+      ),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
   @override
   Widget build(BuildContext context) {
     if (address.isEmpty) {
       address = widget.walletDto.getAddress();
     }
 
-    destinationAddressController.text = '0xF00A0Dc6B9A830fe13942369aA4FAF57F935b3d2';
+    destinationAddressController.text =
+        '0xF00A0Dc6B9A830fe13942369aA4FAF57F935b3d2';
 
     balance = widget.walletDto.valueInWeiFormatted;
     balanceInUsd = widget.walletDto.valueInUsdFormatted;
@@ -110,9 +129,10 @@ class _Send extends State<Send> {
                     backgroundColor: Color.fromRGBO(7, 255, 208, 1),
                     fontSize: 20,
                   ),
-                  decoration: const InputDecoration(labelText: "Destination Address"),
+                  decoration:
+                      const InputDecoration(labelText: "Destination Address"),
                   keyboardType: TextInputType.text,
-                      controller: destinationAddressController,
+                  controller: destinationAddressController,
                 )),
                 ElevatedButton(
                   style: blackWhiteButton,
@@ -173,9 +193,12 @@ class _Send extends State<Send> {
                     fontSize: 20,
                   ),
                   decoration: const InputDecoration(labelText: "Enter amount"),
-                  keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                  inputFormatters: [DecimalTextInputFormatter(decimalRange: 18)],
-                  controller: amountController,// Only numbers can be entered
+                  keyboardType:
+                      const TextInputType.numberWithOptions(decimal: true),
+                  inputFormatters: [
+                    DecimalTextInputFormatter(decimalRange: 18)
+                  ],
+                  controller: amountController, // Only numbers can be entered
                 ),
               ),
               ElevatedButton(
@@ -278,43 +301,45 @@ class _Send extends State<Send> {
                                 });
                                 await Future.delayed(
                                     const Duration(seconds: 1));
+                                var sucesso = false;
+                                try{
+                                  var pointedText = amountController.text;
+                                  pointedText =
+                                      pointedText.replaceAll(",", ".");
+                                  var bp = Big(pointedText);
+                                  sucesso = await walletService.sendRBTC(
+                                      widget.walletDto.wallet,
+                                      destinationAddressController.text,
+                                      BigInt.parse(bp
+                                          .times(1000000000000000000)
+                                          .toString()));
+                                } catch (e) {
+                                  displaySnackBar(
+                                      "Error sending transaction, review and try again");
+                                  success = false;
+                                  sucessIcon = const Icon(Icons.dangerous_outlined, color: Colors.red,);
+                                }
+
                                 setState(() {
-                                  try {
-                                    var pointedText = amountController.text;
-                                    pointedText = pointedText.replaceAll(",", ".");
-                                    var bp = Big(pointedText);
-                                    print(bp.toStringAsFixed(dp: 18, rm: RoundingMode.roundHalfEven));
-                                    print(bp.times(1000000000000000000));
-
-
-                                    walletService.sendRBTC(
-                                        widget.walletDto.wallet,
-                                        destinationAddressController.text,
-                                        BigInt.parse(bp.times(1000000000000000000).toString()));
-                                    success = true;
-                                  }catch(e){
-                                    success = false;
-                                    final snackBar = SnackBar(
-                                      content: const Text("Error sending transaction, change values and try again"),
-                                      action: SnackBarAction(
-                                        label: 'Ok',
-                                        onPressed: () {
-                                          // Some code to undo the change.
-                                        },
-                                      ),
-                                    );
-
-                                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                                    sendingTransaction = false;
-                                  }
+                                    success = sucesso;
+                                    if(!success){
+                                      //displaySnackBar(
+                                      //   "Verify your balance, review and try again");
+                                      sucessIcon = const Icon(Icons.dangerous_outlined, color: Colors.red,);
+                                    }else{
+                                      sucessIcon = const Icon(Icons.check, color: Colors.green,);
+                                    }
                                 });
                                 await Future.delayed(
                                     const Duration(milliseconds: 500));
-
-                                if(success) {
+                                if (success) {
                                   Navigator.pop(context);
                                 }
-                              },
+
+                                setState(() {
+                                  sendingTransaction = false;
+                                });
+                                },
                               child: const Row(
                                 children: <Widget>[
                                   Row(
@@ -332,12 +357,9 @@ class _Send extends State<Send> {
                                 ],
                               ),
                             )
-                          : !success
+                          : sendingTransaction
                               ? const LinearProgressIndicator()
-                              : const Icon(
-                                  Icons.check,
-                                  color: Colors.green,
-                                )),
+                              : sucessIcon),
                   const SizedBox(
                     width: 15,
                   ),
