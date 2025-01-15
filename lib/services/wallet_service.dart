@@ -18,7 +18,9 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 abstract class WalletAddressService {
   String generateMnemonic();
+
   Future<String> getPrivateKey(String mnemonic);
+
   web3.EthereumAddress getPublicKey(String privateKey);
 }
 
@@ -55,7 +57,6 @@ class WalletServiceImpl extends ChangeNotifier implements WalletAddressService {
   }
 
   Future<List<WalletEntity>> getWallets(final String ownerEmail) async {
-
     WidgetsFlutterBinding.ensureInitialized();
     // Open the database and store the reference.
     final database = openDatabase(
@@ -68,19 +69,24 @@ class WalletServiceImpl extends ChangeNotifier implements WalletAddressService {
     final db = await database;
 
     // Query the table for all the wallets.
-    final List<Map<String, Object?>> walletMaps = await db.query('wallets', where: 'ownerEmail = ?', whereArgs: [ownerEmail]);
+    final List<Map<String, Object?>> walletMaps = await db.query(
+        'wallets', where: 'ownerEmail = ?', whereArgs: [ownerEmail]);
 
     // Convert the list of each fields into a list of `Wallet` objects.
     return [
       for (final {
-        'privateKey': privateKey as String,
-        'walletName': walletName as String,
-        'walletId': walletId as String,
-        'publicKey': publicKey as String,
-        'ownerEmail': ownerEmail as String,
-        'amount': amountValue as double,
-        } in walletMaps)
-        WalletEntity(amountValue, privateKey: privateKey, publicKey: publicKey, walletId: walletId, walletName: walletName, ownerEmail: ownerEmail),
+      'privateKey': privateKey as String,
+      'walletName': walletName as String,
+      'walletId': walletId as String,
+      'publicKey': publicKey as String,
+      'ownerEmail': ownerEmail as String,
+      'amount': amountValue as double,
+      } in walletMaps)
+        WalletEntity(amountValue, privateKey: privateKey,
+            publicKey: publicKey,
+            walletId: walletId,
+            walletName: walletName,
+            ownerEmail: ownerEmail),
     ];
   }
 
@@ -105,7 +111,8 @@ class WalletServiceImpl extends ChangeNotifier implements WalletAddressService {
 
   void delete(WalletEntity wallet) async {
     final db = await openDataBase();
-    await db.delete("wallets", where: 'privateKey = ?', whereArgs: [wallet.privateKey]);
+    await db.delete(
+        "wallets", where: 'privateKey = ?', whereArgs: [wallet.privateKey]);
   }
 
   Future<String> getBalance(WalletEntity wallet) async {
@@ -113,7 +120,7 @@ class WalletServiceImpl extends ChangeNotifier implements WalletAddressService {
     try {
       final wei = await getBalanceInWei(wallet);
       return (wei.toRBTCTrimmedString());
-    }catch(e){
+    } catch (e) {
       return returnValue;
     }
   }
@@ -126,33 +133,40 @@ class WalletServiceImpl extends ChangeNotifier implements WalletAddressService {
       final credentials = web3.EthPrivateKey.fromHex(wallet.privateKey);
       final address = credentials.address;
       balance = await client.getBalance(address);
-    } catch(error) {
+    } catch (error) {
       // error
     }
     return Wei(src: balance.getInWei, currency: "wei");
   }
 
-  Future<bool> sendRBTC(WalletEntity wallet, String destinationAddress, BigInt amount) async {
+  Future<bool> sendRBTC(WalletEntity wallet, String destinationAddress,
+      BigInt amount) async {
     bool finished = true;
     try {
-      final node = dotenv.env['ROOTSTOCK_NODE'];
-      final client = web3.Web3Client(node!, http.Client());
+      var node = dotenv.env['ROOTSTOCK_NODE'];
+      var httpClient = http.Client();
+      final client = web3.Web3Client(node.toString(), httpClient);
       final credentials = web3.EthPrivateKey.fromHex(wallet.privateKey);
+      var chainId = await client.getChainId();
+      web3.EtherAmount gasPrice = await client.getGasPrice();
 
+      var unit = web3.EtherAmount.fromUnitAndValue(web3.EtherUnit.wei, amount);
+
+      var transaction = web3.Transaction(
+        to: web3.EthereumAddress.fromHex("0xad33cf15a2ed23b19b99ae406138631e56810491"),
+        gasPrice: web3.EtherAmount.inWei(BigInt.from(20000000000)),
+        maxGas: 6721975, //35234508
+        value: unit,
+      );
 
       await client.sendTransaction(
         credentials,
-        chainId: 31,
-        web3.Transaction(
-          to: web3.EthereumAddress.fromHex(destinationAddress),
-          gasPrice: web3.EtherAmount.inWei(BigInt.parse('50000000000000000')),
-          maxGas: 100000,
-          value: web3.EtherAmount.inWei(BigInt.parse('59240000000000')),
-        ),
+        transaction,
+        chainId: chainId.toInt()
       );
 
       await client.dispose();
-    } catch(error) {
+    } catch (error) {
       finished = false;
     }
     return finished;
@@ -161,21 +175,21 @@ class WalletServiceImpl extends ChangeNotifier implements WalletAddressService {
   // Tentar reutilizar isso em alguma classe para nao buscar toda hora do .env
   String getExplorerUrl(String transactionId) {
     final blockExplorer = dotenv.env['BLOCK_EXPLORER_URL'];
-    return blockExplorer!+transactionId;
+    return blockExplorer! + transactionId;
   }
 
   Future<WalletDTO> createWalletToDisplay(WalletEntity wallet) async {
     var walletDto = WalletDTO(wallet: wallet, transactions: null);
     final wei = await getBalanceInWei(wallet);
     final usdPrice = await getPrice();
-    final value =  wei.getWei() * usdPrice;
+    final value = wei.getWei() * usdPrice;
     final formatter = NumberFormat.simpleCurrency();
     walletDto.amountInWeis = wei.getWei();
     walletDto.amountInUsd = value;
     walletDto.valueInWeiFormatted = (wei.toRBTCTrimmedStringPlaces(10));
     walletDto.valueInUsdFormatted = formatter.format(value);
 
-    if(wei.src.compareTo(BigInt.from(wallet.amount)) != 0) {
+    if (wei.src.compareTo(BigInt.from(wallet.amount)) != 0) {
       wallet.amount = wei.src.toDouble();
       persistNewWallet(wallet);
     }
@@ -184,21 +198,24 @@ class WalletServiceImpl extends ChangeNotifier implements WalletAddressService {
   }
 
   Future<int> getPrice() async {
-    final response = await http.get(Uri.parse('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin&order=market_cap_desc&per_page=100&page=1&sparkline=false'));
+    final response = await http.get(Uri.parse(
+        'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin&order=market_cap_desc&per_page=100&page=1&sparkline=false'));
 
     if (response.statusCode == 200) {
       List<dynamic> body = jsonDecode(response.body) as List<dynamic>;
 
       List<CoinGeckoResponse> prices = body
           .map(
-            (dynamic item) => CoinGeckoResponse.fromJson2(item as Map<String, dynamic>),
+            (dynamic item) =>
+            CoinGeckoResponse.fromJson2(item as Map<String, dynamic>),
       ).toList();
-      var price = (prices.elementAt(0).currentPrice);
+      var price = (prices
+          .elementAt(0)
+          .currentPrice);
 
       setLastUsdPrice(price);
 
       return price;
-
     } else {
       return getLastUsdPrice();
     }
