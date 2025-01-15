@@ -1,6 +1,5 @@
 import 'package:big_dart/big_dart.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:my_rootstock_wallet/entities/wallet_dto.dart';
 import '../../entities/simple_user.dart';
@@ -41,7 +40,7 @@ class _Send extends State<Send> {
     color: Colors.black,
   );
 
-  Icon sucessIcon = Icon(Icons.check,color: Colors.green,);
+  Icon sucessIcon = const Icon(Icons.check,color: Colors.green,);
 
   @override
   void initState() {
@@ -304,12 +303,13 @@ class _Send extends State<Send> {
                                   pointedText =
                                       pointedText.replaceAll(",", ".");
                                   var bp = Big(pointedText);
-                                  sucesso = await walletService.sendRBTC(
+                                  var transactionPersist = await walletService.sendRBTC(
                                       widget.walletDto.wallet,
                                       destinationAddressController.text,
                                       BigInt.parse(bp
                                           .times(1000000000000000000)
                                           .toString()));
+                                  sucesso = transactionPersist.transactionSent!;
                                 } catch (e) {
                                   displaySnackBar(
                                       "Error sending transaction, review and try again");

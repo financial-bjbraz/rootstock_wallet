@@ -39,7 +39,7 @@ class CreateTransactionServiceImpl extends ChangeNotifier implements CreateTrans
     var list = [
       for (final {
       'transactionId': transactionId as String,
-      'amountInWeis': amountInWeis as double,
+      'amountInWeis': amountInWeis as int,
       'date': date as String,
       'walletId': walletId as String,
       'valueInUsdFormatted': valueInUsdFormatted as String,

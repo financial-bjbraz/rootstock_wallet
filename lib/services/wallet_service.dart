@@ -12,6 +12,7 @@ import 'package:my_rootstock_wallet/util/wei.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:web3dart/web3dart.dart' as web3;
+import '../entities/simple_transaction.dart';
 import '../entities/wallet_entity.dart';
 import '../util/util.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -139,9 +140,11 @@ class WalletServiceImpl extends ChangeNotifier implements WalletAddressService {
     return Wei(src: balance.getInWei, currency: "wei");
   }
 
-  Future<bool> sendRBTC(WalletEntity wallet, String destinationAddress,
+  Future<SimpleTransaction> sendRBTC(WalletEntity wallet, String destinationAddress,
       BigInt amount) async {
-    bool finished = true;
+    var persistTransaction = SimpleTransaction(transactionId: '', amountInWeis: amount.toInt(), date: DateFormat("dd/MM/yyyy").format(DateTime.now()), walletId: wallet.walletId,
+        valueInUsdFormatted: '',
+        valueInWeiFormatted: '');
     try {
       var node = dotenv.env['ROOTSTOCK_NODE'];
       var httpClient = http.Client();
@@ -159,17 +162,18 @@ class WalletServiceImpl extends ChangeNotifier implements WalletAddressService {
         value: unit,
       );
 
-      var transactionReceipt = await client.sendTransaction(
+      persistTransaction.transactionId = await client.sendTransaction(
         credentials,
         transaction,
         chainId: chainId.toInt()
       );
+      persistTransaction.transactionSent = true;
 
       await client.dispose();
     } catch (error) {
-      finished = false;
+      persistTransaction.transactionSent = false;
     }
-    return finished;
+    return persistTransaction;
   }
 
   // Tentar reutilizar isso em alguma classe para nao buscar toda hora do .env
