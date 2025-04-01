@@ -21,7 +21,7 @@
   "pagar": "Pagar",
   "bloquear": "Bloquear",
   "glogin": "Logar com Google",
-  "alogin": "logar Anonimo",
+  "alogin": "Login Anônimo",
   "anonimus": "Anonimus",
   "wallet": "Wallet #",
   "saldo": "SALDO",
@@ -41,5 +41,11 @@
   "txSent": "Transação enviada",
   "txReceived": "Transação recebida",
   "amount": "Digite o valor",
-  "destination": "Endereço destino"
+  "destination": "Endereço destino",
+  "copiedMessage": "Copiado para área de transferência",
+  "configureAccount": "Configurar conta",
+  "profile": "Perfil",
+  "help": "Ajuda",
+  "exit": "Sair"
+
 }

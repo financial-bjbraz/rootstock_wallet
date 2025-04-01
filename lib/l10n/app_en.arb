@@ -37,9 +37,14 @@
   "receive": "Receive",
   "sendTransaction": "Send new Transaction",
   "receiveTransactions": "Your Rootstock Address",
-  "transactions": "Last transactions",
+  "transactions": "Transactions",
   "txSent": "Tx Sent",
   "txReceived": "Tx Received",
   "amount": "Enter amount",
-  "destination": "Destination address"
+  "destination": "Destination address",
+  "copiedMessage": "Copied to the clipboard",
+  "configureAccount": "Settings",
+  "profile": "Profile",
+  "help": "Help",
+  "exit": "Exit"
 }

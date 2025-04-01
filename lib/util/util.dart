@@ -7,6 +7,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
 
 const databaseName = "my_rootstock_wallet.db";
+const RBTC_DECIMAL_PLACES = 1000000000000000000;
+const RBTC_DECIMAL_PLACES_COUNT = 18;
 
 Color? orange() => const Color.fromRGBO(255, 145, 0, 1);
 Color? pink() => const Color.fromRGBO(255, 112, 224, 1);
@@ -176,7 +178,7 @@ EdgeInsets createPaddingBetweenDifferentRows() {
 
 Future<bool> isTableCreated() async {
   final prefs = await SharedPreferences.getInstance();
-  var created = prefs.getString("dataBaseCreated_2");
+  var created = prefs.getString("dataBaseCreated_4");
   return created != null;
 }
 
@@ -233,7 +235,7 @@ Future<Database> openDataBase() async {
             'CREATE TABLE users(name TEXT PRIMARY KEY, email TEXT, userId TEXT, password TEXT)',
           );
           await db.execute(
-            'CREATE TABLE transactions(transactionId TEXT PRIMARY KEY, walletId TEXT, amountInWeis TEXT, valueInUsdFormatted TEXT, valueinWeiFormatted TEXT, date TEXT, status TEXT)',
+            'CREATE TABLE transactions(transactionId TEXT PRIMARY KEY, walletId TEXT, amountInWeis INTEGER, valueInUsdFormatted TEXT, valueinWeiFormatted TEXT, date TEXT, status TEXT, type INTEGER, destination TEXT)',
           );
           if (kDebugMode) {
             print("created table users ");
@@ -249,7 +251,7 @@ Future<Database> openDataBase() async {
           "CREATE TABLE users(name TEXT PRIMARY KEY, email TEXT, userId TEXT, password TEXT)");
     });
     database.transaction((txn) async {
-      await txn.execute('CREATE TABLE transactions(transactionId TEXT PRIMARY KEY, walletId TEXT, amountInWeis TEXT, valueInUsdFormatted TEXT, valueinWeiFormatted TEXT, date TEXT, status TEXT)');
+      await txn.execute('CREATE TABLE transactions(transactionId TEXT PRIMARY KEY, walletId TEXT, amountInWeis INTEGER, valueInUsdFormatted TEXT, valueinWeiFormatted TEXT, date TEXT, status TEXT, type INTEGER, destination TEXT)');
     });
   } catch(e){
     if (kDebugMode) {
@@ -274,6 +276,20 @@ String formatAddress(final String publicKey) {
   var address = publicKey;
   address = "${address.substring(0, 8)}...${address.substring(
       address.length - 8, address.length)}";
+  return address;
+}
+
+String formatAddressWithParameter(final String publicKey, final int param) {
+  var address = publicKey;
+  address = "${address.substring(0, param)}...${address.substring(
+      address.length - param, address.length)}";
+  return address;
+}
+
+String formatAddressMinimal(final String publicKey) {
+  var address = publicKey;
+  address = "${address.substring(0, 4)}...${address.substring(
+      address.length - 4, address.length)}";
   return address;
 }
 
